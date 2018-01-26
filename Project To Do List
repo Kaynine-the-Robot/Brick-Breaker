@@ -1,6 +1,6 @@
 Project To Do List
 
-Classes:
+Writing Classes:
     
     Main
     Bat/Player
@@ -8,3 +8,18 @@ Classes:
     Ball
     Screen/Boundaries
     Error Handling 
+
+Artwork:
+    
+    Blocks
+    Bat/Player
+    Background and Borders
+    Ball
+    Power-Up's (Later)
+    
+Music and Sound Effects (Later):
+
+    Bouncing (off bat, walls and blocks)
+    Block broken/Score
+    Level Completed
+    Background Music
