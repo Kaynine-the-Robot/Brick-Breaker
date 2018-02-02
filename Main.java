@@ -15,8 +15,10 @@
  */
 public class Main 
 	{
+	private int xLength;
+	private int yLength;
 	    public void static Main(String[] args)
 	        {
-	            
+                Board board = new Board();
 	        }	
 	}
