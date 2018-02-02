@@ -15,5 +15,8 @@
  */
 public class Main 
 	{
-		
+	    public void static Main(String[] args)
+	        {
+	            
+	        }	
 	}
