@@ -1,3 +1,6 @@
+import Classes.Board;
+
+import 
 /**
  * This is the project for CPSC 233 Lecture 02 Tutorial section 06 for group 5
  * Group 5 is Amanda, Emir, Kaynen, Sebastien.
@@ -17,7 +20,7 @@ public class Main
 	{
 	private int xLength;
 	private int yLength;
-	    public void static Main(String[] args)
+	    public static void main(String[] args)
 	        {
                 Board board = new Board();
 	        }	
