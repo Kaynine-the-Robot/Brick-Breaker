@@ -11,7 +11,7 @@ public class Board
 	{
 	    private int xLength;
 	    private int yLength;
-	    private int[][] board;
+	    private char[][] board;
 	    
 	    /**
 	     * The constructor for the board class.
@@ -19,7 +19,7 @@ public class Board
 	     * @param x is the horizontal length in integer units.
 	     * @param y is the vertical length in integer units.
 	     */
-	    Board(int x, int y)
+	   public Board(int x, int y)
 	        {
 	            this.xLength = x;
 	            this.yLength = y;
@@ -30,7 +30,7 @@ public class Board
 	     */
 	    public void makeBoard()
 	        {
-	            this.board = new int[this.yLength][this.xLength];
+	            this.board = new char[this.yLength][this.xLength];
 	        }
 	    
 	    /**
@@ -47,16 +47,16 @@ public class Board
 	     * This is a getter for retrieving the board/array and everything in it.
 	     * @return returns the board/array
 	     */
-	    public int[][] getBoard()
+	    public char[][] getBoard()
 	    	{
 	    		return this.board;
 	    	}
 	    
 	    /**
-	     * This is a setter for setting a predefined 2D array of integers as the new board.
-	     * @param newBoard Should be a 2D array of integers.
+	     * This is a setter for setting a predefined 2D array of characters as the new board.
+	     * @param newBoard Should be a 2D array of characters.
 	     */
-	    public void setBoard(int[][] newBoard) 
+	    public void setBoard(char[][] newBoard) 
 	    	{
 	    		this.board = newBoard;
 	    	}
@@ -70,5 +70,13 @@ public class Board
 	    	{
 	    		this.xLength = x;
 	    		this.yLength = y;
+	    	}
+	    
+	    public void basicRowBlocks(int row) 
+	    	{
+	    		for(int i = 0; i < this.yLength; i++) 
+	    			{
+	    				this.board[i][row] = 'B';
+    			}
 	    	}
 	}
