@@ -1,6 +1,7 @@
 package Main;
 
 import Classes.Board;
+import GUI.Text_GUI;
 
 /**
  * This is the project for CPSC 233 Lecture 02 Tutorial section 06 for group 5
@@ -19,9 +20,18 @@ import Classes.Board;
  */
 public class Main 
 	{
+		/**
+		 * The main method of the game, controls and calls other objects to make the game happen.
+		 * @param args is an array of Strings.
+		 */
 	    public static void main(String[] args)
 	        {
                 Board board = new Board(6,5);
-                
+                Text_GUI draw = new Text_GUI(true);
+                board.makeBoard();
+                board.basicRowBlocks(0);
+                board.makePlayer(2,4);
+                board.makeBall(2,3);
+                draw.printBoard(board);
 	        }	
 	}

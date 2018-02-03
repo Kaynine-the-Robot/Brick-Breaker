@@ -1,5 +1,6 @@
 package Classes;
 import java.awt.Point;
+//import java.util.Formatter;
 
 /**
  * This is the Board class for the Brickbreaker game. 
@@ -12,6 +13,8 @@ public class Board
 	    private int xLength;
 	    private int yLength;
 	    private char[][] board;
+	    private Point ballPos;
+	    private Point playerPos;
 	    
 	    /**
 	     * The constructor for the board class.
@@ -30,7 +33,7 @@ public class Board
 	     */
 	    public void makeBoard()
 	        {
-	            this.board = new char[this.yLength][this.xLength];
+	            this.board = new char[this.xLength][this.yLength];
 	        }
 	    
 	    /**
@@ -72,11 +75,58 @@ public class Board
 	    		this.yLength = y;
 	    	}
 	    
+	    /**
+	     * This method is for drawing a row of Blocks. (Later to become drawing multiple rows or patterns)
+	     * @param row is the constant row in the 2D array to set Blocks on.
+	     */
 	    public void basicRowBlocks(int row) 
 	    	{
-	    		for(int i = 0; i < this.yLength; i++) 
+	    		for(int i = 0; i < this.xLength; i++) 
 	    			{
 	    				this.board[i][row] = 'B';
     			}
 	    	}
+	    
+	    /**
+	     * This is a method for setting the player's start position on the board.
+	     * The player's bat/bar is multiple spaces long and the "coordinate" is the leftmost block of the player.
+	     * @param startX is the specified starting x coordinate of the player.
+	     * @param startY is the specified starting y coordinate of the player.
+	     */
+	    public void makePlayer(int startX, int startY)
+	    	{
+	    		this.playerPos = new Point(startX, startY);
+	    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
+	    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
+	    	}
+	    
+	    /**
+	     * This is a method for setting the ball's positions on the board.
+	     * The ball's a 1X1 block so it's coordinate is exact.
+	     * @param startX is the specified starting x coordinate of the ball.
+	     * @param startY is the specified starting y coordinate of the ball.
+	     */
+	    public void makeBall(int startX, int startY) 
+	    	{
+	    		this.ballPos = new Point(startX, startY);
+	    		this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = 'O';
+	    	}
+	    
+	    /**
+	     * This method is for updating the board positions of the ball and player when moving.
+	     * @param newBallPos is the new position of the ball that is going to replace the old position.
+	     * @param newPlayerPos is the new position of the player that is going to replace the old position.
+	     */
+		public void updateBoard(Point newBallPos, Point newPlayerPos) 
+			{
+				this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = ' ';
+				this.ballPos.setLocation((int) newBallPos.getX(), (int) newBallPos.getY());
+				//The Player posistion will be changed here, but depends on left/right
+			}
 	}
+
+
+
+
+
+
