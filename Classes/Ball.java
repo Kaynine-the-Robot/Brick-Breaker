@@ -63,5 +63,10 @@ public class Ball
 	    {
 	        vertMovement = vertMovement * -1;
 	    }
+	    
+	    public char getSymbol()
+	    {
+	        return symbol;
+	    }
 	
 	}
