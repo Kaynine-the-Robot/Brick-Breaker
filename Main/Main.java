@@ -33,5 +33,16 @@ public class Main
                 board.makePlayer(2,4);
                 board.makeBall(2,3);
                 draw.printBoard(board);
+                /**
+                 * Ball ball = new Ball(2,3);
+                 * Player player = new Player(2,4);
+                 *
+                 * player.moveBar(); //Bar gets moved
+                 * ball.updatePos();  //Ball gets moved
+                 * ball.checkLocation(); //Checks where ball is and switches direction if necessary
+                 * board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
+                 * draw.printBoard(board); //Board gets displayed
+                 * 
+                 */
 	        }	
 	}
