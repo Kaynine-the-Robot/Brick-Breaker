@@ -12,12 +12,8 @@ public class Ball
 	    
 	    private Point position;
 	    private int horzMovement = 1;
-	    private int vertMovement = 1;
-<<<<<<< HEAD
-	    private char symbol = 'o';
-=======
+	    private int vertMovement = -1;
 	    private char symbol = 'O';
->>>>>>> 3a3f8d1075597f9c68aacb35ff92d8beb8ee7256
 	    
 	    public Ball(int x, int y)
 	    {
@@ -71,6 +67,38 @@ public class Ball
 	    public char getSymbol()
 	    {
 	        return symbol;
+	    }
+	    
+	     /** checkLocation() tracks ball location and responds appropriately.
+	     * @args None
+	     * This just MOVES the ball, but doesnt detect collision with block or bar yet, it sees them as invisible.
+	     * @author Amanda
+	     */
+	    
+	    public void checkLocation()
+	    {
+	    	if (this.position.getX() == 0 || this.position.getX() == 5) { 
+	    		
+	    		this.vertCollision();
+	    	
+	    		if (this.position.getY() == 0) {
+	    			this.horzCollision();
+	    		}
+	    				
+	    	} 
+	    	
+	    	else if (this.position.getY() == 0 ) {
+	    		
+	    		this.horzCollision();
+	    	} 
+	    	
+	    	
+	    	else if (this.position.getY() == 4) {
+	    		System.out.println("You lose.");
+	    		System.exit(0);
+	    	}
+	    	
+	    	
 	    }
 	
 	}
