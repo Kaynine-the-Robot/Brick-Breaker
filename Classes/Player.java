@@ -33,24 +33,23 @@ public class Player {
 		return position;
 	}
 	
-	/** moveBar() method asks the user to move bar in direction 'R', 'L' or ' '. and updates the bar position.
+	/** moveBar() method asks the user to move bar in direction 'R', 'L' or 'N'(none). and updates the bar position.
 	 * 
 	 * @author Amanda
 	 */
-
-	public void moveBar() {
-	    
-	    Scanner input = new Scanner(System.in);
-	    
-		System.out.println("Please enter 'L' , 'R' or ' ' for bar movement :");
-		
+	 
+    public void moveBar() {
+        
+		System.out.println("Please enter 'L' , 'R' or 'N'(none) for bar movement :");
+		Scanner input = new Scanner(System.in);
 		
 		boolean continueLoop = true;
+	
 		while (continueLoop == true) {
 			
 			char direction = input.next().charAt(0);
 			
-			if (direction == 'L' || direction == 'R') {
+			if (direction == 'L' || direction == 'R' || direction == 'N') {
 				
 				continueLoop = false;
 				int xCor = (int) position.getX();
@@ -63,18 +62,19 @@ public class Player {
 				}
 				
 				else if (direction == 'L') {
-			
+
 					position.move(xCor-1,yCor);
 					System.out.println("I moved the bar to:"+this.getPosition());
 				}
-				else if (direction == ' ') {
-					System.out.println("no bar movement");
+				
+				else if (direction == 'N') {
+				    
+					continueLoop = false;
 				}
 				
-				
-		}
-		
+		}	
 		else {
+		    
 			System.out.println("Please enter a valid input - 'R' , 'L' or ' '.");
 		}
 
