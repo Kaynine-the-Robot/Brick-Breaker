@@ -8,7 +8,7 @@ import java.awt.Point;
  * @author Kaynen
  *
  */
-public class Board 
+public class Board
 	{
 	    private int xLength;
 	    private int yLength;
@@ -99,6 +99,12 @@ public class Board
 	    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
 	    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
 	    	}
+	    public void makePlayer(Player bar)
+    	{
+    		this.playerPos = bar.getPosition();
+    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
+    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
+    	}
 	    
 	    /**
 	     * This is a method for setting the ball's positions on the board.

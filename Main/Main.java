@@ -1,6 +1,6 @@
 package Main;
 
-import Classes.Board;
+import Classes.*;
 import GUI.Text_GUI;
 
 /**
@@ -28,9 +28,10 @@ public class Main
 	        {
                 Board board = new Board(6,5);
                 Text_GUI draw = new Text_GUI(true);
+                Player player = new Player(2);
                 board.makeBoard();
                 board.basicRowBlocks(0);
-                board.makePlayer(2,4);
+                board.makePlayer(player);
                 board.makeBall(2,3);
                 draw.printBoard(board);
 	        }	

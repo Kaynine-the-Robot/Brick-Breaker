@@ -13,7 +13,7 @@ public class Ball
 	    private Point position;
 	    private int horzMovement = 1;
 	    private int vertMovement = 1;
-	    private char symbol = 'o'
+	    private char symbol = 'o';
 	    
 	    public Ball(int x, int y)
 	    {
