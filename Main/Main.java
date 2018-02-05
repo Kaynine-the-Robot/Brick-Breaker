@@ -34,16 +34,19 @@ public class Main
                 board.makePlayer(player);
                 board.makeBall(2,3);
                 draw.printBoard(board);
-                /**
-                 * Ball ball = new Ball(2,3);
-                 * Player player = new Player(2,4);
-                 *
-                 * player.moveBar(); //Bar gets moved
-                 * ball.updatePos();  //Ball gets moved
-                 * ball.checkLocation(); //Checks where ball is and switches direction if necessary
-                 * board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
-                 * draw.printBoard(board); //Board gets displayed
-                 * 
-                 */
+                
+                
+                Ball ball = new Ball(2,3);
+                Player player = new Player(2,4);
+                
+                while (true){
+                    
+                 player.moveBar(); //User asked to move bar, new bar position recorded
+                 ball.updatePos();  //Ball moved, new ball position recorded
+              
+                 ball.checkLocation(); //Detects ball with WALL collision, not BLOCK or BAR yet..
+                 
+                 board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
+                 draw.printBoard(board); //Board gets displayed
 	        }	
 	}
