@@ -39,7 +39,10 @@ public class Ball
 	     */
 	    public void updatePos()
 	    {
-	        position.move(horzMovement, vertMovement);
+	        int xCor = (int) this.position.getX();
+	    	int yCor = (int) this.position.getY();
+	    	
+	        this.position.move(xCor + horzMovement, yCor + vertMovement);
 	    }
 	    
 	    /**
