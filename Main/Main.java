@@ -1,7 +1,9 @@
 package Main;
 
-import Classes.*;
+import Classes.Board;
 import GUI.Text_GUI;
+import Classes.Ball;
+import Classes.Player;
 
 /**
  * This is the project for CPSC 233 Lecture 02 Tutorial section 06 for group 5
@@ -28,35 +30,22 @@ public class Main
 	        {
                 Board board = new Board(6,5);
                 Text_GUI draw = new Text_GUI(true);
-                Player player = new Player(2);
                 board.makeBoard();
                 board.basicRowBlocks(0);
-                board.makePlayer(player);
+                board.makePlayer(2,4);
                 board.makeBall(2,3);
                 draw.printBoard(board);
                 
-                
                 Ball ball = new Ball(2,3);
                 Player player = new Player(2,4);
+                player.Move();
                 
-                while (true){
-                    
-                 player.moveBar(); //User asked to move bar, new bar position recorded
-                 ball.updatePos();  //Ball moved, new ball position recorded
-                    
-                    
-                 //Detects the ball - bar collision.
-                 if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
-                    || ball.getPosition().getX() == player.getPosition().getX()+1 && ball.getPosition().getY()+1 == player.getPosition().getY()){ 
-                	 
-                	 ball.vertCollision();
-	 
-                 }
-                    
-                    
-                 ball.checkLocation(); //Detects the ball - wall collision.
-                 
-                 board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
-                 draw.printBoard(board); //Board gets displayed
+                //boolean continueGame = true;
+               // while (continueGame == true) {
+                	//bar.moveBar(right/left)
+                	//ball.moveBall(coordinates toward where its supposed to move)
+              
+                	
+                //}
 	        }	
 	}

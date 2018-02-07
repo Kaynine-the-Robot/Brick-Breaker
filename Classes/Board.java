@@ -8,7 +8,7 @@ import java.awt.Point;
  * @author Kaynen
  *
  */
-public class Board
+public class Board 
 	{
 	    private int xLength;
 	    private int yLength;
@@ -99,12 +99,6 @@ public class Board
 	    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
 	    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
 	    	}
-	    public void makePlayer(Player bar)
-    	{
-    		this.playerPos = bar.getPosition();
-    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
-    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
-    	}
 	    
 	    /**
 	     * This is a method for setting the ball's positions on the board.
@@ -125,15 +119,9 @@ public class Board
 	     */
 		public void updateBoard(Point newBallPos, Point newPlayerPos) 
 			{
-				this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = ' '; //ball remove
-				this.ballPos.setLocation((int) newBallPos.getX(), (int) newBallPos.getY()); //ball update pos
-				this.board[(int) newBallPos.getX()][(int) newBallPos.getY()] = 'O';//place ball
-				
-				this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] =' '; //Remove bar
-				this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = ' ';//Remove bar
-				this.board[(int) newPlayerPos.getX()][(int) newPlayerPos.getY()] = 'P'; //Place bar
-				this.board[(int) newPlayerPos.getX()+1][(int) newPlayerPos.getY()] = 'P'; //Place bar
-				this.playerPos.setLocation((int) newPlayerPos.getX(), (int) newPlayerPos.getY());//Update bar
+				this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = ' ';
+				this.ballPos.setLocation((int) newBallPos.getX(), (int) newBallPos.getY());
+				//The Player posistion will be changed here, but depends on left/right
 			}
 	}
 
