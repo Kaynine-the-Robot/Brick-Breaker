@@ -43,8 +43,18 @@ public class Main
                     
                  player.moveBar(); //User asked to move bar, new bar position recorded
                  ball.updatePos();  //Ball moved, new ball position recorded
-              
-                 ball.checkLocation(); //Detects ball with WALL collision, not BLOCK or BAR yet..
+                    
+                    
+                 //Detects the ball - bar collision.
+                 if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
+                    || ball.getPosition().getX() == player.getPosition().getX()+1 && ball.getPosition().getY()+1 == player.getPosition().getY()){ 
+                	 
+                	 ball.vertCollision();
+	 
+                 }
+                    
+                    
+                 ball.checkLocation(); //Detects the ball - wall collision.
                  
                  board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
                  draw.printBoard(board); //Board gets displayed
