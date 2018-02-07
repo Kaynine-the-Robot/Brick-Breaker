@@ -12,7 +12,7 @@ public class Ball
 	    
 	    private Point position;
 	    private int horzMovement = 1;
-	    private int vertMovement = 1;
+	    private int vertMovement = -1;
 	    private char symbol = 'o';
 	    
 	    public Ball(int x, int y)
@@ -35,11 +35,14 @@ public class Ball
 	     * This method updates the position of the ball object.
 	     * @param args unused.
 	     * @return Nothing.
-	     * 
+	     * @author Amanda
 	     */
 	    public void updatePos()
 	    {
-	        position.move(horzMovement, vertMovement);
+	    	int xCor = (int) this.position.getX();
+	    	int yCor = (int) this.position.getY();
+	    	
+	        this.position.move(xCor + horzMovement, yCor + vertMovement);
 	    }
 	    
 	    /**
@@ -68,5 +71,35 @@ public class Ball
 	    {
 	        return symbol;
 	    }
+	    
+	    /** checkLocation() tracks ball location and responds appropriately.
+	     * @args None
+	     * @returns Nothing
+	     * @author Amanda
+	     */
+	    
+	    public void checkLocation()
+	    {
+	    	if (this.position.getX() == 0 || this.position.getX() == 5) { 
+	    		this.horzCollision();	
+	    	} 
+	    	
+	    	if (this.position.getY() == 0 ) {
+	    	this.vertCollision();
+	    	} 
+	    	
+	    	if (this.position.getY() == 4) {
+	    		System.out.println("You lose.");
+	    		System.exit(0);
+	    	}
+	    	
+	    	
+	    }
+	    	
+	    	
+	    		
+	    	
+	    }
+	    
+	    
 	
-	}

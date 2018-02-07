@@ -35,17 +35,35 @@ public class Main
                 board.makePlayer(2,4);
                 board.makeBall(2,3);
                 draw.printBoard(board);
-                
+               
                 Ball ball = new Ball(2,3);
                 Player player = new Player(2,4);
-                player.Move();
                 
-                //boolean continueGame = true;
-               // while (continueGame == true) {
-                	//bar.moveBar(right/left)
-                	//ball.moveBall(coordinates toward where its supposed to move)
-              
-                	
-                //}
+                while (true){
+                	ball.updatePos();  //Ball gets moved
+                	player.moveBar(); //Bar gets moved
+                 
+                 //if ball is on the bar's LEFT or RIGHT side..
+                 if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
+                		 || ball.getPosition().getX() == player.getPosition().getX()+1 && ball.getPosition().getY()+1 == player.getPosition().getY()){ 
+                	 
+                	 ball.vertCollision();
+	 
+                 }
+                 
+                 board.checkBrickCollision(); //Develop this method.
+                 ball.checkLocation(); //Checks where ball is and switches direction if necessary
+                 board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
+                 draw.printBoard(board); //Board gets displayed
+                 
+                }
+                
+                
+                
+                
 	        }	
+	    
+	    
+	    
+	    
 	}
