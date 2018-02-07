@@ -78,22 +78,15 @@ public class Ball
 	    public void checkLocation()
 	    {
 	    	if (this.position.getX() == 0 || this.position.getX() == 5) { 
-	    		
-	    		this.vertCollision();
-	    	
-	    		if (this.position.getY() == 0) {
-	    			this.horzCollision();
-	    		}
-	    				
+	    		this.horzCollision();	
 	    	} 
 	    	
-	    	else if (this.position.getY() == 0 ) {
-	    		
-	    		this.horzCollision();
+	    	if (this.position.getY() == 0 ) {
+	    	this.vertCollision();
 	    	} 
 	    	
 	    	
-	    	else if (this.position.getY() == 4) {
+	    	if (this.position.getY() == 4) {
 	    		System.out.println("You lose.");
 	    		System.exit(0);
 	    	}
