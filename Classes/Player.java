@@ -9,21 +9,30 @@ import java.awt.Point;
  */
 public class Player {
 	private Point position;
+	private int score = 0;
 	
-	
-	public Player(int x, int y) {
-		this.position = new Point(x,y);
+	public Player(int y) {
+		this.position = new Point(2, y);
 		}
 	
 	public Point getPosition(){
 		return position;
 	}
 	
+	public int getScore()
+	{
+		return this.score;
+	}
+	
+	public void increaseScore()
+	{
+		this.score++;
+	}
+	
 	/** Move method asks the user to move bar in direction 'R', 'L' or ' '. and updates the bar position.
 	 * 
 	 * @author Amanda
 	 */
-
 	public void moveBar() {
 		System.out.println("Please enter 'L' , 'R' or 'N'(none) for bar movement :");
 		Scanner input = new Scanner(System.in);

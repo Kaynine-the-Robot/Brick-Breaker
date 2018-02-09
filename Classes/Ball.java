@@ -68,6 +68,12 @@ public class Ball
 	        vertMovement = vertMovement * -1;
 	    }
 	    
+	    /**
+	     * This method returns the text representation of the ball.
+	     * @param args unused.
+	     * @return symbol
+	     * 
+	     */
 	    public char getSymbol()
 	    {
 	        return symbol;
@@ -75,25 +81,32 @@ public class Ball
 	    
 	    /** checkLocation() tracks ball location and responds appropriately.
 	     * @args None
-	     * @returns Nothing
+	     * @returns true if the ball collides with a block, otherwise false
 	     * @author Amanda
 	     */
 	    
-	    public void checkLocation()
+	    public boolean checkLocation()
 	    {
 	    	if (this.position.getX() == 0 || this.position.getX() == 5) { 
-	    		this.horzCollision();	
+	    		this.horzCollision();
+	    		
 	    	} 
 	    	
 	    	if (this.position.getY() == 0 ) {
-	    	this.vertCollision();
-	    	
+	    		this.vertCollision();
+	    		
+	    		return true;
 	    	} 
 	    	
-	    	if (this.position.getY() == 4) {
+	    	else if (this.position.getY() == 4) {
 	    		System.out.println("You lose.");
 	    		System.exit(0);
+	    		
+	    		return false;
+	    		
 	    	}
+	    	
+			return false;
 	    	
 	    	
 	    }

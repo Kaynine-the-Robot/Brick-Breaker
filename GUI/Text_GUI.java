@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.Point;
 import Classes.Board;
+import Classes.Player;
 
 public class Text_GUI
 	{
@@ -21,7 +22,7 @@ public class Text_GUI
 		 * Draws the letters representing the objects surrounded by lines representing the spaces/blocks/possible spaces of the array
 		 * @param board is the object of the board which contains the array and size of the current board.
 		 */
-		public void printBoard(Board board) 
+		public void printBoard(Board board, Player player) 
 			{
 				if(this.visibility == true)
 					{
@@ -46,6 +47,8 @@ public class Text_GUI
 								}
 							System.out.println("");
 						}
+					System.out.println("Score: " + player.getScore());
+					
 					}
 			}
 	}

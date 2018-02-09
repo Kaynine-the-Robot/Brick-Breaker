@@ -37,10 +37,12 @@ public class Main
                 board.advancedRowBlocks(blocks.arrayBlocks());
                 board.makePlayer(2,4);
                 board.makeBall(2,3);
-                draw.printBoard(board);
+                
                
                 Ball ball = new Ball(2,3);
-                Player player = new Player(2,4);
+                Player player = new Player(4);
+                
+                draw.printBoard(board, player);
                 
                 while (true){
                 	ball.updatePos();  //Ball gets moved
@@ -55,13 +57,16 @@ public class Main
                  }
                  
                  board.checkBrickCollision(); //Develop this method.
-                 ball.checkLocation(); //Checks where ball is and switches direction if necessary
+                 if(ball.checkLocation())//Checks where ball is and switches direction if necessary
+                 {
+                	 player.increaseScore();
+                 }
                  board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
                  if(ball.getPosition().getY() == 0) 
                  	{
                 	 
                  	}
-                 draw.printBoard(board); //Board gets displayed
+                 draw.printBoard(board, player); //Board gets displayed
                  
                 }
                 
@@ -69,8 +74,4 @@ public class Main
                 
                 
 	        }	
-	    
-	    
-	    
-	    
 	}
