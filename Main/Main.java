@@ -60,23 +60,12 @@ public class Main
                  }
                  
                  board.checkBrickCollision(); //Develop this method.
-                 if(ball.checkLocation())//Checks where ball is and switches direction if necessary
+                 if((int) ball.getPosition().getY() == 0)//Checks where ball is and switches direction if necessary
                  {
                 	 player.increaseScore();
                  }
                  board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
-                 if(ball.getPosition().getY() == 0) 
-                 	{
-                	 
-                 	}
                  draw.printBoard(board, player); //Board gets displayed
-                	//Condition checks if the ball lands on the bar @author Amanda
-                	if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
-                		 || ball.getPosition().getX() == player.getPosition().getX()+1 && ball.getPosition().getY()+1 == player.getPosition().getY())
-                	{ 
-                		ball.vertCollision();
-                	}
-                 
                 	board.checkBrickCollision(); //Develop this method.
                 	
                 	ball.checkLocation(); //Checks where ball is and switches direction if necessary

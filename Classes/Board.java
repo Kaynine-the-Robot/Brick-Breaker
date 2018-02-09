@@ -149,13 +149,16 @@ public class Board
 			{
 				this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = ' '; //ball remove
 				this.ballPos.setLocation((int) newBallPos.getX(), (int) newBallPos.getY()); //ball update pos
+				System.out.println((int) newBallPos.getX());
+				System.out.println((int) newBallPos.getY());
 				this.board[(int) newBallPos.getX()][(int) newBallPos.getY()] = 'O';//place ball
 				
 				this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] =' '; //Remove bar
 				this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = ' ';//Remove bar
+				this.playerPos.setLocation((int) newPlayerPos.getX(), (int) newPlayerPos.getY());//Update bar
 				this.board[(int) newPlayerPos.getX()][(int) newPlayerPos.getY()] = 'P'; //Place bar
 				this.board[(int) newPlayerPos.getX()+1][(int) newPlayerPos.getY()] = 'P'; //Place bar
-				this.playerPos.setLocation((int) newPlayerPos.getX(), (int) newPlayerPos.getY());//Update bar
+				
 				
 				this.checkBrickCollision();
 				
