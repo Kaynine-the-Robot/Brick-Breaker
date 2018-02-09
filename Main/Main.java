@@ -19,7 +19,7 @@ import Classes.Player;
 /**
  * This is the main class of the game that will control and call the other classes and functions.
  *
- *@author
+ *@author Everyone
  */
 public class Main 
 	{
@@ -32,6 +32,8 @@ public class Main
                 Board board = new Board(6,5);
                 Text_GUI draw = new Text_GUI(true);
                 Block blocks = new Block();
+                Ball ball = new Ball(2,3);
+                Player player = new Player(2,4);
                 board.makeBoard();
                 //board.basicRowBlocks(0);
                 board.advancedRowBlocks(blocks.arrayBlocks());
@@ -43,9 +45,15 @@ public class Main
                 Player player = new Player(4);
                 
                 draw.printBoard(board, player);
-                
+                board.makePlayer(player);
+                board.makeBall(ball);
+                draw.printBoard(board);
+               
+                                
                 while (true){
+                	
                 	ball.updatePos();  //Ball gets moved
+                	
                 	player.moveBar(); //Bar gets moved
                  
                  //if ball is on the bar's LEFT or RIGHT side..
@@ -67,11 +75,30 @@ public class Main
                 	 
                  	}
                  draw.printBoard(board, player); //Board gets displayed
+                	//Condition checks if the ball lands on the bar @author Amanda
+                	if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
+                		 || ball.getPosition().getX() == player.getPosition().getX()+1 && ball.getPosition().getY()+1 == player.getPosition().getY())
+                	{ 
+                		ball.vertCollision();
+                	}
                  
+                	board.checkBrickCollision(); //Develop this method.
+                	
+                	ball.checkLocation(); //Checks where ball is and switches direction if necessary
+                	
+                	board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
+                	
+                	draw.printBoard(board); //Board gets displayed
+                	
+                	//Condition checks if the game is over @author Amanda
+                	if (ball.getPosition().getY() == 4) 
+                	{ 
+                		System.out.println("You lose.");
+                		System.exit(0);
+                	}
+ 
                 }
-                
-                
-                
-                
+        
 	        }	
+
 	}

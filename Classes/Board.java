@@ -1,6 +1,6 @@
 package Classes;
 import java.awt.Point;
-import Classes.Block;
+import Classes.*;
 //import java.util.Formatter;
 
 /**
@@ -121,9 +121,9 @@ public class Board
 	     * @param startX is the specified starting x coordinate of the player.
 	     * @param startY is the specified starting y coordinate of the player.
 	     */
-	    public void makePlayer(int startX, int startY)
+	    public void makePlayer(Player player)
 	    	{
-	    		this.playerPos = new Point(startX, startY);
+	    		this.playerPos = new Point((int) player.getPosition().getX(), (int) player.getPosition().getY());
 	    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
 	    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
 	    	}
@@ -134,9 +134,9 @@ public class Board
 	     * @param startX is the specified starting x coordinate of the ball.
 	     * @param startY is the specified starting y coordinate of the ball.
 	     */
-	    public void makeBall(int startX, int startY) 
+	    public void makeBall(Ball ball) 
 	    	{
-	    		this.ballPos = new Point(startX, startY);
+	    		this.ballPos = new Point( (int) ball.getPosition().getX(), (int) ball.getPosition().getY());
 	    		this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = 'O';
 	    	}
 	    
@@ -171,7 +171,7 @@ public class Board
 						}
 					else 
 						{
-						this.board[(int) this.ballPos.getX() - 1][(int) this.ballPos.getY()] = ' ';
+							this.board[(int) this.ballPos.getX() - 1][(int) this.ballPos.getY()] = ' ';
 						}
 				}
 			

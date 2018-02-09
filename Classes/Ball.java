@@ -5,7 +5,7 @@ import Classes.Block;
 /**
  * This is the ball class which will have all the methods and attributes to control the ball 
  * and it's interactions.
- * @author
+ * @author Sebastian, Amanda
  *
  */
 public class Ball 
@@ -112,9 +112,9 @@ public class Ball
 	    }
 	    	
 	    	
-	    		
-	    	
 	    }
+	    	  	
+	  }
 	    
 	    
 	
