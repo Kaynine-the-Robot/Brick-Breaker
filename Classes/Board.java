@@ -1,5 +1,6 @@
 package Classes;
 import java.awt.Point;
+import Classes.Block;
 //import java.util.Formatter;
 
 /**
@@ -13,6 +14,7 @@ public class Board
 	    private int xLength;
 	    private int yLength;
 	    private char[][] board;
+	    private Block[][] objBoard;
 	    private Point ballPos;
 	    private Point playerPos;
 	    
@@ -87,6 +89,32 @@ public class Board
     			}
 	    	}
 	    
+	    public void advancedRowBlocks(Block[][] blocks) 
+	    	{
+	    		this.objBoard = blocks;
+	    		for(int i = 0; i < blocks.length; i++) 
+    			{
+    				for(int j = 0; j < blocks[i].length; j++) 
+    					{
+    						System.out.println(blocks[i][j]);
+    					}
+    			}
+	    		for(int i = 0; i < blocks.length; i++) 
+	    			{
+	    				for(int j = 0; j < blocks[i].length; j++) 
+	    					{
+	    						if(blocks[i][j] != null)
+	    							{
+	    								System.out.println(this.board.length);
+	    								System.out.println(this.board[i].length);
+	    								this.board[i][j] = (char) blocks[i][j].getSymbol();
+	    								this.board[i+1][j] = (char) blocks[i][j].getSymbol();
+	    							}
+	    						}
+	    					}
+	    			}
+	    
+	    
 	    /**
 	     * This is a method for setting the player's start position on the board.
 	     * The player's bat/bar is multiple spaces long and the "coordinate" is the leftmost block of the player.
@@ -129,10 +157,23 @@ public class Board
 				this.board[(int) newPlayerPos.getX()+1][(int) newPlayerPos.getY()] = 'P'; //Place bar
 				this.playerPos.setLocation((int) newPlayerPos.getX(), (int) newPlayerPos.getY());//Update bar
 				
+				this.checkBrickCollision();
+				
 			}
 		
 		public void checkBrickCollision() {
 			
+			if((int) this.ballPos.getY() == 0) 
+				{
+					if( (((int) this.ballPos.getX()) % 2) == 0) 
+						{
+							this.board[(int) this.ballPos.getX() + 1][(int) this.ballPos.getY()] = ' ';
+						}
+					else 
+						{
+						this.board[(int) this.ballPos.getX() - 1][(int) this.ballPos.getY()] = ' ';
+						}
+				}
 			
 		}
 	}

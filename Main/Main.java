@@ -3,6 +3,7 @@ package Main;
 import Classes.Board;
 import GUI.Text_GUI;
 import Classes.Ball;
+import Classes.Block;
 import Classes.Player;
 
 /**
@@ -30,8 +31,10 @@ public class Main
 	        {
                 Board board = new Board(6,5);
                 Text_GUI draw = new Text_GUI(true);
+                Block blocks = new Block();
                 board.makeBoard();
-                board.basicRowBlocks(0);
+                //board.basicRowBlocks(0);
+                board.advancedRowBlocks(blocks.arrayBlocks());
                 board.makePlayer(2,4);
                 board.makeBall(2,3);
                 draw.printBoard(board);
@@ -54,6 +57,10 @@ public class Main
                  board.checkBrickCollision(); //Develop this method.
                  ball.checkLocation(); //Checks where ball is and switches direction if necessary
                  board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
+                 if(ball.getPosition().getY() == 0) 
+                 	{
+                	 
+                 	}
                  draw.printBoard(board); //Board gets displayed
                  
                 }

@@ -1,5 +1,6 @@
 package Classes;
 import java.awt.Point;
+import Classes.Block;
 
 /**
  * This is the ball class which will have all the methods and attributes to control the ball 
@@ -13,7 +14,7 @@ public class Ball
 	    private Point position;
 	    private int horzMovement = 1;
 	    private int vertMovement = -1;
-	    private char symbol = 'o';
+	    private char symbol = 'O';
 	    
 	    public Ball(int x, int y)
 	    {
@@ -86,6 +87,7 @@ public class Ball
 	    	
 	    	if (this.position.getY() == 0 ) {
 	    	this.vertCollision();
+	    	
 	    	} 
 	    	
 	    	if (this.position.getY() == 4) {
