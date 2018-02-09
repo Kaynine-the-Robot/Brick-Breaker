@@ -29,16 +29,11 @@ public class Player {
 		this.score++;
 	}
 	
-	/** Move method asks the user to move bar in direction 'R', 'L' or ' '. and updates the bar position.
-	 * 
-	 * @author Amanda
-	 */
-	public void moveBar() {
+
 	/** Move method asks the user to move bar in direction 'R', 'L' or 'N'(none), and updates the bar position.
 	 * @param None
 	 * @return Nothing
 	 */
-
 	public void moveBar() 
 	{
 		

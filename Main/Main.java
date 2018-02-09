@@ -33,22 +33,17 @@ public class Main
                 Text_GUI draw = new Text_GUI(true);
                 Block blocks = new Block();
                 Ball ball = new Ball(2,3);
-                Player player = new Player(2,4);
+                Player player = new Player(4);
                 board.makeBoard();
+                
                 //board.basicRowBlocks(0);
                 board.advancedRowBlocks(blocks.arrayBlocks());
-                board.makePlayer(2,4);
-                board.makeBall(2,3);
-                
-               
-                Ball ball = new Ball(2,3);
-                Player player = new Player(4);
+                board.makePlayer(player);
+                board.makeBall(ball);
                 
                 draw.printBoard(board, player);
                 board.makePlayer(player);
-                board.makeBall(ball);
-                draw.printBoard(board);
-               
+                board.makeBall(ball);               
                                 
                 while (true){
                 	
@@ -88,7 +83,7 @@ public class Main
                 	
                 	board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
                 	
-                	draw.printBoard(board); //Board gets displayed
+                	draw.printBoard(board, player); //Board gets displayed
                 	
                 	//Condition checks if the game is over @author Amanda
                 	if (ball.getPosition().getY() == 4) 
