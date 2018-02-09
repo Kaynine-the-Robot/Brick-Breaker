@@ -32,15 +32,7 @@ public class Block
 				return this.symbol;
 			}
 		
-		public void removeBlock(Board board) 
-			{
-				if(this.blockLength == 2) 
-					{
-						//Makes the Board block and the one next to it dissapear
-						board.getBoard()[(int) this.coordinates.getX()][(int) this.coordinates.getY()] = ' ';
-						board.getBoard()[(int) this.coordinates.getX()+1][(int) this.coordinates.getY()] = ' ';
-					}
-			}
+
 		
 		public Block[][] arrayBlocks()
 			{

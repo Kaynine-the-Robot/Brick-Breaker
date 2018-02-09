@@ -32,15 +32,16 @@ public class Main
                 Board board = new Board(6,5);
                 Text_GUI draw = new Text_GUI(true);
                 Block blocks = new Block();
+                Ball ball = new Ball(2,3);
+                Player player = new Player(2,4);
                 board.makeBoard();
                 //board.basicRowBlocks(0);
                 board.advancedRowBlocks(blocks.arrayBlocks());
-                board.makePlayer(2,4);
-                board.makeBall(2,3);
+                board.makePlayer(player);
+                board.makeBall(ball);
                 draw.printBoard(board);
                
-                Ball ball = new Ball(2,3);
-                Player player = new Player(2,4);
+                
                 
                 while (true){
                 	ball.updatePos();  //Ball gets moved
