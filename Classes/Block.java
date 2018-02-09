@@ -36,7 +36,7 @@ public class Block
 			{
 				if(this.blockLength == 2) 
 					{
-						//Makes the Board block and the one next to it dissapear
+						//Makes the Board block and the one next to it disappear
 						board.getBoard()[(int) this.coordinates.getX()][(int) this.coordinates.getY()] = ' ';
 						board.getBoard()[(int) this.coordinates.getX()+1][(int) this.coordinates.getY()] = ' ';
 					}
