@@ -33,7 +33,7 @@ public class Main
                 Text_GUI draw = new Text_GUI(true);
                 Block blocks = new Block();
                 Ball ball = new Ball(2,3);
-                Player player = new Player(4);
+                Player player = new Player(2);
                 board.makeBoard();
                 
                 //board.basicRowBlocks(0);

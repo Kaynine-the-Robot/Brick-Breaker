@@ -11,8 +11,8 @@ public class Player {
 	private Point position;
 	private int score = 0;
 	
-	public Player(int y) {
-		this.position = new Point(2, y);
+	public Player(int x) {
+		this.position = new Point(x, 4);
 		}
 	
 	public Point getPosition(){
