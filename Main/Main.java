@@ -45,7 +45,7 @@ public class Main
                 board.makePlayer(player);
                 board.makeBall(ball);               
                                 
-                while (true){
+                while(player.getScore() < 3){
                 	
                 	ball.updatePos();  //Ball gets moved
                 	
@@ -82,6 +82,9 @@ public class Main
                 	}
  
                 }
+                
+                System.out.println("You win.");
+        		System.exit(0);
         
 	        }	
 
