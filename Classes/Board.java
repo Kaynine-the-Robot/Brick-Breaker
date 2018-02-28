@@ -149,8 +149,6 @@ public class Board
 			{
 				this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = ' '; //ball remove
 				this.ballPos.setLocation((int) newBallPos.getX(), (int) newBallPos.getY()); //ball update pos
-				System.out.println((int) newBallPos.getX());
-				System.out.println((int) newBallPos.getY());
 				this.board[(int) newBallPos.getX()][(int) newBallPos.getY()] = 'O';//place ball
 				
 				this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] =' '; //Remove bar

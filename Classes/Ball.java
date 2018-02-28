@@ -33,6 +33,22 @@ public class Ball
 	    }
 	    
 	    /**
+	     * This is a getter for returning a value of current horizontal movement
+	     * @param none
+	     * @return horzMovement value
+	     */
+	    public int getHorzMovement() {
+	    	return this.horzMovement;
+	    }
+	     /**
+	      * This is a getter for returning a value of current vertical movement
+	      * @return
+	      */
+	    public int getVertMovement() {
+	    	return this.vertMovement;
+	    }
+	    	
+	    /**
 	     * This method updates the position of the ball object.
 	     * @param args unused.
 	     * @return Nothing.
@@ -110,7 +126,7 @@ public class Ball
 	    	
 	    	
 	    }
-	    	
+	   
 	    	
 	    }
 	    
