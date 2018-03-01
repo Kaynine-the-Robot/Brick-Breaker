@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayList;
+
 import Classes.Ball;
 import Classes.Block;
 import Classes.Player;
@@ -117,6 +119,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			Scene scene = new Scene(root , 400 , 500);
 			
 			Rectangle bar = new Rectangle(170,460,70,8);
+			
 			Circle ball = new Circle(205,455,10);
 			ball.setStroke(Color.RED);
 			ball.setFill(Color.RED);
@@ -130,7 +133,6 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			//final Bounds bounds = new Bounds();
 
 			final Bounds bounds = root.getBoundsInLocal(); //Border bounds
-			final Bounds barBounds = bar.getBoundsInLocal();
 			
 			//The animation "loop"
 			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), (evt) -> {
@@ -149,7 +151,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
             		ballMovement.vertCollision();
             		
             	//If ball comes in contact with the bar
-            	if (ball.intersects(barBounds) == true ){
+            	if (ball.getBoundsInParent().intersects(bar.getBoundsInParent()) == true ){
             		System.out.println("Ball intersected the bar!!");
             	}
       
@@ -171,7 +173,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
 		@Override
 		public void handle(KeyEvent event) {
 			if (event.getCode() == KeyCode.KP_RIGHT) {
-				System.out.println(x);
+				System.out.println("Right key pressed");
 			}
 			//System.out.println(barX);
 		}
