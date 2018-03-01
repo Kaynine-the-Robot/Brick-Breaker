@@ -17,9 +17,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
-import com.sun.org.apache.xml.internal.security.keys.content.KeyName;
 
 import Classes.Ball;
 import Classes.Block;
@@ -131,13 +130,16 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			//final Bounds bounds = new Bounds();
 
 			final Bounds bounds = root.getBoundsInLocal(); //Border bounds
+			final Bounds barBounds = bar.getBoundsInLocal();
 			
+			//The animation "loop"
 			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), (evt) -> {
+				
 				//Here we are moving the ball
             	ball.setLayoutX(ball.getLayoutX() + ballMovement.getHorzMovement());
             	ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
             	
-            	//IF the ball comes in contact with left or right side of border
+            	//If the all comes in contact with left or right side of border
             	if (ball.getLayoutX() == (195-ball.getRadius()) || ball.getLayoutX() == (-206+ ball.getRadius())){
             		ballMovement.horzCollision();
             	}
@@ -145,9 +147,13 @@ public class Main extends Application implements EventHandler<KeyEvent>
             	//If ball comes in contact with top or bottom 
             	if (ball.getLayoutY() == (-456 + ball.getRadius())) {
             		ballMovement.vertCollision();
-            		System.out.println(ball.getLayoutY());
+            		
+            	//If ball comes in contact with the bar
+            	if (ball.intersects(barBounds) == true ){
+            		System.out.println("Ball intersected the bar!!");
             	}
-            	
+      
+           	}
             	
 			}));
 			
@@ -164,6 +170,9 @@ public class Main extends Application implements EventHandler<KeyEvent>
 		
 		@Override
 		public void handle(KeyEvent event) {
+			if (event.getCode() == KeyCode.KP_RIGHT) {
+				System.out.println(x);
+			}
 			//System.out.println(barX);
 		}
 	    
