@@ -118,13 +118,15 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			Pane root = new Pane();
 			Scene scene = new Scene(root , 400 , 500);
 			
-			Rectangle bar = new Rectangle(170,460,70,8);
+			Rectangle brick = new Rectangle(120,10,50,10);
+			Rectangle bar = new Rectangle(280,460,70,8);
 			
 			Circle ball = new Circle(205,455,10);
 			ball.setStroke(Color.RED);
 			ball.setFill(Color.RED);
 			root.getChildren().add(ball);
 			root.getChildren().add(bar);
+			root.getChildren().add(brick);
 			
 			scene.setOnKeyPressed(this);
 			
@@ -147,9 +149,11 @@ public class Main extends Application implements EventHandler<KeyEvent>
             	}
             	
             	//If ball comes in contact with top or bottom 
-            	if (ball.getLayoutY() == (-456 + ball.getRadius())) {
+            	if (ball.getLayoutY() == (-456 + ball.getRadius())) 
+            		{
             		ballMovement.vertCollision();
-            		
+            		}
+            	
             	//If ball comes into contact with a brick
             	if((root.getChildren().contains(brick)) && (brick.intersects(ball.getBoundsInParent()))) 
             		{
@@ -157,14 +161,12 @@ public class Main extends Application implements EventHandler<KeyEvent>
             			ballMovement.vertCollision();
             		}
             	
-				//If bal comes into contact with bar
+				//If ball comes into contact with bar
             	if((root.getChildren().contains(bar)) && (bar.intersects(ball.getBoundsInParent())))
             		{
-            			root.getChildren().remove(bar);
             			ballMovement.vertCollision();
             		}
       
-           	}
             	
 			}));
 			
@@ -172,7 +174,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
 	        timeline.play();
 			
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("Block Breaker");
+			primaryStage.setTitle("Brick Breaker");
 			primaryStage.show();
 			
 	
