@@ -109,7 +109,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
 	       
 	        **/	
 	        }
-	    
+	    Rectangle bar = new Rectangle(170,460,70,8);
 	    @Override
 		public void start(Stage primaryStage) throws Exception {
 			
@@ -119,9 +119,9 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			Scene scene = new Scene(root , 400 , 500);
 			
 			Rectangle brick = new Rectangle(120,10,50,10);
-			Rectangle bar = new Rectangle(280,460,70,8);
 			
-			Circle ball = new Circle(205,455,10);
+			
+			Circle ball = new Circle(205,455,5);
 			ball.setStroke(Color.RED);
 			ball.setFill(Color.RED);
 			root.getChildren().add(ball);
@@ -161,8 +161,8 @@ public class Main extends Application implements EventHandler<KeyEvent>
             			ballMovement.vertCollision();
             		}
             	
-				//If ball comes into contact with bar
-            	if((root.getChildren().contains(bar)) && (bar.intersects(ball.getBoundsInParent())))
+            	//If ball comes into contact with bar from top ONLY
+            	if(bar.getBoundsInParent().intersects(ball.getBoundsInParent()))
             		{
             			ballMovement.vertCollision();
             		}
@@ -181,12 +181,15 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			 
 		}
 		
-		@Override
+	    @Override
 		public void handle(KeyEvent event) {
-			if (event.getCode() == KeyCode.KP_RIGHT) {
-				System.out.println("Right key pressed");
+			if (event.getCode() == KeyCode.RIGHT) {
+				bar.setTranslateX(bar.getTranslateX() + 5);	
 			}
-			//System.out.println(barX);
+			
+			if (event.getCode() == KeyCode.LEFT) {
+				bar.setTranslateX(bar.getTranslateX() - 5);
+			}
 		}
 	    
 		
