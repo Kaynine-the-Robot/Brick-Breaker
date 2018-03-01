@@ -150,10 +150,19 @@ public class Main extends Application implements EventHandler<KeyEvent>
             	if (ball.getLayoutY() == (-456 + ball.getRadius())) {
             		ballMovement.vertCollision();
             		
-            	//If ball comes in contact with the bar
-            	if (ball.getBoundsInParent().intersects(bar.getBoundsInParent()) == true ){
-            		System.out.println("Ball intersected the bar!!");
-            	}
+            	//If ball comes into contact with a brick
+            	if((root.getChildren().contains(brick)) && (brick.intersects(ball.getBoundsInParent()))) 
+            		{
+            			root.getChildren().remove(brick);
+            			ballMovement.vertCollision();
+            		}
+            	
+				//If bal comes into contact with bar
+            	if((root.getChildren().contains(bar)) && (bar.intersects(ball.getBoundsInParent())))
+            		{
+            			root.getChildren().remove(bar);
+            			ballMovement.vertCollision();
+            		}
       
            	}
             	
