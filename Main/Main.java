@@ -134,25 +134,31 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			//ball.relocate(0, 10); //Might be useful later
 			//final Bounds bounds = new Bounds();
 
-			final Bounds bounds = root.getBoundsInLocal(); //Border bounds
+			final Bounds bounds = root.getBoundsInParent(); //Border bounds
 			
 			//The animation "loop"
-			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), (evt) -> {
+			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 				
 				//Here we are moving the ball
             	ball.setLayoutX(ball.getLayoutX() + ballMovement.getHorzMovement());
             	ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
             	
-            	//If the all comes in contact with left or right side of border
+            	//If the ball comes in contact with left or right side of border
             	if (ball.getLayoutX() == (195-ball.getRadius()) || ball.getLayoutX() == (-206+ ball.getRadius())){
             		ballMovement.horzCollision();
             	}
             	
-            	//If ball comes in contact with top or bottom 
+            	//If ball comes in contact with top side of the border
             	if (ball.getLayoutY() == (-456 + ball.getRadius())) 
             		{
             		ballMovement.vertCollision();
             		}
+            	
+            	//if ball hits the floor (game ends)
+            	if (ball.getLayoutY() == (46 - ball.getRadius())) {
+            		System.exit(0); //For now..
+            		
+            	}
             	
             	//If ball comes into contact with a brick
             	if((root.getChildren().contains(brick)) && (brick.intersects(ball.getBoundsInParent()))) 
@@ -166,6 +172,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
             		{
             			ballMovement.vertCollision();
             		}
+            	
       
             	
 			}));
