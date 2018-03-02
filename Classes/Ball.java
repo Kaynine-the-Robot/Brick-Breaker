@@ -15,6 +15,7 @@ public class Ball
 	    private int horzMovement = 1;
 	    private int vertMovement = -1;
 	    private char symbol = 'O';
+	    private boolean hitBrick = false;
 	    
 	    public Ball(int x, int y)
 	    {
@@ -93,6 +94,16 @@ public class Ball
 	    public char getSymbol()
 	    {
 	        return symbol;
+	    }
+	    
+	    public boolean getHitBrick()
+	    {
+	    	return hitBrick;
+	    }
+	    
+	    public void setHitBrick(boolean state)
+	    {
+	    	hitBrick = state;
 	    }
 	    
 	    /** checkLocation() tracks ball location and responds appropriately.

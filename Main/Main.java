@@ -43,6 +43,8 @@ import Classes.Player;
  */
 public class Main extends Application implements EventHandler<KeyEvent>
 	{
+	
+	
 		
 		/**
 		 * The main method of the game, controls and calls other objects to make the game happen.
@@ -109,24 +111,41 @@ public class Main extends Application implements EventHandler<KeyEvent>
 	       
 	        **/	
 	        }
-	    Rectangle bar = new Rectangle(170,460,70,8);
+	    
 	    @Override
 		public void start(Stage primaryStage) throws Exception {
 			
 			Ball ballMovement = new Ball(0,0);
+			Player barMovement = new Player(0);
+			
+			Rectangle[][] bricks = new Rectangle[10][3];
+			
+			for(int i = 0; i < bricks.length; i++)
+			{
+				for(int j = 0; j < bricks[0].length; j++)
+				{
+					bricks[i][j] = new Rectangle(10 + (40 * i), 70 + (20 * j), 30, 10);
+				}
+			}
 			
 			Pane root = new Pane();
 			Scene scene = new Scene(root , 400 , 500);
 			
-			Rectangle brick = new Rectangle(120,10,50,10);
+			Rectangle bar = new Rectangle(280,460,70,8);
 			
-			
-			Circle ball = new Circle(205,455,5);
+			Circle ball = new Circle(205,455,10);
 			ball.setStroke(Color.RED);
 			ball.setFill(Color.RED);
 			root.getChildren().add(ball);
 			root.getChildren().add(bar);
-			root.getChildren().add(brick);
+			
+			for(int i = 0; i < bricks.length; i++)
+			{
+				for(int j = 0; j < bricks[0].length; j++)
+				{
+					root.getChildren().add(bricks[i][j]);
+				}	
+			}
 			
 			scene.setOnKeyPressed(this);
 			
@@ -134,16 +153,30 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			//ball.relocate(0, 10); //Might be useful later
 			//final Bounds bounds = new Bounds();
 
-			final Bounds bounds = root.getBoundsInParent(); //Border bounds
+			final Bounds bounds = root.getBoundsInLocal(); //Border bound4
 			
 			//The animation "loop"
-			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
+			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), (evt) -> {
+				
+				ballMovement.setHitBrick(false);
 				
 				//Here we are moving the ball
             	ball.setLayoutX(ball.getLayoutX() + ballMovement.getHorzMovement());
             	ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
             	
-            	//If the ball comes in contact with left or right side of border
+            	//If the right key is down
+            	if(barMovement.getRFlag() && bar.getLayoutX() < 330)
+            	{
+            		bar.setLayoutX(bar.getLayoutX() + 1);
+            	}
+            	
+            	//If the left key is down
+            	if(barMovement.getLFlag() && bar.getLayoutX() > -280)
+            	{
+            		bar.setLayoutX(bar.getLayoutX() - 1);
+            	}
+            	
+            	//If the all comes in contact with left or right side of border
             	if (ball.getLayoutX() == (195-ball.getRadius()) || ball.getLayoutX() == (-206+ ball.getRadius())){
             		ballMovement.horzCollision();
             	}
@@ -160,22 +193,60 @@ public class Main extends Application implements EventHandler<KeyEvent>
             		
             	}
             	
-            	//If ball comes into contact with a brick
-            	if((root.getChildren().contains(brick)) && (brick.intersects(ball.getBoundsInParent()))) 
+            	//Checks each brick for ball contact
+            	for(int i = 0; i < bricks.length; i++)
+            	{
+            		for(int j = 0; j < bricks[0].length; j++)
             		{
-            			root.getChildren().remove(brick);
-            			ballMovement.vertCollision();
+            			if((ballMovement.getHitBrick() == false && root.getChildren().contains(bricks[i][j])) && (ball.getBoundsInParent().intersects(bricks[i][j].getBoundsInParent()))) 
+            			{
+            				root.getChildren().remove(bricks[i][j]);
+            				ballMovement.vertCollision();
+            				ballMovement.setHitBrick(true);
+            			}
             		}
+            	}
             	
-            	//If ball comes into contact with bar from top ONLY
-            	if(bar.getBoundsInParent().intersects(ball.getBoundsInParent()))
+				//If ball comes into contact with bar
+            	if((root.getChildren().contains(bar)) && (ball.getBoundsInParent().intersects(bar.getBoundsInParent())))
             		{
             			ballMovement.vertCollision();
-            		}
-            	
-      
-            	
+            		}  	
 			}));
+			
+			scene.setOnKeyPressed(
+					new EventHandler<KeyEvent>()
+					{
+						public void handle(KeyEvent e)
+						{
+							if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false)
+							{
+								barMovement.setRFlag(true);
+							}
+							
+							if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false)
+							{
+								barMovement.setLFlag(true);
+							}
+						}
+					});
+				
+				scene.setOnKeyReleased(
+						new EventHandler<KeyEvent>()
+						{
+							public void handle(KeyEvent e)
+							{
+								if(e.getCode() == KeyCode.RIGHT)
+								{
+									barMovement.setRFlag(false);
+								}
+								
+								if(e.getCode() == KeyCode.LEFT)
+								{
+									barMovement.setLFlag(false);
+								}
+							}
+						});
 			
 			timeline.setCycleCount(Timeline.INDEFINITE);
 	        timeline.play();
@@ -183,20 +254,18 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Brick Breaker");
 			primaryStage.show();
-			
-	
 			 
 		}
 		
-	    @Override
+		@Override
 		public void handle(KeyEvent event) {
-			if (event.getCode() == KeyCode.RIGHT) {
-				bar.setTranslateX(bar.getTranslateX() + 5);	
+			if (event.getCode() == KeyCode.KP_RIGHT) {
+				
+				
+				
+				System.out.println("Right key pressed");
 			}
-			
-			if (event.getCode() == KeyCode.LEFT) {
-				bar.setTranslateX(bar.getTranslateX() - 5);
-			}
+			//System.out.println(barX);
 		}
 	    
 		

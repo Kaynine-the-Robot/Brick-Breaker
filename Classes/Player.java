@@ -10,6 +10,8 @@ import java.awt.Point;
 public class Player {
 	private Point position;
 	private int score = 0;
+	private boolean rFlag = false;
+	private boolean lFlag = false;
 	
 	public Player(int x) {
 		this.position = new Point(x, 4);
@@ -27,6 +29,26 @@ public class Player {
 	public void increaseScore()
 	{
 		this.score++;
+	}
+	
+	public boolean getRFlag()
+	{
+		return rFlag;
+	}
+	
+	public void setRFlag(boolean state)
+	{
+		rFlag = state;
+	}
+	
+	public boolean getLFlag()
+	{
+		return lFlag;
+	}
+	
+	public void setLFlag(boolean state)
+	{
+		lFlag = state;
 	}
 	
 
