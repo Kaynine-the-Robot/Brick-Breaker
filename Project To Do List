@@ -1,13 +1,10 @@
 Project To Do List
 
-Writing Classes:
+Writing Code:
     
-    Main
-    Bat/Player
-    Block
-    Ball
-    Screen/Boundaries
-    Error Handling 
+	A general collision method for GUI classes as they are all pretty similar if I understand right.
+	Using and rewriting old code to make useful or delete. (Mostly for tidying up code and making it more mudular)
+	Review for privacy leaks. (Mostly for after changing/deleting code and moving/making it more modular)
 
 Artwork:
     
