@@ -41,7 +41,7 @@ import Classes.Player;
  *
  *@author Everyone
  */
-public class Main extends Application implements EventHandler<KeyEvent>
+public class Main extends Application // *** SEEMS TO DO NOTHING *** implements EventHandler<KeyEvent>
 	{
 	
 	
@@ -53,71 +53,17 @@ public class Main extends Application implements EventHandler<KeyEvent>
 	    public static void main(String[] args)
 	        {
 	    		launch(args);
-                /**
-                Board board = new Board(6,5);
-                Text_GUI draw = new Text_GUI(true);
-                Block blocks = new Block();
-                Ball ball = new Ball(2,3);
-                Player player = new Player(2);
-                board.makeBoard();
-             
-                board.advancedRowBlocks(blocks.arrayBlocks());
-                board.makePlayer(player);
-                board.makeBall(ball);
-                
-                draw.printBoard(board, player);
-                board.makePlayer(player);
-                board.makeBall(ball);               
-                                
-                while(player.getScore() < 3){
-                	
-                	ball.updatePos();  //Ball gets moved
-                	
-                	player.moveBar(); //Bar gets moved by the player
-                 
-                	
-                 //if ball is on the bar's LEFT or RIGHT side..
-                 if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
-                		 || ball.getPosition().getX() == player.getPosition().getX()+1 && ball.getPosition().getY()+1 == player.getPosition().getY()){ 
-                	 
-                	 ball.vertCollision();
-	 
-                 }
-                 
-                 board.checkBrickCollision(); //Checks if ball collides with brick
-                 
-                 if((int) ball.getPosition().getY() == 0)//Checks where ball is and switches direction if necessary
-                 {
-                	 player.increaseScore();
-                 }
-                 
-                 	board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
-                 	
-                 	draw.printBoard(board, player); //Board gets displayed
-                 
-                	board.checkBrickCollision(); //Checks if ball collides with brick
-                	
-                	ball.checkLocation(); //Checks where ball is and switches direction if necessary
-                	
-                	board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
-                	
-                	draw.printBoard(board, player); //Board gets displayed
-
-                }
-                
-                System.out.println("You win.");
-        		System.exit(0);
-        
-	       
-	        **/	
 	        }
 	    
+	    //Overriding the inherited start function of Application class in JavaFX.
 	    @Override
 		public void start(Stage primaryStage) throws Exception {
 			
+	    	//Classes used for keeping track of the ball and player movement for the GUI
 			Ball ballMovement = new Ball(0,0);
 			Player barMovement = new Player(0);
 			
+			//A 2D array for keeping track of the bricks in the GUI and inserting the bricks into it with info
 			Rectangle[][] bricks = new Rectangle[10][3];
 			
 			for(int i = 0; i < bricks.length; i++)
@@ -128,17 +74,19 @@ public class Main extends Application implements EventHandler<KeyEvent>
 				}
 			}
 			
+			//Just setting up the graphics for the game including the player and ball
 			Pane root = new Pane();
 			Scene scene = new Scene(root , 400 , 500);
 			
 			Rectangle bar = new Rectangle(280,460,70,8);
 			
 			Circle ball = new Circle(205,455,10);
-			ball.setStroke(Color.RED);
+			ball.setStroke(Color.BLACK);
 			ball.setFill(Color.RED);
 			root.getChildren().add(ball);
 			root.getChildren().add(bar);
 			
+			//Iterating through the array of bricks and adding them to the graphics
 			for(int i = 0; i < bricks.length; i++)
 			{
 				for(int j = 0; j < bricks[0].length; j++)
@@ -147,16 +95,18 @@ public class Main extends Application implements EventHandler<KeyEvent>
 				}	
 			}
 			
-			scene.setOnKeyPressed(this);
+			// *** SEEMS TO DO NOTHING ***
+			//scene.setOnKeyPressed(this);
 			
 			
 			//ball.relocate(0, 10); //Might be useful later
 			//final Bounds bounds = new Bounds();
 
-			final Bounds bounds = root.getBoundsInLocal(); //Border bound4
+			// *** SEEMS TO DO NOTHING ***
+			//final Bounds bounds = root.getBoundsInLocal(); //Border bound4
 			
-			//The animation "loop"
-			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), (evt) -> {
+			//The animation "loop" that handles all movement in graphics
+			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 				
 				ballMovement.setHitBrick(false);
 				
@@ -165,7 +115,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
             	ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
             	
             	//If the right key is down
-            	if(barMovement.getRFlag() && bar.getLayoutX() < 330)
+            	if(barMovement.getRFlag() && bar.getLayoutX() < 50)
             	{
             		bar.setLayoutX(bar.getLayoutX() + 1);
             	}
@@ -177,20 +127,21 @@ public class Main extends Application implements EventHandler<KeyEvent>
             	}
             	
             	//If the all comes in contact with left or right side of border
-            	if (ball.getLayoutX() == (195-ball.getRadius()) || ball.getLayoutX() == (-206+ ball.getRadius())){
+            	if (ball.getLayoutX() == (195-ball.getRadius()) || ball.getLayoutX() == (-206+ ball.getRadius()))
+            	{
             		ballMovement.horzCollision();
             	}
             	
             	//If ball comes in contact with top side of the border
             	if (ball.getLayoutY() == (-456 + ball.getRadius())) 
-            		{
-            		ballMovement.vertCollision();
-            		}
+            	{
+            	ballMovement.vertCollision();
+            	}
             	
             	//if ball hits the floor (game ends)
-            	if (ball.getLayoutY() == (46 - ball.getRadius())) {
-            		System.exit(0); //For now..
-            		
+            	if (ball.getLayoutY() == (46 - ball.getRadius())) 
+            	{
+            		System.exit(0); //For now, to become a losing screen
             	}
             	
             	//Checks each brick for ball contact
@@ -212,9 +163,10 @@ public class Main extends Application implements EventHandler<KeyEvent>
             		{
             			ballMovement.vertCollision();
             		}  	
-			}));
+			})); //This is the end of the Timeline animation
 			
-			scene.setOnKeyPressed(
+				//The Key handler for key presses, sets flag on in movement objects
+				scene.setOnKeyPressed(
 					new EventHandler<KeyEvent>()
 					{
 						public void handle(KeyEvent e)
@@ -230,7 +182,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
 							}
 						}
 					});
-				
+				//The Key handler for keys released, sets flags off in movement objects
 				scene.setOnKeyReleased(
 						new EventHandler<KeyEvent>()
 						{
@@ -248,15 +200,20 @@ public class Main extends Application implements EventHandler<KeyEvent>
 							}
 						});
 			
+			//Timeline goes forever unless interrupted and starts timeline
 			timeline.setCycleCount(Timeline.INDEFINITE);
 	        timeline.play();
 			
+	        //Setting up the the final for actually showing the graphics
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Brick Breaker");
 			primaryStage.show();
 			 
 		}
 		
+	    // *** SEEMS TO DO NOTHING ***
+	    
+	    /*
 		@Override
 		public void handle(KeyEvent event) {
 			if (event.getCode() == KeyCode.KP_RIGHT) {
@@ -267,6 +224,7 @@ public class Main extends Application implements EventHandler<KeyEvent>
 			}
 			//System.out.println(barX);
 		}
+		*/
 	    
 		
 	    
