@@ -13,48 +13,78 @@ public class Player {
 	private boolean rFlag = false;
 	private boolean lFlag = false;
 	
-	public Player(int x) {
+	/**
+	 * A constructor for creating a player object with a horizontal position (should stay in one veticle placement)
+	 * @param x is the horizontal position of the player the begin in
+	 */
+	public Player(int x) 
+		{
 		this.position = new Point(x, 4);
 		}
 	
+	/**
+	 * A getter for returning the point object of the players position
+	 * @return a point object representing the player position
+	 */
 	public Point getPosition(){
-		return position;
+		return new Point(position);
 	}
 	
+	/**
+	 * A getter returning the score of the game for winning
+	 * @return is  an int representing the score of the game
+	 */
 	public int getScore()
 	{
 		return this.score;
 	}
 	
+	/**
+	 * A method for increasing the score by one
+	 */
 	public void increaseScore()
 	{
 		this.score++;
 	}
 	
+	/**
+	 * A getter for telling if the right arrow key is pressed
+	 * @return is a boolean flag representing if the right arrow key is pressed
+	 */
 	public boolean getRFlag()
 	{
 		return rFlag;
 	}
 	
+	/**
+	 * A setter for setting if the right arrow key is pressed
+	 * @param state is a boolean describing if the right arrow key is pressed
+	 */
 	public void setRFlag(boolean state)
 	{
 		rFlag = state;
 	}
 	
+	/**
+	 * A getter for telling if the left arrow key is pressed
+	 * @return is a boolean flag representing if the left arrow key is pressed
+	 */
 	public boolean getLFlag()
 	{
 		return lFlag;
 	}
 	
+	/**
+	 * A setter for setting if the left arrow key is pressed
+	 * @param state is a boolean describing if the left arrow key is pressed
+	 */
 	public void setLFlag(boolean state)
 	{
 		lFlag = state;
 	}
-	
 
-	/** Move method asks the user to move bar in direction 'R', 'L' or 'N'(none), and updates the bar position.
-	 * @param None
-	 * @return Nothing
+	/** 
+	 * A method that asks the user to move bar in direction 'R', 'L' or 'N'(none), and updates the bar position.
 	 */
 	public void moveBar() 
 	{
@@ -92,16 +122,14 @@ public class Player {
 					{
 						continueLoop = false;
 					}
-				
 			}	
-				
 			else 
-			{
-				continue;
-			}
+				{
+					continue;
+				}
 
 		}	
 	}
-	}
+}
 	
 	

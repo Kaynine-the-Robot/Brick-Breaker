@@ -17,6 +17,11 @@ public class Ball
 	    private char symbol = 'O';
 	    private boolean hitBrick = false;
 	    
+	    /**
+	     * A constructor for a ball object
+	     * @param x is an int for the x coordinate of a Point object
+	     * @param y is an int for the y coordinate of a Point object
+	     */
 	    public Ball(int x, int y)
 	    {
 	        this.position = new Point(x, y);
@@ -30,7 +35,7 @@ public class Ball
 	     */
 	    public Point getPosition()
 	    {
-	        return position;
+	        return new Point(position);
 	    }
 	    
 	    /**
@@ -38,14 +43,17 @@ public class Ball
 	     * @param none
 	     * @return horzMovement value
 	     */
-	    public int getHorzMovement() {
+	    public int getHorzMovement() 
+	    {
 	    	return this.horzMovement;
 	    }
+	    
 	     /**
 	      * This is a getter for returning a value of current vertical movement
 	      * @return
 	      */
-	    public int getVertMovement() {
+	    public int getVertMovement() 
+	    {
 	    	return this.vertMovement;
 	    }
 	    	
@@ -96,46 +104,48 @@ public class Ball
 	        return symbol;
 	    }
 	    
+	    /**
+	     * A getter for returning a flag if a collision with a brick is true
+	     * @return a boolean telling if the ball has hit a brick
+	     */
 	    public boolean getHitBrick()
 	    {
 	    	return hitBrick;
 	    }
 	    
+	    /**
+	     * A method for setting if a brick is hit
+	     * @param state is a boolean describing if a brick has been hit
+	     */
 	    public void setHitBrick(boolean state)
 	    {
 	    	hitBrick = state;
 	    }
 	    
-	    /** checkLocation() tracks ball location and responds appropriately.
-	     * @args None
+	    /** 
+	     * A method that tracks ball location and responds appropriately
 	     * @returns true if the ball collides with a block, otherwise false
-	     * @author Amanda
 	     */
-	    
 	    public boolean checkLocation()
 	    {
-	    	if (this.position.getX() == 0 || this.position.getX() == 5) { 
+	    	//Checking if the ball will hit horizontal boundaries
+	    	if (this.position.getX() == 0 || this.position.getX() == 5) 
+	    	{ 
 	    		this.horzCollision();
-	    		
 	    	} 
-	    	
-	    	if (this.position.getY() == 0 ) {
+	    	//Checks for is ball is at the top of screen
+	    	if (this.position.getY() == 0 ) 
+	    	{
 	    		this.vertCollision();
-	    		
 	    		return true;
 	    	} 
-	    	
-	    	else if (this.position.getY() == 4) {
+	    	//Checks for if ball is at the bottom of screen
+	    	else if (this.position.getY() == 4) 
+	    	{
 	    		System.out.println("You lose.");
 	    		System.exit(0);
-	    		
-	    		return false;
-	    		
 	    	}
-	    	
 			return false;
-	    	
-	    	
 	    }
 	   
 	    	

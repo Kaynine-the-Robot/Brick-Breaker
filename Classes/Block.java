@@ -8,18 +8,26 @@ import Classes.Board;
  */
 public class Block 
 	{
-		private Point coordinates;
-		private char color;
-		private int blockLength;
+		private Point coordinates = new Point(0,0);
+		private char color = 'R';
+		private int blockLength = 2;
 		private char symbol = 'B';
 		
+		/**
+		 * A default constructor for Block
+		 */
 		public Block() 
 			{
-				this.color = 'R';
-				this.blockLength = 2;
-				this.coordinates = new Point(0,0);
+			
 			}
 		
+		/**
+		 * A Constructor for Block setting all its attributes
+		 * @param x is an int used for the Point object's x coordinate
+		 * @param y is an int used for the Point object's y coordinate
+		 * @param col is a character representing what color the block is
+		 * @param len is an in representing the length of the blocks
+		 */
 		public Block(int x, int y, char col, int len) 
 			{
 				this.color = col;
@@ -27,11 +35,19 @@ public class Block
 				this.coordinates = new Point(x,y);
 			}
 		
+		/**
+		 * A getter for the symbol representing this is a block
+		 * @return a character B for Block
+		 */
 		public char getSymbol() 
 			{
 				return this.symbol;
 			}
 		
+		/**
+		 * A method for removing the parts of the blocks next to each other
+		 * @param board is the Board object used to get the array and change the B char to empty
+		 */
 		public void removeBlock(Board board) 
 			{
 				if(this.blockLength == 2) 
@@ -42,6 +58,10 @@ public class Block
 					}
 			}
 		
+		/**
+		 * A method for making custom sized boards
+		 * @return is a 2D array of Block objects
+		 */
 		public Block[][] arrayBlocks()
 			{
 				//Making a custom board, could be more generalized later

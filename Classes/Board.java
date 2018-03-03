@@ -28,13 +28,6 @@ public class Board
 	        {
 	            this.xLength = x;
 	            this.yLength = y;
-	        }
-	    
-	    /**
-	     * This is a method for creating and setting a new board/array to the attribute board.
-	     */
-	    public void makeBoard()
-	        {
 	            this.board = new char[this.xLength][this.yLength];
 	        }
 	    
@@ -89,6 +82,10 @@ public class Board
     			}
 	    	}
 	    
+	    /**
+	     * This is for making multiple rows of blocks
+	     * @param blocks is the 2D array of blocks
+	     */
 	    public void advancedRowBlocks(Block[][] blocks) 
 	    	{
 	    		this.objBoard = blocks;
@@ -162,6 +159,9 @@ public class Board
 				
 			}
 		
+		/**
+		 * This is a simple function for checking if the ball hits one of the blocks at the top and removing it's part beside it
+		 */
 		public void checkBrickCollision() {
 			
 			if((int) this.ballPos.getY() == 0) 
@@ -177,6 +177,7 @@ public class Board
 				}
 			
 		}
+		
 	}
 
 
