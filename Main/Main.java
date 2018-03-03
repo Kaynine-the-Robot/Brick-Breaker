@@ -225,8 +225,64 @@ public class Main extends Application // *** SEEMS TO DO NOTHING *** implements 
 			//System.out.println(barX);
 		}
 		*/
-	    
-		
-	    
-
 	}
+
+//This is the old text based game
+/**
+Board board = new Board(6,5);
+Text_GUI draw = new Text_GUI(true);
+Block blocks = new Block();
+Ball ball = new Ball(2,3);
+Player player = new Player(2);
+board.makeBoard();
+
+board.advancedRowBlocks(blocks.arrayBlocks());
+board.makePlayer(player);
+board.makeBall(ball);
+
+draw.printBoard(board, player);
+board.makePlayer(player);
+board.makeBall(ball);               
+                
+while(player.getScore() < 3)
+{
+	
+	ball.updatePos();  //Ball gets moved
+	
+	player.moveBar(); //Bar gets moved by the player
+ 
+	
+ //if ball is on the bar's LEFT or RIGHT side..
+ if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
+		 || ball.getPosition().getX() == player.getPosition().getX()+1 && ball.getPosition().getY()+1 == player.getPosition().getY()){ 
+	 
+	 ball.vertCollision();
+
+ }
+ 
+ board.checkBrickCollision(); //Checks if ball collides with brick
+ 
+ if((int) ball.getPosition().getY() == 0)//Checks where ball is and switches direction if necessary
+ {
+	 player.increaseScore();
+ }
+ 
+ 	board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
+ 	
+ 	draw.printBoard(board, player); //Board gets displayed
+ 
+	board.checkBrickCollision(); //Checks if ball collides with brick
+	
+	ball.checkLocation(); //Checks where ball is and switches direction if necessary
+	
+	board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
+	
+	draw.printBoard(board, player); //Board gets displayed
+
+}
+
+System.out.println("You win.");
+System.exit(0);
+
+
+**/	
