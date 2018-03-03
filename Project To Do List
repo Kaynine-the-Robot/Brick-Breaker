@@ -3,6 +3,8 @@ Project To Do List
 Writing Code:
     
 	A general collision method for GUI classes as they are all pretty similar if I understand right.
+	Add collisions for side of bricks and player.
+	Add harder blocks. (Probs by row for now)
 	Using and rewriting old code to make useful or delete. (Mostly for tidying up code and making it more mudular)
 	Review for privacy leaks. (Mostly for after changing/deleting code and moving/making it more modular)
 
