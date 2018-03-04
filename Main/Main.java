@@ -93,18 +93,7 @@ public class Main extends Application // *** SEEMS TO DO NOTHING *** implements 
 				{
 					root.getChildren().add(bricks[i][j]);
 				}	
-			}
-			
-			// *** SEEMS TO DO NOTHING ***
-			//scene.setOnKeyPressed(this);
-			
-			
-			//ball.relocate(0, 10); //Might be useful later
-			//final Bounds bounds = new Bounds();
-
-			// *** SEEMS TO DO NOTHING ***
-			//final Bounds bounds = root.getBoundsInLocal(); //Border bound4
-			
+			}			
 			//The animation "loop" that handles all movement in graphics
 			Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 				
@@ -210,21 +199,6 @@ public class Main extends Application // *** SEEMS TO DO NOTHING *** implements 
 			primaryStage.show();
 			 
 		}
-		
-	    // *** SEEMS TO DO NOTHING ***
-	    
-	    /*
-		@Override
-		public void handle(KeyEvent event) {
-			if (event.getCode() == KeyCode.KP_RIGHT) {
-				
-				
-				
-				System.out.println("Right key pressed");
-			}
-			//System.out.println(barX);
-		}
-		*/
 	}
 
 //This is the old text based game
