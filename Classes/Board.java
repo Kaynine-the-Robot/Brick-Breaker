@@ -1,6 +1,9 @@
 package Classes;
 import java.awt.Point;
 import Classes.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 //import java.util.Formatter;
 
 /**
@@ -17,6 +20,9 @@ public class Board
 	    private Block[][] objBoard;
 	    private Point ballPos;
 	    private Point playerPos;
+	    private Rectangle[][] blockArray;
+	    private int blockArrayRow;
+	    private int blockArrayCol;
 	    
 	    /**
 	     * The constructor for the board class.
@@ -30,7 +36,19 @@ public class Board
 	            this.yLength = y;
 	            this.board = new char[this.xLength][this.yLength];
 	        }
-	    
+	   
+	   /**
+	    * This is a constructor for board that asks for row and col number(For rectangle-like block structure)
+	    * @param levelName
+	    * @param rowNumber
+	    * @param colNumber
+	    */
+	   public Board(String levelName,int rowNumber, int colNumber) {
+		   this.blockArrayRow = rowNumber;
+		   this.blockArrayCol = colNumber;
+	   }
+	  	 	
+
 	    /**
 	     * This is a getter for retrieving the board size in a Point object coordinate.
 	     * @return returns the board size in a Point object.
@@ -175,6 +193,110 @@ public class Board
 							this.board[(int) this.ballPos.getX() - 1][(int) this.ballPos.getY()] = ' ';
 						}
 				}
+			
+		}
+		
+		/**
+		   * This method generates array of Rectangle objects (Blocks) to store it in Array List
+		   */
+		   public void generateBlockArray() 
+		   {
+			   blockArray = new Rectangle[blockArrayRow][blockArrayCol];
+				
+		 		for(int i = 0; i < blockArray.length; i++)
+		 		{
+		 			for(int j = 0; j < blockArray[0].length; j++)
+		 			{
+		 				blockArray[i][j] = new Rectangle(10 + (40 * i), 70 + (20 * j), 30, 10);
+		 			}
+		 		}
+			      
+		   }
+
+		/**
+		 * This is a getter for number of rows in the block array
+		 * @return blockArrayRow - which is a number of rows in block array
+		 */
+		public int getBlockArrayRow() 
+		{
+			return this.blockArrayRow;
+		}
+		
+		/**
+		  * This is a getter for number of columns in the block array
+		 * @return blockArrayCol - which is a number of columns in block array
+		 */
+		public int getBlockArrayCol() 
+		{
+			return this.blockArrayCol;
+		}
+		
+		/**
+		 * This is a method for getting a specific block by index
+		 * @param x
+		 * @param y
+		 * @return blockArray - At the index requested
+		 */
+		public Rectangle getBlockArrayAtIndex(int x,int y) 
+		{
+			return this.blockArray[x][y];
+		}
+		
+		/**
+		 * This method removes block by specific index
+		 * @param root
+		 * @param x
+		 * @param y
+		 */
+		public void removeBlockAtIndex(Pane root,int x, int y) 
+		{
+				root.getChildren().remove((this.getBlockArrayAtIndex(x,y)));
+		}
+		
+		/**
+		 * This is a getter for block array
+		 * @return blockArray - which is the array of blocks
+		 */
+		public Rectangle[][] getBlockArray(){
+			return this.blockArray;
+		}
+		
+		/**
+		 * This is a method for adding block array to the root
+		 * @param root
+		 */
+		public void addBlockArray(Pane root) {
+			//Iterating through the array of bricks and adding them to the graphics
+			for(int i = 0; i < blockArray.length; i++)
+			{
+				for(int j = 0; j < blockArray[0].length; j++)
+				{
+					root.getChildren().add(blockArray[i][j]);
+				}	
+			}	
+			
+		}
+
+		/**
+		 * This is a method for checking ball and brick collision
+		 * @param root
+		 * @param ball
+		 * @param ballMovement
+		 */
+		public void checkBallBrickCollision(Pane root, Circle ball, Ball ballMovement) {
+			
+			for(int i = 0; i < this.getBlockArrayRow(); i++) 
+        	{
+        		for(int j = 0; j < this.getBlockArrayCol(); j++)
+        		{
+        			if((ballMovement.getHitBrick() == false && root.getChildren().contains(this.getBlockArrayAtIndex(i,j))) && (ball.getBoundsInParent().intersects((this.getBlockArrayAtIndex(i,j)).getBoundsInParent()))) 
+        			{
+        				root.getChildren().remove((this.getBlockArrayAtIndex(i,j)));
+        				ballMovement.vertCollision();
+        				ballMovement.setHitBrick(true);
+        			}
+        		}
+        	}       
 			
 		}
 		

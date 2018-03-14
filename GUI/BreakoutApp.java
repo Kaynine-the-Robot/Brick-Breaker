@@ -1,6 +1,7 @@
 package GUI;
 
 import Classes.Ball;
+import Classes.Board;
 import Classes.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,21 +26,26 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
     	//Classes used for keeping track of the ball and player movement for the GUI
 		Ball ballMovement = new Ball(0,0);
 		Player barMovement = new Player(0);
-		
-		//A 2D array for keeping track of the bricks in the GUI and inserting the bricks into it with info
-		Rectangle[][] bricks = new Rectangle[10][3];
-		
-		for(int i = 0; i < bricks.length; i++)
-		{
-			for(int j = 0; j < bricks[0].length; j++)
-			{
-				bricks[i][j] = new Rectangle(10 + (40 * i), 70 + (20 * j), 30, 10);
-			}
-		}
+		Board board = new Board("Default",10,3); //10 rows and 2 columns in the block structure
+		board.generateBlockArray();
 		
 		//Just setting up the graphics for the game including the player and ball
 		Pane root = new Pane();
 		Scene scene = new Scene(root , 400 , 500);
+		
+		board.addBlockArray(root);
+
+		//This here just messes around with different block arrangements by removing some, so creating a "design"
+		//Can save some levels and just load them on here somehow
+		board.removeBlockAtIndex(root, 4, 0);
+		board.removeBlockAtIndex(root, 5, 0);
+		board.removeBlockAtIndex(root, 6, 0);
+		board.removeBlockAtIndex(root, 3, 1);
+		board.removeBlockAtIndex(root, 4, 1);
+		board.removeBlockAtIndex(root, 5, 1);
+		board.removeBlockAtIndex(root, 2, 2);
+		board.removeBlockAtIndex(root, 3, 2);
+		board.removeBlockAtIndex(root, 4, 2);
 		
 		Rectangle bar = new Rectangle(280,460,70,8);
 		
@@ -49,14 +55,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		root.getChildren().add(ball);
 		root.getChildren().add(bar);
 		
-		//Iterating through the array of bricks and adding them to the graphics
-		for(int i = 0; i < bricks.length; i++)
-		{
-			for(int j = 0; j < bricks[0].length; j++)
-			{
-				root.getChildren().add(bricks[i][j]);
-			}	
-		}			
+		
 		//The animation "loop" that handles all movement in graphics
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 			
@@ -96,25 +95,15 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         		System.exit(0); //For now, to become a losing screen
         	}
         	
-        	//Checks each brick for ball contact
-        	for(int i = 0; i < bricks.length; i++)
-        	{
-        		for(int j = 0; j < bricks[0].length; j++)
-        		{
-        			if((ballMovement.getHitBrick() == false && root.getChildren().contains(bricks[i][j])) && (ball.getBoundsInParent().intersects(bricks[i][j].getBoundsInParent()))) 
-        			{
-        				root.getChildren().remove(bricks[i][j]);
-        				ballMovement.vertCollision();
-        				ballMovement.setHitBrick(true);
-        			}
-        		}
-        	}
-        	
 			//If ball comes into contact with bar
         	if((root.getChildren().contains(bar)) && (ball.getBoundsInParent().intersects(bar.getBoundsInParent())))
         		{
         			ballMovement.vertCollision();
         		}  	
+        	
+        	//If ball collides with brick
+        	board.checkBallBrickCollision(root,ball,ballMovement);
+        	
 		})); //This is the end of the Timeline animation
 		
 			//The Key handler for key presses, sets flag on in movement objects
