@@ -1,5 +1,7 @@
 package Classes;
 import java.awt.Point;
+import java.util.concurrent.ThreadLocalRandom;
+
 import Classes.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
@@ -26,6 +28,16 @@ public class Board
 	    private int blockArrayCol;
 	    
 	    /**
+	     * This is a default constructor for board
+	     */
+	    public Board()
+	    {
+	    	this.blockArrayRow = 10;
+	    	this.blockArrayCol = 10;
+	    	
+	    }
+	    
+	    /**
 	     * The constructor for the board class.
 	     * Sets the board dimensions.
 	     * @param x is the horizontal length in integer units.
@@ -39,17 +51,27 @@ public class Board
 	        }
 	   
 	   /**
-	    * This is a constructor for board that asks for row and col number(For rectangle-like block structure)
+	    * This is a constructor for board that creates basic square block shape.
 	    * @param levelName
 	    * @param rowNumber
 	    * @param colNumber
 	    */
 	   public Board(String levelName,int rowNumber, int colNumber) {
-		   this.blockArrayRow = rowNumber;
-		   this.blockArrayCol = colNumber;
+		   
+		   if (levelName == "Basic") 
+		   {
+			   this.blockArrayRow = rowNumber;
+			   this.blockArrayCol = colNumber;
+			   
+		   }
+		   
+		   else 
+		   {
+			   System.out.println("Logical Error - please use constructor for board properly." );
+		   }
 	   }
-	  	 	
-
+	   
+	   
 	    /**
 	     * This is a getter for retrieving the board size in a Point object coordinate.
 	     * @return returns the board size in a Point object.
@@ -301,6 +323,74 @@ public class Board
 			
 		}
 		
+		/**
+		 * This method generates random array of blocks
+		 * @param root
+		 */
+		public void generateRandomLevel(Pane root) {
+			int maxBlockThatCanBeRemoved = (blockArrayRow * blockArrayCol); //Max num of blocks that can be removed is all blocks
+			int randomNumBlocksToRemove = ThreadLocalRandom.current().nextInt(0, maxBlockThatCanBeRemoved +1);
+			
+			for (int i=0; i< randomNumBlocksToRemove ;i++) {
+				
+				int randomRow = ThreadLocalRandom.current().nextInt(0, blockArrayRow );
+				int randomCol = ThreadLocalRandom.current().nextInt(0, blockArrayCol );
+				this.removeBlockAtIndex(root, randomRow,randomCol);
+			
+			}		
+		}
+		
+
+		
+		  public void addCustomLevel(Pane root,String levelName) {
+			  
+			  	this.blockArrayRow = 10;
+			  	this.blockArrayRow = 10; //Ensure the standard size
+			  	
+				if (levelName == "smile")
+				{
+				}
+			
+				if (levelName == "heart") 
+				{
+					this.removeBlockAtIndex(root,1,0);
+					this.removeBlockAtIndex(root,8,0);
+					this.removeBlockAtIndex(root,1,6);
+					this.removeBlockAtIndex(root,8,6);
+					for (int i=0;i<10;i++) 
+					{
+						this.removeBlockAtIndex(root,0,i);
+						this.removeBlockAtIndex(root,9,i);
+					}
+					for (int i=1;i<4;i++)
+					{
+						this.removeBlockAtIndex(root,i,9);
+						this.removeBlockAtIndex(root,i,8);
+						this.removeBlockAtIndex(root,i+5,9);
+						this.removeBlockAtIndex(root,i+5,8);
+					}
+					for (int i=3;i<7;i++) 
+					{
+						this.removeBlockAtIndex(root,i,0);
+					}	
+						
+					for (int i=1;i<3;i++)
+					{
+						this.removeBlockAtIndex(root,i,7);
+						this.removeBlockAtIndex(root,i+6,7);
+						this.removeBlockAtIndex(root,i+3,1);		
+					}	
+					
+				}
+			
+				if (levelName == "2 boxes")
+				{
+					this.removeBlockAtIndex(root, 0, 0);
+				}
+				
+		  }
+	 
+				
 	}
 
 

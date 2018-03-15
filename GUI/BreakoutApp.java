@@ -26,32 +26,24 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
     	//Classes used for keeping track of the ball and player movement for the GUI
 		Ball ballMovement = new Ball(0,0);
 		Player barMovement = new Player(0);
-		Board board = new Board("Default",10,3); //10 rows and 2 columns in the block structure
-		board.generateBlockArray();
+		
 		
 		//Just setting up the graphics for the game including the player and ball
 		Pane root = new Pane();
-		Scene scene = new Scene(root , 400 , 500);
+		Board board = new Board(); 
+		Scene scene = new Scene(root , 408 , 500,Color.SKYBLUE);
+		
+		board.generateBlockArray();
 		
 		board.addBlockArray(root);
-
-		//This here just messes around with different block arrangements by removing some, so creating a "design"
-		//Can save some levels and just load them on here somehow
-		board.removeBlockAtIndex(root, 4, 0);
-		board.removeBlockAtIndex(root, 5, 0);
-		board.removeBlockAtIndex(root, 6, 0);
-		board.removeBlockAtIndex(root, 3, 1);
-		board.removeBlockAtIndex(root, 4, 1);
-		board.removeBlockAtIndex(root, 5, 1);
-		board.removeBlockAtIndex(root, 2, 2);
-		board.removeBlockAtIndex(root, 3, 2);
-		board.removeBlockAtIndex(root, 4, 2);
 		
-		Rectangle bar = new Rectangle(280,460,70,8);
+		//board.generateRandomLevel(root);
+		board.addCustomLevel(root,"heart");
 		
-		Circle ball = new Circle(205,455,10);
+		Rectangle bar = new Rectangle(280,460,70,8);		
+		Circle ball = new Circle(205,455,7);
 		ball.setStroke(Color.BLACK);
-		ball.setFill(Color.RED);
+		ball.setFill(Color.CRIMSON);
 		root.getChildren().add(ball);
 		root.getChildren().add(bar);
 		
@@ -66,7 +58,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
         	
         	//If the right key is down
-        	if(barMovement.getRFlag() && bar.getLayoutX() < 50)
+        	if(barMovement.getRFlag() && bar.getLayoutX() < 58)
         	{
         		bar.setLayoutX(bar.getLayoutX() + 1);
         	}
@@ -77,8 +69,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         		bar.setLayoutX(bar.getLayoutX() - 1);
         	}
         	
-        	//If the all comes in contact with left or right side of border
-        	if (ball.getLayoutX() == (195-ball.getRadius()) || ball.getLayoutX() == (-206+ ball.getRadius()))
+        	//If the ball comes in contact with left or right side of border
+
+        	if (ball.getLayoutX() == (204-ball.getRadius()) || ball.getLayoutX() == (-206+ ball.getRadius()))
         	{
         		ballMovement.horzCollision();
         	}
