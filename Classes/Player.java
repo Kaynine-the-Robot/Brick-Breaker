@@ -7,8 +7,7 @@ import java.awt.Point;
  * @author
  *
  */
-public class Player {
-	private Point position;
+public class Player extends AbstractObjects {
 	private int score = 0;
 	private boolean rFlag = false;
 	private boolean lFlag = false;
@@ -19,16 +18,9 @@ public class Player {
 	 */
 	public Player(int x) 
 		{
-		this.position = new Point(x, 4);
+		this.setPosition(x, 4);
+		this.setSymbol('P');
 		}
-	
-	/**
-	 * A getter for returning the point object of the players position
-	 * @return a point object representing the player position
-	 */
-	public Point getPosition(){
-		return new Point(position);
-	}
 	
 	/**
 	 * A getter returning the score of the game for winning
@@ -102,19 +94,19 @@ public class Player {
 			if (direction == 'L' || direction == 'R' || direction == 'N') 
 			{
 				continueLoop = false;
-				int xCor = (int) position.getX();
-				int yCor = (int) position.getY();
+				int xCor = (int) getPosition().getX();
+				int yCor = (int) getPosition().getY();
 				
 				
 					if (direction == 'R' && xCor !=4)
 					{ 
-						position.move(xCor+1,yCor);
+						getPosition().move(xCor+1,yCor);
 					}
 					
 				
 					else if (direction == 'L' && xCor !=0) 
 					{
-						position.move(xCor-1,yCor);	
+						getPosition().move(xCor-1,yCor);	
 					}
 				
 				

@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import Classes.Ball;
 import Classes.Block;
 import Classes.Player;
+import Classes.Text_Block;
 
 /**
  * This is the project for CPSC 233 Lecture 02 Tutorial section 06 for group 5
@@ -42,7 +43,7 @@ import Classes.Player;
  *
  *@author Everyone
  */
-public class Main // *** SEEMS TO DO NOTHING *** implements EventHandler<KeyEvent>
+public class Main
 	{
 		/**
 		 * The main method of the game, controls and calls other objects to make the game happen.
@@ -59,7 +60,7 @@ public class Main // *** SEEMS TO DO NOTHING *** implements EventHandler<KeyEven
 /**
 Board board = new Board(6,5);
 Text_GUI draw = new Text_GUI(true);
-Block blocks = new Block();
+Block blocks = new Text_Block();
 Ball ball = new Ball(2,3);
 Player player = new Player(2);
 board.makeBoard();
@@ -112,5 +113,4 @@ while(player.getScore() < 3)
 System.out.println("You win.");
 System.exit(0);
 
-
-**/	
+*/

@@ -6,12 +6,10 @@ import Classes.Board;
  * @author
  *
  */
-public class Block 
+public class Block extends AbstractObjects
 	{
-		private Point coordinates = new Point(0,0);
 		private char color = 'R';
 		private int blockLength = 2;
-		private char symbol = 'B';
 		
 		/**
 		 * A default constructor for Block
@@ -32,51 +30,53 @@ public class Block
 			{
 				this.color = col;
 				this.blockLength = len;
-				this.coordinates = new Point(x,y);
+				this.setPosition(x,y);
+				this.setSymbol('B');
 			}
 		
 		/**
-		 * A getter for the symbol representing this is a block
-		 * @return a character B for Block
+		 * A getter for the color attribute of a block
+		 * @return the char attribute color representing the color
 		 */
-		public char getSymbol() 
-			{
-				return this.symbol;
-			}
+		public char getColor()
+		{
+			return this.color;
+		}
 		
 		/**
-		 * A method for removing the parts of the blocks next to each other
-		 * @param board is the Board object used to get the array and change the B char to empty
+		 * A getter for the block length of a block for drawing
+		 * @return the integer representing block length
 		 */
-		public void removeBlock(Board board) 
-			{
-				if(this.blockLength == 2) 
-					{
-						//Makes the Board block and the one next to it disappear
-						board.getBoard()[(int) this.coordinates.getX()][(int) this.coordinates.getY()] = ' ';
-						board.getBoard()[(int) this.coordinates.getX()+1][(int) this.coordinates.getY()] = ' ';
-					}
-			}
+		public int getBlockLength()
+		{
+			return this.blockLength;
+		}
 		
 		/**
-		 * A method for making custom sized boards
-		 * @return is a 2D array of Block objects
+		 * A setter for changing the char representing the color of a block
+		 * Checks if the char is one of the three approved color characters
+		 * @param nCol is the new char letter that the color will be changed to
 		 */
-		public Block[][] arrayBlocks()
+		public void setColor(char nCol)
+		{
+			if(nCol == 'R' || nCol == 'B' || nCol == 'G')
 			{
-				//Making a custom board, could be more generalized later
-				Block[][] letterBlocks = new Block[6][5];
-				for(int i = 0; i < 6; i++) 
-					{
-						for(int j = 0; j < 5; j++) 
-							{
-								if(j==0) 
-									{
-										letterBlocks[i][j] = new Block(i,j,'R',2);  //The array of Block objects
-										i += 1; //Incrementing one more for 2 block space
-									}
-							}
-					}
-				return letterBlocks;
+				this.color = nCol;
 			}
+		} 
+		
+		/**
+		 * A setter for changing the block length
+		 * Checks if the length is positive and from 1-4 units
+		 * @param nLength is the new integer length of block
+		 */
+		public void setBlockLength(int nLength)
+		{
+			if(nLength > 0 && nLength < 5)
+			{
+				this.blockLength = nLength;
+			}
+		}
+		
+		
 	}

@@ -3,3 +3,7 @@
 /Board.class
 /Player.class
 /CollisionChecker.class
+/AbstractObjects.class
+/Text_Block.class
+/Normal_Block.class
+/Hard_Block.class

@@ -8,13 +8,11 @@ import Classes.Block;
  * @author Sebastian, Amanda
  *
  */
-public class Ball 
+public class Ball extends AbstractObjects
 	{
 	    
-	    private Point position;
 	    private int horzMovement = 1;
 	    private int vertMovement = -1;
-	    private char symbol = 'O';
 	    private boolean hitBrick = false;
 	    
 	    /**
@@ -24,18 +22,8 @@ public class Ball
 	     */
 	    public Ball(int x, int y)
 	    {
-	        this.position = new Point(x, y);
-	    }
-	    
-	    /**
-	     * This method returns the position of the ball object.
-	     * @param args unused.
-	     * @return Ball position as a Point object.
-	     * 
-	     */
-	    public Point getPosition()
-	    {
-	        return new Point(position);
+	        this.setPosition(x, y);
+	        this.setSymbol('O');
 	    }
 	    
 	    /**
@@ -65,10 +53,10 @@ public class Ball
 	     */
 	    public void updatePos()
 	    {
-	    	int xCor = (int) this.position.getX();
-	    	int yCor = (int) this.position.getY();
+	    	int xCor = (int) this.getPosition().getX();
+	    	int yCor = (int) this.getPosition().getY();
 	    	
-	        this.position.move(xCor + horzMovement, yCor + vertMovement);
+	        this.getPosition().move(xCor + horzMovement, yCor + vertMovement);
 	    }
 	    
 	    /**
@@ -91,17 +79,6 @@ public class Ball
 	    public void vertCollision()
 	    {
 	        vertMovement = vertMovement * -1;
-	    }
-	    
-	    /**
-	     * This method returns the text representation of the ball.
-	     * @param args unused.
-	     * @return symbol
-	     * 
-	     */
-	    public char getSymbol()
-	    {
-	        return symbol;
 	    }
 	    
 	    /**
@@ -129,18 +106,18 @@ public class Ball
 	    public boolean checkLocation()
 	    {
 	    	//Checking if the ball will hit horizontal boundaries
-	    	if (this.position.getX() == 0 || this.position.getX() == 5) 
+	    	if (this.getPosition().getX() == 0 || this.getPosition().getX() == 5) 
 	    	{ 
 	    		this.horzCollision();
 	    	} 
 	    	//Checks for is ball is at the top of screen
-	    	if (this.position.getY() == 0 ) 
+	    	if (this.getPosition().getY() == 0 ) 
 	    	{
 	    		this.vertCollision();
 	    		return true;
 	    	} 
 	    	//Checks for if ball is at the bottom of screen
-	    	else if (this.position.getY() == 4) 
+	    	else if (this.getPosition().getY() == 4) 
 	    	{
 	    		System.out.println("You lose.");
 	    		System.exit(0);

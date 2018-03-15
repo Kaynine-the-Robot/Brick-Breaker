@@ -4,6 +4,7 @@ import Classes.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import Classes.Normal_Block;
 //import java.util.Formatter;
 
 /**
@@ -20,7 +21,7 @@ public class Board
 	    private Block[][] objBoard;
 	    private Point ballPos;
 	    private Point playerPos;
-	    private Rectangle[][] blockArray;
+	    private Normal_Block[][] blockArray;
 	    private int blockArrayRow;
 	    private int blockArrayCol;
 	    
@@ -201,13 +202,13 @@ public class Board
 		   */
 		   public void generateBlockArray() 
 		   {
-			   blockArray = new Rectangle[blockArrayRow][blockArrayCol];
+			   blockArray = new Normal_Block[blockArrayRow][blockArrayCol];
 				
 		 		for(int i = 0; i < blockArray.length; i++)
 		 		{
 		 			for(int j = 0; j < blockArray[0].length; j++)
 		 			{
-		 				blockArray[i][j] = new Rectangle(10 + (40 * i), 70 + (20 * j), 30, 10);
+		 				blockArray[i][j] = new Normal_Block(10 + (40 * i), 70 + (20 * j), 'B', 2, 30, 10);
 		 			}
 		 		}
 			      
@@ -237,7 +238,7 @@ public class Board
 		 * @param y
 		 * @return blockArray - At the index requested
 		 */
-		public Rectangle getBlockArrayAtIndex(int x,int y) 
+		public Normal_Block getBlockArrayAtIndex(int x,int y) 
 		{
 			return this.blockArray[x][y];
 		}
@@ -250,14 +251,14 @@ public class Board
 		 */
 		public void removeBlockAtIndex(Pane root,int x, int y) 
 		{
-				root.getChildren().remove((this.getBlockArrayAtIndex(x,y)));
+				this.getBlockArrayAtIndex(x,y).removeRectangleFromRoot(root);
 		}
 		
 		/**
 		 * This is a getter for block array
 		 * @return blockArray - which is the array of blocks
 		 */
-		public Rectangle[][] getBlockArray(){
+		public Block[][] getBlockArray(){
 			return this.blockArray;
 		}
 		
@@ -269,9 +270,9 @@ public class Board
 			//Iterating through the array of bricks and adding them to the graphics
 			for(int i = 0; i < blockArray.length; i++)
 			{
-				for(int j = 0; j < blockArray[0].length; j++)
+				for(int j = 0; j < blockArray[i].length; j++)
 				{
-					root.getChildren().add(blockArray[i][j]);
+					blockArray[i][j].addRectangleToRoot(root);;
 				}	
 			}	
 			
@@ -289,9 +290,9 @@ public class Board
         	{
         		for(int j = 0; j < this.getBlockArrayCol(); j++)
         		{
-        			if((ballMovement.getHitBrick() == false && root.getChildren().contains(this.getBlockArrayAtIndex(i,j))) && (ball.getBoundsInParent().intersects((this.getBlockArrayAtIndex(i,j)).getBoundsInParent()))) 
+        			if((ballMovement.getHitBrick() == false && this.getBlockArrayAtIndex(i,j).getContainsRectangle(root) && this.getBlockArrayAtIndex(i,j).getIntersectsRectangle(root, ball))) 
         			{
-        				root.getChildren().remove((this.getBlockArrayAtIndex(i,j)));
+        				this.getBlockArrayAtIndex(i,j).removeRectangleFromRoot(root);;
         				ballMovement.vertCollision();
         				ballMovement.setHitBrick(true);
         			}
