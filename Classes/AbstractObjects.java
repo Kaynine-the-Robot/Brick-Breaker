@@ -35,6 +35,35 @@ public abstract class AbstractObjects {
 	}
 	
 	/**
+     * This method updates the position of the ball object.
+     * @param args unused.
+     * @return Nothing.
+     * @author Amanda
+     */
+    public void updatePos(int horzMovement, int vertMovement)
+    {	
+    	int newX = (int) (this.position.getX() + horzMovement);
+    	int newY = (int) (this.position.getY() + vertMovement);
+    	
+        this.position.move(newX, newY);
+    }
+    
+    /**
+     * This method updates the position of the player object.
+     * @param args unused.
+     * @return Nothing.
+     * @author Amanda
+     */
+    public void updatePos(int horzMovement)
+    {	
+    	System.out.println(horzMovement);
+    	int newX = (int) (this.position.getX() + horzMovement);
+    	int newY = (int) (this.position.getY());
+    	
+        this.position.move(newX, newY);
+    }
+	
+	/**
      * This method returns the text representation of the game object.
      * @return symbol
      */

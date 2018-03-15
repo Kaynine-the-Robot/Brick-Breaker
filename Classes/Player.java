@@ -78,49 +78,16 @@ public class Player extends AbstractObjects {
 	/** 
 	 * A method that asks the user to move bar in direction 'R', 'L' or 'N'(none), and updates the bar position.
 	 */
-	public void moveBar() 
+	public void moveBar(char d) 
 	{
-		
-		System.out.println("Please enter 'L' , 'R' or 'N'(none) for bar movement :");
-		
-		Scanner input = new Scanner(System.in);
-		
-		boolean continueLoop = true;
-	
-		while (continueLoop == true) {
-			
-			char direction = input.next().charAt(0);
-			
-			if (direction == 'L' || direction == 'R' || direction == 'N') 
-			{
-				continueLoop = false;
-				int xCor = (int) getPosition().getX();
-				int yCor = (int) getPosition().getY();
-				
-				
-					if (direction == 'R' && xCor !=4)
-					{ 
-						getPosition().move(xCor+1,yCor);
-					}
-					
-				
-					else if (direction == 'L' && xCor !=0) 
-					{
-						getPosition().move(xCor-1,yCor);	
-					}
-				
-				
-					else if (direction == 'N') 
-					{
-						continueLoop = false;
-					}
-			}	
-			else 
-				{
-					continue;
-				}
-
-		}	
+		if(d == 'L' && this.getPosition().getX() != 0)
+		{
+			updatePos(-1);
+		}
+		else if(d == 'R' && this.getPosition().getX() != 4)
+		{
+			updatePos(1);
+		}
 	}
 }
 	

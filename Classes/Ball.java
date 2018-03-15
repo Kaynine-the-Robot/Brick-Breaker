@@ -44,20 +44,6 @@ public class Ball extends AbstractObjects
 	    {
 	    	return this.vertMovement;
 	    }
-	    	
-	    /**
-	     * This method updates the position of the ball object.
-	     * @param args unused.
-	     * @return Nothing.
-	     * @author Amanda
-	     */
-	    public void updatePos()
-	    {
-	    	int xCor = (int) this.getPosition().getX();
-	    	int yCor = (int) this.getPosition().getY();
-	    	
-	        this.getPosition().move(xCor + horzMovement, yCor + vertMovement);
-	    }
 	    
 	    /**
 	     * This method changes the horizontal speed of the ball object when there has been a collision.
