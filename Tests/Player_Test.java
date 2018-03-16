@@ -26,4 +26,20 @@ public class Player_Test {
 		p.increaseScore();
 		assertEquals("Expected 2", 2, p.getScore());
 	}
+	
+	@Test
+	public void test_bar_movement()
+	{
+		
+		Player p = new Player(3);
+		p.moveBar('L');
+		assertEquals("Expected (2, 4)", new Point(2, 4), p.getPosition());
+		p.moveBar('L');
+		p.moveBar('L');
+		p.moveBar('L');
+		assertEquals("Expected (0, 4)", new Point(0, 4), p.getPosition());
+		p.moveBar('R');
+		p.moveBar('W');
+		assertEquals("Expected (1, 4)", new Point(1, 4), p.getPosition());
+	}
 }
