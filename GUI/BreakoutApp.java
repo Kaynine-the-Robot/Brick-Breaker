@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -31,7 +32,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//Just setting up the graphics for the game including the player and ball
 		Pane root = new Pane();
 		Board board = new Board(); 
-		Scene scene = new Scene(root , 408 , 500,Color.SKYBLUE);
+		Scene scene = new Scene(root , 408 , 500, Color.SKYBLUE);
 		
 		board.generateBlockArray();
 		
@@ -47,11 +48,17 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		root.getChildren().add(ball);
 		root.getChildren().add(bar);
 		
+		Label score = new Label("Score: 0");
+		root.getChildren().add(score);
+		score.setLayoutX(10);
+		score.setLayoutY(10);
 		
 		//The animation "loop" that handles all movement in graphics
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 			
 			ballMovement.setHitBrick(false);
+			
+			score.setText("Score: " + barMovement.getScore());
 			
 			//Here we are moving the ball
         	ball.setLayoutX(ball.getLayoutX() + ballMovement.getHorzMovement());
@@ -79,7 +86,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	//If ball comes in contact with top side of the border
         	if (ball.getLayoutY() == (-456 + ball.getRadius())) 
         	{
-        	ballMovement.vertCollision();
+        		ballMovement.vertCollision();
         	}
         	
         	//if ball hits the floor (game ends)
@@ -90,12 +97,17 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	
 			//If ball comes into contact with bar
         	if((root.getChildren().contains(bar)) && (ball.getBoundsInParent().intersects(bar.getBoundsInParent())))
-        		{
-        			ballMovement.vertCollision();
-        		}  	
+        	{
+        		ballMovement.vertCollision();
+        	}  	
         	
         	//If ball collides with brick
-        	board.checkBallBrickCollision(root,ball,ballMovement);
+        	board.checkBallBrickCollision(root,ball,ballMovement,barMovement);
+        	
+        	if(barMovement.getScore() == board.numOfBlocks())
+        	{
+        		System.exit(0); //For now, to become a winning screen
+        	}
         	
 		})); //This is the end of the Timeline animation
 		

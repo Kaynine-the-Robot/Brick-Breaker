@@ -38,7 +38,14 @@ public class Text_GUI
 						{
 							for(int i = 0; i < xLength; i++) 
 								{
-									System.out.print(String.format("| %c ",board.getBoard()[i][j]));
+									if(board.getBoard()[i][j] == 0)
+									{
+										System.out.print("|   ");
+									}
+									else
+									{
+										System.out.print(String.format("| %c ",board.getBoard()[i][j]));
+									}
 								}
 							System.out.println("|");
 							for(int a = 0; a < xLength; a++) 

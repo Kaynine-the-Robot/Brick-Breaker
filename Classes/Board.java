@@ -284,6 +284,21 @@ public class Board
 			return this.blockArray;
 		}
 		
+		public int numOfBlocks() {
+			
+			int count = 0;
+			
+			for(int i = 0; i < this.blockArray.length; i++)
+			{
+				for(int j = 0; j < this.blockArray[i].length; j++)
+				{
+					count++;
+				}
+			}
+			
+			return count;
+		}
+		
 		/**
 		 * This is a method for adding block array to the root
 		 * @param root
@@ -305,8 +320,9 @@ public class Board
 		 * @param root
 		 * @param ball
 		 * @param ballMovement
+		 * @param barMovement
 		 */
-		public void checkBallBrickCollision(Pane root, Circle ball, Ball ballMovement) {
+		public void checkBallBrickCollision(Pane root, Circle ball, Ball ballMovement, Player barMovement) {
 			
 			for(int i = 0; i < this.getBlockArrayRow(); i++) 
         	{
@@ -317,6 +333,7 @@ public class Board
         				this.getBlockArrayAtIndex(i,j).removeRectangleFromRoot(root);;
         				ballMovement.vertCollision();
         				ballMovement.setHitBrick(true);
+        				barMovement.increaseScore();
         			}
         		}
         	}       
