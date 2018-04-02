@@ -25,7 +25,7 @@ public class Ball extends AbstractObjects
 	        this.setPosition(x, y);
 	        this.setSymbol('O');
 	    }
-	    
+ 
 	    /**
 	     * This is a getter for returning a value of current horizontal movement
 	     * @param none
@@ -92,7 +92,7 @@ public class Ball extends AbstractObjects
 	    public boolean checkLocation()
 	    {
 	    	//Checking if the ball will hit horizontal boundaries
-	    	if (this.getPosition().getX() == 0 || this.getPosition().getX() == 5) 
+	    	if (this.getPosition().getX() == 0 || this.getPosition().getX() == 9) 
 	    	{ 
 	    		this.horzCollision();
 	    	} 
@@ -103,7 +103,7 @@ public class Ball extends AbstractObjects
 	    		return true;
 	    	} 
 	    	//Checks for if ball is at the bottom of screen
-	    	else if (this.getPosition().getY() == 4) 
+	    	else if (this.getPosition().getY() == 14) 
 	    	{
 	    		System.out.println("You lose.");
 	    		System.exit(0);

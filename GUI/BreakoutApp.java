@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
-
+		
 	//Overriding the inherited start function of Application class in JavaFX.
     @Override
 	public void start(Stage primaryStage) throws Exception {
@@ -39,7 +39,8 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		board.addBlockArray(root);
 		
 		//board.generateRandomLevel(root);
-		board.addCustomLevel(root,"heart");
+		//board.removeBlockAtIndex(root, 0,4);
+		board.addCustomLevel(root,"lines.txt",Color.CORNFLOWERBLUE);
 		
 		Rectangle bar = new Rectangle(280,460,70,8);		
 		Circle ball = new Circle(205,455,7);
@@ -53,6 +54,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		score.setLayoutX(10);
 		score.setLayoutY(10);
 		
+
 		//The animation "loop" that handles all movement in graphics
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 			
@@ -109,7 +111,10 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         		System.exit(0); //For now, to become a winning screen
         	}
         	
+        	
+        	
 		})); //This is the end of the Timeline animation
+		
 		
 			//The Key handler for key presses, sets flag on in movement objects
 			scene.setOnKeyPressed(
@@ -149,7 +154,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//Timeline goes forever unless interrupted and starts timeline
 		timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-		
         //Setting up the the final for actually showing the graphics
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Brick Breaker");

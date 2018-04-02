@@ -1,9 +1,14 @@
 package Classes;
 import java.awt.Point;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Classes.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import Classes.Normal_Block;
@@ -24,8 +29,8 @@ public class Board
 	    private Point ballPos;
 	    private Point playerPos;
 	    private Normal_Block[][] blockArray;
-	    private int blockArrayRow;
-	    private int blockArrayCol;
+	    private int blockArrayRow = 10;
+	    private int blockArrayCol = 10;
 	    
 	    /**
 	     * This is a default constructor for board
@@ -71,7 +76,25 @@ public class Board
 		   }
 	   }
 	   
-	   
+	   /**
+	    * This method is for getting the number of blocks
+	    * @return count - the number of blocks
+	    */
+	   public int numOfBlocks() {
+			
+			int count = 0;
+			
+			for(int i = 0; i < this.blockArray.length; i++)
+			{
+				for(int j = 0; j < this.blockArray[i].length; j++)
+				{
+					count++;
+				}
+			}
+			
+			return count;
+		}
+
 	    /**
 	     * This is a getter for retrieving the board size in a Point object coordinate.
 	     * @return returns the board size in a Point object.
@@ -90,6 +113,16 @@ public class Board
 	    	{
 	    		return this.board;
 	    	}
+	    
+	    /**
+	     * This is a method for returning how many blocks are left in text gui
+	     * @return blockNum - int
+	     */
+	    public int totalBlocks() 
+	    {
+	    	return objBoard.length;
+	    }
+	    
 	    
 	    /**
 	     * This is a setter for setting a predefined 2D array of characters as the new board.
@@ -130,23 +163,15 @@ public class Board
 	    public void advancedRowBlocks(Block[][] blocks) 
 	    	{
 	    		this.objBoard = blocks;
-	    		for(int i = 0; i < blocks.length; i++) 
-    			{
-    				for(int j = 0; j < blocks[i].length; j++) 
-    					{
-    						System.out.println(blocks[i][j]);
-    					}
-    			}
+
 	    		for(int i = 0; i < blocks.length; i++) 
 	    			{
 	    				for(int j = 0; j < blocks[i].length; j++) 
 	    					{
 	    						if(blocks[i][j] != null)
 	    							{
-	    								System.out.println(this.board.length);
-	    								System.out.println(this.board[i].length);
 	    								this.board[i][j] = (char) blocks[i][j].getSymbol();
-	    								this.board[i+1][j] = (char) blocks[i][j].getSymbol();
+
 	    							}
 	    						}
 	    					}
@@ -183,7 +208,7 @@ public class Board
 	     * @param newBallPos is the new position of the ball that is going to replace the old position.
 	     * @param newPlayerPos is the new position of the player that is going to replace the old position.
 	     */
-		public void updateBoard(Point newBallPos, Point newPlayerPos) 
+		public void updateBoard(Point newBallPos, Point newPlayerPos, Ball ball) 
 			{
 				this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = ' '; //ball remove
 				this.ballPos.setLocation((int) newBallPos.getX(), (int) newBallPos.getY()); //ball update pos
@@ -196,31 +221,48 @@ public class Board
 				this.board[(int) newPlayerPos.getX()+1][(int) newPlayerPos.getY()] = 'P'; //Place bar
 				
 				
-				this.checkBrickCollision();
+				//this.checkBrickCollision(ball);
 				
 			}
 		
 		/**
-		 * This is a simple function for checking if the ball hits one of the blocks at the top and removing it's part beside it
+		 * This is a function that checks the board brick collision IN TEXT GUI
+		 * 
 		 */
-		public void checkBrickCollision() {
-			
-			if((int) this.ballPos.getY() == 0) 
+		public void checkBrickCollision(Ball ball,Player player) {
+
+			for (int i = 0 ; i< 10; i++) 
+			{
+				for (int j = 0 ; j< 10 ; j++) 
 				{
-					if( (((int) this.ballPos.getX()) % 2) == 0) 
+					if ((ball.getPosition().getX() == objBoard[i][j].getPosition().getX()
+							&& ball.getPosition().getY() == objBoard[i][j].getPosition().getY()) 
+							&& objBoard[i][j].getVisibility() == true)
+					{
+						
+						objBoard[i][j].setVisibility(false);
+						
+						ball.vertCollision();
+						
+						if (ball.getPosition().getX() != 0 && ball.getPosition().getX() != 9) 
 						{
-							this.board[(int) this.ballPos.getX() + 1][(int) this.ballPos.getY()] = ' ';
+							ball.horzCollision();
 						}
-					else 
-						{
-							this.board[(int) this.ballPos.getX() - 1][(int) this.ballPos.getY()] = ' ';
-						}
+						
+						player.increaseScore();
+					
+					
+					}
+					
+					
 				}
+			}
 			
 		}
+						
 		
 		/**
-		   * This method generates array of Rectangle objects (Blocks) to store it in Array List
+		   * This method generates array of Rectangle objects (Blocks) to store it in Array List for javafx gui
 		   */
 		   public void generateBlockArray() 
 		   {
@@ -266,7 +308,7 @@ public class Board
 		}
 		
 		/**
-		 * This method removes block by specific index
+		 * This method removes block by specific index in javafx gui
 		 * @param root
 		 * @param x
 		 * @param y
@@ -277,6 +319,17 @@ public class Board
 		}
 		
 		/**
+		 * This method is for removing block at text gui by index
+		 * @param x
+		 * @param y
+		 */
+		
+		public void removeBlockAtIndex(int x, int y) {
+			objBoard[x][y].setVisibility(false);
+			board[x][y] = ' ';
+
+		}
+		/**
 		 * This is a getter for block array
 		 * @return blockArray - which is the array of blocks
 		 */
@@ -284,20 +337,6 @@ public class Board
 			return this.blockArray;
 		}
 		
-		public int numOfBlocks() {
-			
-			int count = 0;
-			
-			for(int i = 0; i < this.blockArray.length; i++)
-			{
-				for(int j = 0; j < this.blockArray[i].length; j++)
-				{
-					count++;
-				}
-			}
-			
-			return count;
-		}
 		
 		/**
 		 * This is a method for adding block array to the root
@@ -341,7 +380,7 @@ public class Board
 		}
 		
 		/**
-		 * This method generates random array of blocks
+		 * This method generates random block level in javafx gui
 		 * @param root
 		 */
 		public void generateRandomLevel(Pane root) {
@@ -357,56 +396,84 @@ public class Board
 			}		
 		}
 		
-
+		/**
+		 * This method generates random block level in the text gui
+		 * @param root
+		 * @param levelName
+		 */
 		
-		  public void addCustomLevel(Pane root,String levelName) {
+		public void generateRandomLevel() {
+			int maxBlockThatCanBeRemoved = (blockArrayRow * blockArrayCol); //Max num of blocks that can be removed is all blocks
+			int randomNumBlocksToRemove = ThreadLocalRandom.current().nextInt(0, maxBlockThatCanBeRemoved +1);
+			for (int i=0; i< randomNumBlocksToRemove ;i++) {
+				int randomRow = ThreadLocalRandom.current().nextInt(0, blockArrayRow );
+				int randomCol = ThreadLocalRandom.current().nextInt(0, blockArrayCol );
+				this.removeBlockAtIndex(randomRow, randomCol);
+			}
+		}
+
+		/**
+		 * This method is for generating custom levels for javafx gui
+		 * @param root
+		 * @param level
+		 */
+		  public void addCustomLevel(Pane root,String level,Paint color) {
 			  
+			  	Scanner scan = null;
+			  	this.blockArrayRow = 10;
+			  	this.blockArrayRow = 10; //Ensure the standard size
+			  	for (int i = 0; i<10; i++) {
+			  		for (int j = 0; j<10; j++) {
+			  			this.getBlockArrayAtIndex(i,j).setColor(color);	
+			  		}
+			  	}
+			  	try {
+					scan = new Scanner(new File(level));
+				}
+			  	catch(FileNotFoundException e) {
+			  		System.out.println(e);
+			  		System.exit(0);
+			  	}
+			  	
+			  	String coordinates = scan.nextLine();
+
+			  	int blocksToRemove = coordinates.length();
+			  	
+			  	for (int i=0; i<blocksToRemove;i+=2) {
+			  		int xvalue = coordinates.charAt(i) - '0';
+			  		int yvalue = coordinates.charAt(i+1) - '0';
+			  		this.removeBlockAtIndex(root,xvalue,yvalue);
+			  		
+			  	}
+		  }
+		  /**
+			 * This method is for generating custom levels for text gui
+			 * @param root
+			 * @param level
+			 */
+		  public void addCustomLevel(String level) {
+			  Scanner scan = null;
 			  	this.blockArrayRow = 10;
 			  	this.blockArrayRow = 10; //Ensure the standard size
 			  	
-				if (levelName == "smile")
-				{
+			  	try {
+					scan = new Scanner(new File(level));
 				}
-			
-				if (levelName == "heart") 
-				{
-					this.removeBlockAtIndex(root,1,0);
-					this.removeBlockAtIndex(root,8,0);
-					this.removeBlockAtIndex(root,1,6);
-					this.removeBlockAtIndex(root,8,6);
-					for (int i=0;i<10;i++) 
-					{
-						this.removeBlockAtIndex(root,0,i);
-						this.removeBlockAtIndex(root,9,i);
-					}
-					for (int i=1;i<4;i++)
-					{
-						this.removeBlockAtIndex(root,i,9);
-						this.removeBlockAtIndex(root,i,8);
-						this.removeBlockAtIndex(root,i+5,9);
-						this.removeBlockAtIndex(root,i+5,8);
-					}
-					for (int i=3;i<7;i++) 
-					{
-						this.removeBlockAtIndex(root,i,0);
-					}	
-						
-					for (int i=1;i<3;i++)
-					{
-						this.removeBlockAtIndex(root,i,7);
-						this.removeBlockAtIndex(root,i+6,7);
-						this.removeBlockAtIndex(root,i+3,1);		
-					}	
-					
-				}
-			
-				if (levelName == "2 boxes")
-				{
-					this.removeBlockAtIndex(root, 0, 0);
-				}
-				
+			  	catch(FileNotFoundException e) {
+			  		System.out.println(e);
+			  		System.exit(0);
+			  	}
+			  	
+			  	String coordinates = scan.nextLine();
+
+			  	int blocksToRemove = coordinates.length();
+			  	
+			  	for (int i=0; i<blocksToRemove;i+=2) {
+			  		int xvalue = coordinates.charAt(i) - '0';
+			  		int yvalue = coordinates.charAt(i+1) - '0';
+			  		this.removeBlockAtIndex(xvalue,yvalue);
+			  	}
 		  }
-	 
 				
 	}
 

@@ -2,6 +2,7 @@ package Classes;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 public class Normal_Block extends Block {
@@ -47,4 +48,8 @@ public class Normal_Block extends Block {
 		return b.getBoundsInParent().intersects((this.rect).getBoundsInParent());
 	}
 	
+	public void setColor(Paint color) {
+		rect.setFill(color);
+		rect.setStroke(color);
+	}
 }

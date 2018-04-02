@@ -18,7 +18,7 @@ public class Player extends AbstractObjects {
 	 */
 	public Player(int x) 
 		{
-		this.setPosition(x, 4);
+		this.setPosition(x, 14);
 		this.setSymbol('P');
 		}
 	
@@ -84,7 +84,7 @@ public class Player extends AbstractObjects {
 		{
 			updatePos(-1);
 		}
-		else if(d == 'R' && this.getPosition().getX() != 4)
+		else if(d == 'R' && this.getPosition().getX() != 8)
 		{
 			updatePos(1);
 		}

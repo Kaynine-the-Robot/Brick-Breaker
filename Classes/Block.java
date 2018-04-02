@@ -8,6 +8,7 @@ import Classes.Board;
  */
 public class Block extends AbstractObjects
 	{
+		Boolean visibility = true;
 		private char color = 'R';
 		private int blockLength = 2;
 		
@@ -33,7 +34,7 @@ public class Block extends AbstractObjects
 				this.setPosition(x,y);
 				this.setSymbol('B');
 			}
-		
+
 		/**
 		 * A getter for the color attribute of a block
 		 * @return the char attribute color representing the color
@@ -77,6 +78,22 @@ public class Block extends AbstractObjects
 				this.blockLength = nLength;
 			}
 		}
+		 
+		/**
+		 * This is a method for setting visibility of the block for text gui
+		 * @param vis - true or false
+		 */
+		public void setVisibility(boolean vis) {
+			this.visibility = vis;
+		}
 		
+		/**
+		 * This is a method for getting visibility of the block for text gui
+		 * @return visibility - boolean value
+		 */
+		
+		public boolean getVisibility() {
+			return this.visibility;
+		}
 		
 	}

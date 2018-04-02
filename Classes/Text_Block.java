@@ -20,19 +20,19 @@ public class Text_Block extends Block {
 	 * A method for making custom sized boards
 	 * @return is a 2D array of Block objects
 	 */
-	public Block[][] arrayBlocks()
+	public Block[][] arrayBlocks(int Rows, int Cols)
 		{
 			//Making a custom board, could be more generalized later
-			Block[][] letterBlocks = new Block[6][5];
-			for(int i = 0; i < 6; i++) 
+			Block[][] letterBlocks = new Block[Rows][Cols];
+			for(int i = 0; i < Rows; i++) 
 				{
-					for(int j = 0; j < 5; j++) 
+					for(int j = 0; j < Cols; j++) 
 						{
-							if(j==0) 
-								{
-									letterBlocks[i][j] = new Block(i,j,'R',2);  //The array of Block objects
-									i += 1; //Incrementing one more for 2 block space
-								}
+							//if(j==0) 
+							//	{
+									letterBlocks[i][j] = new Block(i,j,'R',1);  //The array of Block objects
+									//i += 1; //Incrementing one more for 2 block space
+							//	}
 						}
 				}
 			return letterBlocks;

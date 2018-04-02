@@ -56,23 +56,26 @@ public class Main
 	    		
 	    		
 	    		
-	    		Board board = new Board(6,5);
+	    		Board board = new Board(10,15);
 	    		Text_GUI draw = new Text_GUI(true);
 	    		Text_Block blocks = new Text_Block();
-	    		Ball ball = new Ball(2,3);
-	    		Player player = new Player(2);
+	    		Ball ball = new Ball(4,13);
+	    		Player player = new Player(4);
 
-	    		board.advancedRowBlocks(blocks.arrayBlocks());
+	    		board.advancedRowBlocks(blocks.arrayBlocks(10, 10));
 	    		board.makePlayer(player);
 	    		board.makeBall(ball);
 
+	    		//board.removeBlockAtIndex(0,4);
+	    		//board.generateRandomLevel();
+	    		board.addCustomLevel("spikes.txt");
 	    		draw.printBoard(board, player);
 	    		board.makePlayer(player);
 	    		board.makeBall(ball);
-	    		
+
 	    		Scanner input = new Scanner(System.in);
-	    		                
-	    		while(player.getScore() < 3)
+	    		
+	    		while(player.getScore() <= board.totalBlocks())
 	    		{
 	    			
 	    			ball.updatePos(ball.getHorzMovement(), ball.getVertMovement());  //Ball gets moved
@@ -84,12 +87,12 @@ public class Main
 	    				System.out.println("Please enter 'L' , 'R' or 'N'(none) for bar movement :");
 		    			
 		    			direction = input.next().charAt(0);
-		    			System.out.println(direction);
+
 	    			}
 	    			
 	    			player.moveBar(direction);
 	    			
-	    			System.out.println(player.getPosition());
+
 	    			
 	    			//if ball is on the bar's LEFT or RIGHT side..
 	    			if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
@@ -99,22 +102,19 @@ public class Main
 
 	    			}
 	    		 
-	    			board.checkBrickCollision(); //Checks if ball collides with brick
+	    			board.checkBrickCollision(ball,player); //Checks if ball collides with brick
 	    		 
-	    			if((int) ball.getPosition().getY() == 0)//Checks where ball is and switches direction if necessary
-	    			{
-	    				player.increaseScore();
-	    			}
-	    		 
-	    		 		board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
-	    		 	
-	    		 		board.checkBrickCollision(); //Checks if ball collides with brick
-	    			
-	    		 		ball.checkLocation(); //Checks where ball is and switches direction if necessary
-	    			
-	    		 		board.updateBoard(ball.getPosition(), player.getPosition()); //Board gets updated
-	    			
-	    		 		draw.printBoard(board, player); //Board gets displayed
+	    			//if((int) ball.getPosition().getY() == 0)
+	    			//{
+	    				//player.increaseScore();
+	    			//}
+    		 		
+	    			ball.checkLocation(); //Checks ball-wall collision
+	 	
+	    		 		
+	    		 	board.updateBoard(ball.getPosition(), player.getPosition(),ball); //Board gets updated
+	    		 		
+	    		 	draw.printBoard(board, player); //Board gets displayed
 
 	    			}
 

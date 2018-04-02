@@ -56,7 +56,6 @@ public abstract class AbstractObjects {
      */
     public void updatePos(int horzMovement)
     {	
-    	System.out.println(horzMovement);
     	int newX = (int) (this.position.getX() + horzMovement);
     	int newY = (int) (this.position.getY());
     	
