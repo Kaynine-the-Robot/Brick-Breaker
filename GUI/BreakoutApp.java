@@ -6,8 +6,10 @@ import Classes.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -28,6 +30,29 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		Ball ballMovement = new Ball(0,0);
 		Player barMovement = new Player(0);
 		
+		//Menu items
+		Button heartStage = new Button("Heart Stage");
+		Button spikesStage = new Button("Spikes Stage");
+		Button linesStage = new Button("Lines Stage");
+		Button randomStage = new Button("Random Stage");
+				
+		heartStage.setLayoutX(50);
+		heartStage.setLayoutY(50);
+		spikesStage.setLayoutX(50);
+		spikesStage.setLayoutY(100);
+		linesStage.setLayoutX(50);
+		linesStage.setLayoutY(150);
+		randomStage.setLayoutX(50);
+		randomStage.setLayoutY(200);
+				
+		Pane menuRoot = new Pane();
+		Scene menu = new Scene(menuRoot, 200, 250, Color.SKYBLUE);
+				
+		menuRoot.getChildren().add(heartStage);
+		menuRoot.getChildren().add(randomStage);
+		menuRoot.getChildren().add(linesStage);
+		menuRoot.getChildren().add(spikesStage);
+		
 		
 		//Just setting up the graphics for the game including the player and ball
 		Pane root = new Pane();
@@ -40,7 +65,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		//board.generateRandomLevel(root);
 		//board.removeBlockAtIndex(root, 0,4);
-		board.addCustomLevel(root,"lines.txt",Color.CORNFLOWERBLUE);
+		//board.addCustomLevel(root,"lines.txt",Color.CORNFLOWERBLUE);
 		
 		Rectangle bar = new Rectangle(280,460,70,8);		
 		Circle ball = new Circle(205,455,7);
@@ -153,14 +178,56 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		//Timeline goes forever unless interrupted and starts timeline
 		timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
         //Setting up the the final for actually showing the graphics
-		primaryStage.setScene(scene);
+		primaryStage.setScene(menu);
 		primaryStage.setTitle("Brick Breaker");
 		primaryStage.show();
-		 
-	}
+		
+		//Sets up both menu buttons
+    	heartStage.setOnAction(new EventHandler<ActionEvent>( ) {
+			@Override
+			public void handle(ActionEvent e) {
+				
+				board.addCustomLevel(root,"heart.txt", Color.SKYBLUE);
+				primaryStage.setScene(scene);
+				timeline.play();
+			}
+		});
+    	
+    	spikesStage.setOnAction(new EventHandler<ActionEvent>( ) {
+			@Override
+			public void handle(ActionEvent e) {
+				
+				board.addCustomLevel(root,"spikes.txt", Color.SKYBLUE);
+				primaryStage.setScene(scene);
+				timeline.play();
+			}
+		});
+    	
+    	linesStage.setOnAction(new EventHandler<ActionEvent>( ) {
+			@Override
+			public void handle(ActionEvent e) {
+				
+				board.addCustomLevel(root,"lines.txt", Color.SKYBLUE);
+				primaryStage.setScene(scene);
+				timeline.play();
+			}
+		});
+		
+		randomStage.setOnAction(new EventHandler<ActionEvent>( ) {
 
+			@Override
+			public void handle(ActionEvent e) {
+				
+				board.generateRandomLevel(root);
+				primaryStage.setScene(scene);
+				timeline.play();
+				
+			}
+		});
+		 
+	} 
+    
 	@Override
 	public void handle(KeyEvent arg0) {
 		// TODO Auto-generated method stub
