@@ -367,9 +367,18 @@ public class Board
         	{
         		for(int j = 0; j < this.getBlockArrayCol(); j++)
         		{
-        			if((ballMovement.getHitBrick() == false && this.getBlockArrayAtIndex(i,j).getContainsRectangle(root) && this.getBlockArrayAtIndex(i,j).getIntersectsRectangle(root, ball))) 
+        			if((ballMovement.getHitBrick() == false && this.getBlockArrayAtIndex(i,j).getContainsRectangle(root) && 
+        					this.getBlockArrayAtIndex(i,j).getIntersectsRectangleSides(root, ball)))
         			{
-        				this.getBlockArrayAtIndex(i,j).removeRectangleFromRoot(root);;
+        				this.getBlockArrayAtIndex(i,j).removeRectangleFromRoot(root);
+        				ballMovement.horzCollision();
+        				ballMovement.setHitBrick(true);
+        				barMovement.increaseScore();
+        			}
+        			else if((ballMovement.getHitBrick() == false && this.getBlockArrayAtIndex(i,j).getContainsRectangle(root) && 
+        					this.getBlockArrayAtIndex(i,j).getIntersectsRectangleTopAndBottom(root, ball))) 
+        			{
+        				this.getBlockArrayAtIndex(i,j).removeRectangleFromRoot(root);
         				ballMovement.vertCollision();
         				ballMovement.setHitBrick(true);
         				barMovement.increaseScore();
@@ -377,6 +386,26 @@ public class Board
         		}
         	}       
 			
+		}
+		
+		/**
+		 * This is a method for checking if the ball (Circle Object) collides with the player (Rectangle Object)
+		 * @param root is the Pane object holding the game objects
+		 * @param ball Is the Circle Object for position
+		 * @param bM is the Ball object for movement
+		 * @param bar is the Rectangle object for movement and position
+		 * @param pM is a Player Object for the collides method
+		 */
+		public void checkBallPlayerCollision(Pane root, Circle ball, Ball bM, Rectangle bar, Player pM)
+		{
+			if((root.getChildren().contains(bar) && (pM.getIntersectsBallAndPlayerSides(root, ball, bar))))
+        	{
+]        		bM.horzCollision();
+        	} 
+			if((root.getChildren().contains(bar) && (pM.getIntersectsBallAndPlayerTopAndBottom(root, ball, bar))))
+			{
+				bM.vertCollision();
+			}
 		}
 		
 		/**

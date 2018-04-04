@@ -69,6 +69,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		Rectangle bar = new Rectangle(280,460,70,8);		
 		Circle ball = new Circle(205,455,7);
+		ballMovement.setHitbox(ball);
 		ball.setStroke(Color.BLACK);
 		ball.setFill(Color.CRIMSON);
 		root.getChildren().add(ball);
@@ -78,7 +79,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		root.getChildren().add(score);
 		score.setLayoutX(10);
 		score.setLayoutY(10);
-		
 
 		//The animation "loop" that handles all movement in graphics
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
@@ -92,15 +92,17 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
         	
         	//If the right key is down
-        	if(barMovement.getRFlag() && bar.getLayoutX() < 58)
+        	if(barMovement.getRFlag() && bar.getX() < 340)
         	{
-        		bar.setLayoutX(bar.getLayoutX() + 1);
+        		//bar.setLayoutX(bar.getLayoutX() + 1);
+        		bar.setX(bar.getX() + 1);
         	}
         	
         	//If the left key is down
-        	if(barMovement.getLFlag() && bar.getLayoutX() > -280)
+        	if(barMovement.getLFlag() && bar.getX() > 0)
         	{
-        		bar.setLayoutX(bar.getLayoutX() - 1);
+        		//bar.setLayoutX(bar.getLayoutX() - 1);
+        		bar.setX(bar.getX() - 1);
         	}
         	
         	//If the ball comes in contact with left or right side of border
@@ -123,10 +125,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	}
         	
 			//If ball comes into contact with bar
-        	if((root.getChildren().contains(bar)) && (ball.getBoundsInParent().intersects(bar.getBoundsInParent())))
-        	{
-        		ballMovement.vertCollision();
-        	}  	
+        	board.checkBallPlayerCollision(root,ball,ballMovement, bar, barMovement);
+        	
+        	 	
         	
         	//If ball collides with brick
         	board.checkBallBrickCollision(root,ball,ballMovement,barMovement);

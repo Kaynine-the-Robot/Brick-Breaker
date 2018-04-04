@@ -1,6 +1,10 @@
 package Classes;
 import java.util.Scanner;
 import java.awt.Point;
+import Classes.*;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.Pane;
 
 /**
  * This is the player class which contains the methods and attributes of the player's bat.
@@ -88,6 +92,26 @@ public class Player extends AbstractObjects {
 		{
 			updatePos(1);
 		}
+	}
+	
+	public boolean getIntersectsBallAndPlayerSides(Pane root, Circle b, Rectangle r)
+	{
+		if(b.getBoundsInParent().intersects(r.getX(), r.getY() + 2.0, 1.0, r.getHeight() - 4.0) || 
+				b.getBoundsInParent().intersects(r.getX() + r.getWidth(), r.getY() + 2.0, 1.0, r.getHeight() - 4.0))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean getIntersectsBallAndPlayerTopAndBottom(Pane root, Circle b, Rectangle r)
+	{
+		if(b.getBoundsInParent().intersects(r.getX() + 2.0, r.getY(), r.getWidth() - 4.0, 1.0) || 
+				b.getBoundsInParent().intersects(r.getX() + 2.0, r.getY() + r.getHeight(), r.getWidth() - 4.0, 1.0))
+		{
+			return true;
+		}
+		return false;
 	}
 }
 	

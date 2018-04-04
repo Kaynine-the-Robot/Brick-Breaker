@@ -1,6 +1,7 @@
 package Classes;
 import java.awt.Point;
-import Classes.Block;
+import Classes.*;
+import javafx.scene.shape.Circle;
 
 /**
  * This is the ball class which will have all the methods and attributes to control the ball 
@@ -14,6 +15,7 @@ public class Ball extends AbstractObjects
 	    private int horzMovement = 1;
 	    private int vertMovement = -1;
 	    private boolean hitBrick = false;
+	    private Circle hitbox;
 	    
 	    /**
 	     * A constructor for a ball object
@@ -54,6 +56,16 @@ public class Ball extends AbstractObjects
 	    public void horzCollision()
 	    {
 	        horzMovement = horzMovement * -1;
+	    }
+	    
+	    public Circle getHitbox()
+	    {
+	    	return new Circle(this.hitbox.getCenterX(), this.hitbox.getCenterY(), this.hitbox.getRadius());
+	    }
+	    
+	    public void setHitbox(Circle nHitbox)
+	    {
+	    	this.hitbox = new Circle(nHitbox.getCenterX(), nHitbox.getCenterY(), nHitbox.getRadius());
 	    }
 	    
 	    /**

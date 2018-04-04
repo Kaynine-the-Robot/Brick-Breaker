@@ -43,9 +43,26 @@ public class Normal_Block extends Block {
 		r.getChildren().remove(this.rect);
 	}
 	
-	public boolean getIntersectsRectangle(Pane r, Circle b)
+	public boolean getIntersectsRectangleTopAndBottom(Pane r, Circle b)
 	{
-		return b.getBoundsInParent().intersects((this.rect).getBoundsInParent());
+		if(b.getBoundsInParent().intersects(rect.getX() + 2.0, rect.getY(), rect.getWidth() - 4.0, 1.0) || 
+				b.getBoundsInParent().intersects(rect.getX() + 2.0, rect.getY() + rect.getHeight(), rect.getWidth() - 4.0, 1.0))
+			{ //The 2.0 and 4.0 are offsets to avoid clipping in false collisions
+			 return true;
+			}
+		return false;
+		//return b.getBoundsInParent().intersects((this.rect).getBoundsInParent());
+	}
+	
+	public boolean getIntersectsRectangleSides(Pane r, Circle b)
+	{
+		if(b.getBoundsInParent().intersects(rect.getX(), rect.getY() + 2.0, 1.0, rect.getHeight() - 4.0) || 
+				b.getBoundsInParent().intersects(rect.getX() + rect.getWidth(), rect.getY() + 2.0, 1.0, rect.getHeight() - 4.0))
+		{
+			return true;
+		}
+		return false;
+		//return b.getBoundsInParent().intersects((this.rect).getBoundsInParent());
 	}
 	
 	public void setColor(Paint color) {
