@@ -400,7 +400,7 @@ public class Board
 		{
 			if((root.getChildren().contains(bar) && (pM.getIntersectsBallAndPlayerSides(root, ball, bar))))
         	{
-]        		bM.horzCollision();
+        		bM.horzCollision();
         	} 
 			if((root.getChildren().contains(bar) && (pM.getIntersectsBallAndPlayerTopAndBottom(root, ball, bar))))
 			{

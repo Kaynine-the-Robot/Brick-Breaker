@@ -97,6 +97,16 @@ public class Ball extends AbstractObjects
 	    	hitBrick = state;
 	    }
 	    
+	    /**
+	     * Method that pauses the balls movement
+	     * 
+	     */
+	    public void pauseBall()
+	    {
+	    	vertMovement = 0;
+	    	horzMovement = 0;
+	    }
+	    
 	    /** 
 	     * A method that tracks ball location and responds appropriately
 	     * @returns true if the ball collides with a block, otherwise false

@@ -121,7 +121,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	//if ball hits the floor (game ends)
         	if (ball.getLayoutY() == (46 - ball.getRadius())) 
         	{
-        		System.exit(0); //For now, to become a losing screen
+        		ballMovement.pauseBall();
         	}
         	
 			//If ball comes into contact with bar
@@ -132,9 +132,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	//If ball collides with brick
         	board.checkBallBrickCollision(root,ball,ballMovement,barMovement);
         	
-        	if(barMovement.getScore() == board.numOfBlocks())
+        	if(root.getChildren().size() - 3 == 0)
         	{
-        		System.exit(0); //For now, to become a winning screen
+        		ballMovement.pauseBall();
         	}
         	
         	
