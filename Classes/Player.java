@@ -94,6 +94,13 @@ public class Player extends AbstractObjects {
 		}
 	}
 	
+	public boolean getIntersectsBallAndPlayerCorner(Pane root, Circle b, Rectangle r)
+	{
+		b.setLayoutY(b.getLayoutY() + 2);
+		b.setLayoutX(b.getLayoutX() + 2);
+		return true;
+	}
+	
 	public boolean getIntersectsBallAndPlayerSides(Pane root, Circle b, Rectangle r)
 	{
 		if(b.getBoundsInParent().intersects(r.getX(), r.getY() + 2.0, 1.0, r.getHeight() - 4.0) || 

@@ -58,6 +58,12 @@ public class Ball extends AbstractObjects
 	        horzMovement = horzMovement * -1;
 	    }
 	    
+	    public void increaseSpeed()
+	    {
+	    	this.horzMovement++;
+	    	this.vertMovement++;
+	    }
+	    
 	    public Circle getHitbox()
 	    {
 	    	return new Circle(this.hitbox.getCenterX(), this.hitbox.getCenterY(), this.hitbox.getRadius());

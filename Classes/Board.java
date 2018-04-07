@@ -400,10 +400,38 @@ public class Board
 		{
 			if((root.getChildren().contains(bar) && (pM.getIntersectsBallAndPlayerSides(root, ball, bar))))
         	{
+				if(true)
+				{
+					
+				}
+				if(pM.getLFlag())
+				{
+					ball.setLayoutX(ball.getLayoutX() - 2);
+					ball.setLayoutY(ball.getLayoutY());
+					bM.setPosition((int) bM.getPosition().getX() - 2, (int) bM.getPosition().getY());
+				}
+				else if(pM.getRFlag())
+				{
+					ball.setLayoutX(ball.getLayoutX() + 2);
+					ball.setLayoutY(ball.getLayoutY());
+					bM.setPosition((int) bM.getPosition().getX() + 2, (int) bM.getPosition().getY());
+				}
         		bM.horzCollision();
         	} 
 			if((root.getChildren().contains(bar) && (pM.getIntersectsBallAndPlayerTopAndBottom(root, ball, bar))))
 			{
+				if(pM.getLFlag())
+				{
+					ball.setLayoutX(ball.getLayoutX() + 2);
+					ball.setLayoutY(ball.getLayoutY());
+					bM.setPosition((int) bM.getPosition().getX() + 2, (int) bM.getPosition().getY());
+				}
+				else if(pM.getRFlag())
+				{
+					ball.setLayoutX(ball.getLayoutX() - 2);
+					ball.setLayoutY(ball.getLayoutY());
+					bM.setPosition((int) bM.getPosition().getX() - 2, (int) bM.getPosition().getY());
+				}
 				bM.vertCollision();
 			}
 		}
