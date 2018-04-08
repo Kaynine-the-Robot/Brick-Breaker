@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.scene.layout.Pane;
@@ -7,12 +8,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Polygon;
 
 public class CollisionObjects {
 
 	private Rectangle[][] brickHitboxes; 
 	private Rectangle barHitbox;
 	private Circle ballHitbox;
+	private ArrayList<Polygon> perkSprites = new ArrayList<Polygon>();
 	
 	public CollisionObjects(Rectangle barH, Circle ballH)
 	{
@@ -58,6 +61,15 @@ public class CollisionObjects {
 			}
 		return false;
 		//return b.getBoundsInParent().intersects((this.rect).getBoundsInParent());
+	}
+	
+	public boolean checkPerkAndPlayer(int index)
+	{
+		if(this.perkSprites.get(index).getBoundsInParent().intersects(this.barHitbox.getBoundsInParent()))
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean checkBallAndPlayerSides()
@@ -110,6 +122,15 @@ public class CollisionObjects {
     	}
 	}
 	
+	public void moveAllPerksInWindow(PerkDrop pD)
+	{
+		for(int i = 0; i < this.perkSprites.size(); i++)
+		{
+			this.perkSprites.get(i).setLayoutY(this.perkSprites.get(i).getLayoutY() + pD.getFallSpeed());
+			//(pD.getFallSpeed());
+		}
+	}
+	
 	public void setBrickHitBoxes(Block[][] nArray)
 	{
 		this.brickHitboxes = new Rectangle[nArray.length][nArray[0].length];
@@ -140,6 +161,16 @@ public class CollisionObjects {
 		root.getChildren().remove(this.brickHitboxes[i][j]);
 	}
 	
+	public void addPerkToRoot(Pane root, double i, double j)
+	{
+		Polygon perk = new Polygon();
+		perk.getPoints().addAll(new Double[] { i,j, i+10, j+10, i-10, j+10 });
+		perk.setStroke(Color.BLACK);
+		perk.setFill(Color.GREEN);
+		root.getChildren().add(perk);
+		this.perkSprites.add(perk);
+	}
+	
 	public void colorBrickInArray(int i, int j, Paint[] colors)
 	{
 			int rand = ThreadLocalRandom.current().nextInt(0, colors.length);
@@ -162,7 +193,7 @@ public class CollisionObjects {
 	 * @param barMovement
 	 * @param board
 	 */
-	public void checkBallBrickCollisionTrigger(Pane root, Ball ballMovement, Player barMovement, Board board) {
+	public void checkBallBrickCollisionTrigger(Pane root, Ball ballMovement, Player barMovement, Board board, PerkDrop pD) {
 		
 		for(int i = 0; i < this.brickHitboxes.length; i++) 
     	{
@@ -173,16 +204,25 @@ public class CollisionObjects {
     			{
     				if(board.getBlockArrayAtIndex(i, j).decreaseHealth())
     				{
-    					root.getChildren().remove(this.brickHitboxes[i][j]);
-    					board.removeBlockAtIndex(root, i, j, this);
     					if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'N')
     					{
-    						barMovement.increaseScore(1);
+    						barMovement.increaseScore(1, pD);
     					}
     					else if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'H')
     					{
-    						barMovement.increaseScore(2);
+    						barMovement.increaseScore(2, pD);
+    						int rand = ThreadLocalRandom.current().nextInt(3, 4);
+    						if (rand == 3)
+    						{
+    							double x = this.brickHitboxes[i][j].getX() + (this.brickHitboxes[i][j].getWidth()/2);
+    							double y = this.brickHitboxes[i][j].getY();
+    							this.addPerkToRoot(root, x, y);
+    							pD.choosePerk();
+    							//pD.applyPerk(pD.choosePerk(), barMovement);
+    						}
     					}
+    					root.getChildren().remove(this.brickHitboxes[i][j]);
+    					board.removeBlockAtIndex(root, i, j, this);
     				}
     				ballMovement.horzCollision();
     				ballMovement.setHitBrick(true);
@@ -196,11 +236,11 @@ public class CollisionObjects {
     					board.removeBlockAtIndex(root, i, j, this);
     					if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'N')
     					{
-    						barMovement.increaseScore(1);
+    						barMovement.increaseScore(1, pD);
     					}
     					else if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'H')
     					{
-    						barMovement.increaseScore(2);
+    						barMovement.increaseScore(2, pD);
     					}
     				}
     				ballMovement.vertCollision();
@@ -256,6 +296,56 @@ public class CollisionObjects {
 				bM.setPosition((int) bM.getPosition().getX() - 2, (int) bM.getPosition().getY());
 			}
 			bM.vertCollision();
+		}
+	}
+	
+	/*
+	public void PerkAndPlayerCollision(Pane root, Player pM, PerkDrop pD)
+	{
+		for(int i = 0; i < this.perkSprites.size(); i++)
+		{
+			if(this.checkPerkAndPlayer(i))
+			{
+				pD.applyPerk(pD.getLowestPerk(), pM);
+			}
+		}
+		
+	}
+	
+	public void PerkAndBottomCollision(Pane root, PerkDrop pD)
+	{
+		for(int i = 0; i < this.perkSprites.size(); i++)
+		{
+			if(this.perkSprites.get(i).getLayoutY() >= 30)
+			{
+				root.getChildren().remove(this.perkSprites.get(i));
+				pD.removeLowestPerk();
+			}
+		}
+	}
+	*/
+	
+	public void checkPerkCollisions(Pane root, Player pM, PerkDrop pD)
+	{
+		Paint[] colors = new Paint[4];
+		colors[0] = Color.BLUE; colors[1] = Color.AQUA; colors[2] = Color.GREEN; colors[3] = Color.RED;
+		int rand = ThreadLocalRandom.current().nextInt(0, 4);
+		for(int i = 0; i < this.perkSprites.size(); i++)
+		{
+			this.perkSprites.get(i).setFill(colors[rand]);
+			if(this.checkPerkAndPlayer(i))
+			{
+				pD.applyPerk(pD.getLowestPerk(), pM);
+				root.getChildren().remove(this.perkSprites.get(i));
+				pD.removeLowestPerk();
+				this.perkSprites.remove(i);
+			}
+			else if(this.perkSprites.get(i).getLayoutY() >= 470)
+			{
+				root.getChildren().remove(this.perkSprites.get(i));
+				pD.removeLowestPerk();
+				this.perkSprites.remove(i);
+			}
 		}
 	}
 	

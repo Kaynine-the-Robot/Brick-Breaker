@@ -15,6 +15,7 @@ public class Player extends AbstractObjects {
 	private int score = 0;
 	private boolean rFlag = false;
 	private boolean lFlag = false;
+	private boolean multiFlag = false;
 	
 	/**
 	 * A constructor for creating a player object with a horizontal position (should stay in one veticle placement)
@@ -25,6 +26,16 @@ public class Player extends AbstractObjects {
 		this.setPosition(x, 14);
 		this.setSymbol('P');
 		}
+	
+	public boolean getMultiFlag()
+	{
+		return this.multiFlag;
+	}
+	
+	public void setMultiFlag(boolean nFlag)
+	{
+		this.multiFlag = nFlag;
+	}
 	
 	/**
 	 * A getter returning the score of the game for winning
@@ -38,12 +49,24 @@ public class Player extends AbstractObjects {
 	/**
 	 * A method for increasing the score by one
 	 */
-	public void increaseScore(int nInc)
+	public void increaseScore(int nInc, PerkDrop pD)
 	{
-		if(nInc > 0)
+		if(nInc > 0 && this.multiFlag)
+		{
+			this.score = this.score + (nInc * pD.getMulti());
+		}
+		else if(nInc > 0)
 		{
 			this.score = this.score + nInc;
 		}
+	}
+	
+	/**
+	 * A method for increasing the score by one for TEXT GUI
+	 */
+	public void increaseScore(int nInc)
+	{
+			this.score = this.score++;
 	}
 	
 	/**

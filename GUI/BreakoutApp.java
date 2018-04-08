@@ -63,6 +63,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		CollisionObjects cO = new CollisionObjects(bar, ball);
 		
+		String[] perkList = new String[2]; perkList[0] = "lumpScoreBonus"; perkList[1] = "scoreMultiplier";
+		PerkDrop pD = new PerkDrop(0.5, perkList);
+		
 		board.generateBlockArray(cO);
 		
 		cO.addBlockArrayToRoot(root);
@@ -81,25 +84,36 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		root.getChildren().add(score);
 		score.setLayoutX(10);
 		score.setLayoutY(10);
-
+		
 		//The animation "loop" that handles all movement in graphics
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 			
 			ballMovement.setHitBrick(false);
 			
-			score.setText("Score: " + barMovement.getScore());
+			if(barMovement.getMultiFlag())
+			{
+				score.setText("Score: " + barMovement.getScore() + " MULTIPLIER X" + pD.getMulti());
+			}
+			else
+			{
+				score.setText("Score: " + barMovement.getScore());
+			}
 			
 			//Here we are moving the ball
 			cO.moveBallInWIndow(ballMovement);
         	//Moving Player
         	cO.movePlayerInWindow(barMovement);
+        	//Moving any Perks
+        	cO.moveAllPerksInWindow(pD);
         	
         	//Checking ball and all borders of the window
         	cO.checkBallAndBorders(ballMovement);
         	//Checking ball and player bar collision
         	cO.checkBallPlayerCollisionTrigger(root, ballMovement, barMovement);
         	//If ball collides with brick
-        	cO.checkBallBrickCollisionTrigger(root,ballMovement,barMovement, board);
+        	cO.checkBallBrickCollisionTrigger(root,ballMovement,barMovement, board, pD);
+        	//Checking falling perks collisions
+        	cO.checkPerkCollisions(root, barMovement, pD);
         	
         	if(root.getChildren().size() - 3 == 0)
         	{
