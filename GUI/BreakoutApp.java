@@ -29,29 +29,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		Ball ballMovement = new Ball(0,0);
 		Player barMovement = new Player(0);
 		
-		//Menu items
-		Button heartStage = new Button("Heart Stage");
-		Button spikesStage = new Button("Spikes Stage");
-		Button linesStage = new Button("Lines Stage");
-		Button randomStage = new Button("Random Stage");
-				
-		heartStage.setLayoutX(50);
-		heartStage.setLayoutY(50);
-		spikesStage.setLayoutX(50);
-		spikesStage.setLayoutY(100);
-		linesStage.setLayoutX(50);
-		linesStage.setLayoutY(150);
-		randomStage.setLayoutX(50);
-		randomStage.setLayoutY(200);
-				
-		Pane menuRoot = new Pane();
-		Scene menu = new Scene(menuRoot, 200, 250, Color.SKYBLUE);
-				
-		menuRoot.getChildren().add(heartStage);
-		menuRoot.getChildren().add(randomStage);
-		menuRoot.getChildren().add(linesStage);
-		menuRoot.getChildren().add(spikesStage);
-		
 		
 		//Just setting up the graphics for the game including the player and ball
 		Pane root = new Pane();
@@ -67,9 +44,24 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		cO.addBlockArrayToRoot(root);
 		
+		MainMenu.display();
+		
+		if (MainMenu.getRandomOrCustom().equals("random")) {
+			board.generateRandomLevel(root, cO, MainMenu.getColors());
+		}
+		
+		else if (MainMenu.getRandomOrCustom().equals("custom")) {
+			board.addCustomLevel(root,MainMenu.getLevelName(), MainMenu.getColors(), cO);
+		}
+    	
+		primaryStage.setScene(scene);
+		
+		//timeline.play();
 		//board.generateRandomLevel(root);
 		//board.removeBlockAtIndex(root, 0,4);
 		//board.addCustomLevel(root,"lines.txt",Color.CORNFLOWERBLUE);
+		
+		
 		
 		ball.setStroke(Color.BLACK);
 		ball.setFill(Color.CRIMSON);
@@ -149,60 +141,13 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//Timeline goes forever unless interrupted and starts timeline
 		timeline.setCycleCount(Timeline.INDEFINITE);
         //Setting up the the final for actually showing the graphics
-		primaryStage.setScene(menu);
+		//primaryStage.setScene(MainMenu.getMenu());
+		timeline.play();
 		primaryStage.setTitle("Brick Breaker");
+		
 		primaryStage.show();
 		
-		//Sets up both menu buttons
-    	heartStage.setOnAction(new EventHandler<ActionEvent>( ) {
-			@Override
-			public void handle(ActionEvent e) {
-				
-				Paint[] colors = new Paint[1];
-				colors[0] = Color.DARKRED;
-				board.addCustomLevel(root,"heart.txt", colors, cO);
-				primaryStage.setScene(scene);
-				timeline.play();
-			}
-		});
-    	
-    	spikesStage.setOnAction(new EventHandler<ActionEvent>( ) {
-			@Override
-			public void handle(ActionEvent e) {
-				
-				Paint[] colors = new Paint[4];
-				colors[0] = Color.BLUE; colors[1] = Color.BROWN; colors[2] = Color.GREEN; colors[3] = Color.RED;
-				board.addCustomLevel(root,"spikes.txt", colors, cO);
-				primaryStage.setScene(scene);
-				timeline.play();
-			}
-		});
-    	
-    	linesStage.setOnAction(new EventHandler<ActionEvent>( ) {
-			@Override
-			public void handle(ActionEvent e) {
-				
-				Paint[] colors = new Paint[4];
-				colors[0] = Color.BLUE; colors[1] = Color.AQUA; colors[2] = Color.GREEN; colors[3] = Color.RED;
-				board.addCustomLevel(root,"lines.txt", colors, cO);
-				primaryStage.setScene(scene);
-				timeline.play();
-			}
-		});
 		
-		randomStage.setOnAction(new EventHandler<ActionEvent>( ) {
-
-			@Override
-			public void handle(ActionEvent e) {
-				
-				Paint[] colors = new Paint[4];
-				colors[0] = Color.BLUE; colors[1] = Color.BROWN; colors[2] = Color.GREEN; colors[3] = Color.RED;
-				board.generateRandomLevel(root, cO, colors);
-				primaryStage.setScene(scene);
-				timeline.play();
-				
-			}
-		});
 		 
 	} 
     
