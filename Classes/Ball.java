@@ -15,7 +15,6 @@ public class Ball extends AbstractObjects
 	    private int horzMovement = 1;
 	    private int vertMovement = -1;
 	    private boolean hitBrick = false;
-	    private Circle hitbox;
 	    
 	    /**
 	     * A constructor for a ball object
@@ -62,16 +61,6 @@ public class Ball extends AbstractObjects
 	    {
 	    	this.horzMovement++;
 	    	this.vertMovement++;
-	    }
-	    
-	    public Circle getHitbox()
-	    {
-	    	return new Circle(this.hitbox.getCenterX(), this.hitbox.getCenterY(), this.hitbox.getRadius());
-	    }
-	    
-	    public void setHitbox(Circle nHitbox)
-	    {
-	    	this.hitbox = new Circle(nHitbox.getCenterX(), nHitbox.getCenterY(), nHitbox.getRadius());
 	    }
 	    
 	    /**

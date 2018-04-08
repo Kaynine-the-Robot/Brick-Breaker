@@ -71,7 +71,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//board.removeBlockAtIndex(root, 0,4);
 		//board.addCustomLevel(root,"lines.txt",Color.CORNFLOWERBLUE);
 		
-		ballMovement.setHitbox(ball);
 		ball.setStroke(Color.BLACK);
 		ball.setFill(Color.CRIMSON);
 		root.getChildren().add(ball);
@@ -91,26 +90,14 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			score.setText("Score: " + barMovement.getScore());
 			
 			//Here we are moving the ball
-        	//ball.setLayoutX(ball.getLayoutX() + ballMovement.getHorzMovement());
-        	//ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
 			cO.moveBallInWIndow(ballMovement);
-        	
+        	//Moving Player
         	cO.movePlayerInWindow(barMovement);
         	
-        	
-        	//If the ball comes in contact with left or right side of border
-        	
-        	//If ball comes in contact with top side of the border
-        	
-        	
-        	//if ball hits the floor (game ends)
+        	//Checking ball and all borders of the window
         	cO.checkBallAndBorders(ballMovement);
-        	
-			//If ball comes into contact with bar
+        	//Checking ball and player bar collision
         	cO.checkBallPlayerCollisionTrigger(root, ballMovement, barMovement);
-        	
-        	 	
-        	
         	//If ball collides with brick
         	cO.checkBallBrickCollisionTrigger(root,ballMovement,barMovement, board);
         	

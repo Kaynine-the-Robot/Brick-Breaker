@@ -342,23 +342,6 @@ public class Board
 			return this.blockArray;
 		}
 		
-		
-		/**
-		 * This is a method for adding block array to the root
-		 * @param root
-		 */
-		public void addBlockArray(Pane root) {
-			//Iterating through the array of bricks and adding them to the graphics
-			for(int i = 0; i < blockArray.length; i++)
-			{
-				for(int j = 0; j < blockArray[i].length; j++)
-				{
-					blockArray[i][j].addRectangleToRoot(root);;
-				}	
-			}	
-			
-		}
-		
 		/**
 		 * This method generates random block level in javafx gui
 		 * @param root
