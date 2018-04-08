@@ -38,9 +38,12 @@ public class Player extends AbstractObjects {
 	/**
 	 * A method for increasing the score by one
 	 */
-	public void increaseScore()
+	public void increaseScore(int nInc)
 	{
-		this.score++;
+		if(nInc > 0)
+		{
+			this.score = this.score + nInc;
+		}
 	}
 	
 	/**

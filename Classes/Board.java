@@ -28,7 +28,7 @@ public class Board
 	    private Block[][] objBoard;
 	    private Point ballPos;
 	    private Point playerPos;
-	    private Normal_Block[][] blockArray;
+	    private Block[][] blockArray; //Might make the same as objBoard
 	    private int blockArrayRow = 10;
 	    private int blockArrayCol = 10;
 	    
@@ -249,7 +249,7 @@ public class Board
 							ball.horzCollision();
 						}
 						
-						player.increaseScore();
+						player.increaseScore(1);
 					
 					
 					}
@@ -266,14 +266,21 @@ public class Board
 		   */
 		   public void generateBlockArray(CollisionObjects cO) 
 		   {
-			   blockArray = new Normal_Block[blockArrayRow][blockArrayCol];
-			   Rectangle[][] rectArray = new Rectangle[blockArrayRow][blockArrayCol];
+			   blockArray = new Block[blockArrayRow][blockArrayCol];
 				
 		 		for(int i = 0; i < blockArray.length; i++)
 		 		{
 		 			for(int j = 0; j < blockArray[0].length; j++)
 		 			{
-		 				blockArray[i][j] = new Normal_Block(10 + (40 * i), 70 + (20 * j), 'B', 2, 30, 10);
+		 				int rand = ThreadLocalRandom.current().nextInt(0, 4);
+		 				if(rand == 3)
+		 				{
+		 					blockArray[i][j] = new Hard_Block(10 + (40 * i), 70 + (20 * j), 'B', 2, 30, 10, 2);
+		 				}
+		 				else
+		 				{
+		 					blockArray[i][j] = new Normal_Block(10 + (40 * i), 70 + (20 * j), 'B', 2, 30, 10);
+		 				}
 		 			}
 		 		}
 		 		cO.setBrickHitBoxes(blockArray);
@@ -304,7 +311,7 @@ public class Board
 		 * @param y
 		 * @return blockArray - At the index requested
 		 */
-		public Normal_Block getBlockArrayAtIndex(int x,int y) 
+		public Block getBlockArrayAtIndex(int x,int y) 
 		{
 			return this.blockArray[x][y];
 		}

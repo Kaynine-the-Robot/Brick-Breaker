@@ -77,7 +77,7 @@ public abstract class AbstractObjects {
 	 */
 	public void setSymbol(char nSymb)
 	{
-		if(nSymb == 'O' || nSymb == 'B' || nSymb == 'P')
+		if(nSymb == 'O' || nSymb == 'B' || nSymb == 'P' || nSymb == 'N' || nSymb == 'H')
 		{
 			this.symbol = nSymb;
 		}

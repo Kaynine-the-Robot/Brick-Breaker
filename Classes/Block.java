@@ -1,6 +1,7 @@
 package Classes;
 import java.awt.Point;
 import Classes.Board;
+import javafx.scene.layout.Pane;
 /**
  * This is the block class which will have methods and attributes to control the blocks behavior and appearance
  * @author
@@ -11,6 +12,9 @@ public class Block extends AbstractObjects
 		Boolean visibility = true;
 		private char color = 'R';
 		private int blockLength = 2;
+		private int health;
+		private int width;// = 30;
+		private int height;// = 10;
 		
 		/**
 		 * A default constructor for Block
@@ -21,7 +25,7 @@ public class Block extends AbstractObjects
 			}
 		
 		/**
-		 * A Constructor for Block setting all its attributes
+		 * A Constructor for Block setting all its attributes, this is for the Text version
 		 * @param x is an int used for the Point object's x coordinate
 		 * @param y is an int used for the Point object's y coordinate
 		 * @param col is a character representing what color the block is
@@ -32,8 +36,20 @@ public class Block extends AbstractObjects
 				this.color = col;
 				this.blockLength = len;
 				this.setPosition(x,y);
-				this.setSymbol('B');
+				//this.setSymbol('B');
+				this.health = 1;
 			}
+		
+		public Block(int x, int y, char col, int len, int nWidth, int nHeight) 
+		{
+			this.color = col;
+			this.blockLength = len;
+			this.setPosition(x,y);
+			//this.setSymbol('B');
+			this.width = nWidth;
+			this.height = nHeight;
+			this.health = 1;
+		}
 
 		/**
 		 * A getter for the color attribute of a block
@@ -94,6 +110,58 @@ public class Block extends AbstractObjects
 		
 		public boolean getVisibility() {
 			return this.visibility;
+		}
+		
+		public boolean decreaseHealth()
+		{
+			if(this.health > 1)
+			{
+				this.health--;
+				return false;
+			}
+			else 
+			{
+				return true;
+			}
+		}
+		
+		public int getHealth()
+		{
+			return this.health;
+		}
+		
+		public void setHealth(int nHealth)
+		{
+			if(nHealth > 0 && nHealth < 5)
+			{
+				this.health = nHealth;
+			}
+		}
+		
+		public int getWidth()
+		{
+			return this.width;
+		}
+		
+		public int getHeight()
+		{
+			return this.height;
+		}
+		
+		public void setWidth(int nWidth)
+		{
+			if(nWidth > 0 && nWidth < 100)
+			{
+				this.width = nWidth;
+			}
+		}
+		
+		public void setHeight(int nHeight)
+		{
+			if(nHeight > 0 && nHeight < 100)
+			{
+				this.height = nHeight;
+			}
 		}
 		
 	}

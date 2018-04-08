@@ -110,7 +110,7 @@ public class CollisionObjects {
     	}
 	}
 	
-	public void setBrickHitBoxes(Normal_Block[][] nArray)
+	public void setBrickHitBoxes(Block[][] nArray)
 	{
 		this.brickHitboxes = new Rectangle[nArray.length][nArray[0].length];
 		for(int i = 0; i < nArray.length; i++)
@@ -171,20 +171,40 @@ public class CollisionObjects {
     			if((ballMovement.getHitBrick() == false && board.getBlockArrayAtIndex(i,j).getVisibility() && 
     					this.checkBallAndBrickSides(i, j)))
     			{
-    				root.getChildren().remove(this.brickHitboxes[i][j]);
-    				board.removeBlockAtIndex(root, i, j, this);
+    				if(board.getBlockArrayAtIndex(i, j).decreaseHealth())
+    				{
+    					root.getChildren().remove(this.brickHitboxes[i][j]);
+    					board.removeBlockAtIndex(root, i, j, this);
+    					if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'N')
+    					{
+    						barMovement.increaseScore(1);
+    					}
+    					else if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'H')
+    					{
+    						barMovement.increaseScore(2);
+    					}
+    				}
     				ballMovement.horzCollision();
     				ballMovement.setHitBrick(true);
-    				barMovement.increaseScore();
     			}
     			else if((ballMovement.getHitBrick() == false && board.getBlockArrayAtIndex(i,j).getVisibility() && 
     					this.checkBallAndBrickTopAndBottom(i, j)))
     			{
-    				root.getChildren().remove(this.brickHitboxes[i][j]);
-    				board.removeBlockAtIndex(root, i, j, this);
+    				if(board.getBlockArrayAtIndex(i, j).decreaseHealth())
+    				{
+    					root.getChildren().remove(this.brickHitboxes[i][j]);
+    					board.removeBlockAtIndex(root, i, j, this);
+    					if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'N')
+    					{
+    						barMovement.increaseScore(1);
+    					}
+    					else if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'H')
+    					{
+    						barMovement.increaseScore(2);
+    					}
+    				}
     				ballMovement.vertCollision();
     				ballMovement.setHitBrick(true);
-    				barMovement.increaseScore();
     			}
     		}
     	}       
