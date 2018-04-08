@@ -264,9 +264,10 @@ public class Board
 		/**
 		   * This method generates array of Rectangle objects (Blocks) to store it in Array List for javafx gui
 		   */
-		   public void generateBlockArray() 
+		   public void generateBlockArray(CollisionObjects cO) 
 		   {
 			   blockArray = new Normal_Block[blockArrayRow][blockArrayCol];
+			   Rectangle[][] rectArray = new Rectangle[blockArrayRow][blockArrayCol];
 				
 		 		for(int i = 0; i < blockArray.length; i++)
 		 		{
@@ -275,6 +276,7 @@ public class Board
 		 				blockArray[i][j] = new Normal_Block(10 + (40 * i), 70 + (20 * j), 'B', 2, 30, 10);
 		 			}
 		 		}
+		 		cO.setBrickHitBoxes(blockArray);
 			      
 		   }
 
@@ -313,9 +315,12 @@ public class Board
 		 * @param x
 		 * @param y
 		 */
-		public void removeBlockAtIndex(Pane root,int x, int y) 
+		public void removeBlockAtIndex(Pane root,int x, int y, CollisionObjects cO) 
 		{
-				this.getBlockArrayAtIndex(x,y).removeRectangleFromRoot(root);
+				this.getBlockArrayAtIndex(x,y).setVisibility(false);
+				cO.removeBlockFromRoot(root, x, y);
+				
+				//removeRectangleFromRoot(root);
 		}
 		
 		/**
@@ -324,7 +329,7 @@ public class Board
 		 * @param y
 		 */
 		
-		public void removeBlockAtIndex(int x, int y) {
+		public void removeBlockAtIndexText(int x, int y) {
 			objBoard[x][y].setVisibility(false);
 			board[x][y] = ' ';
 
@@ -353,104 +358,32 @@ public class Board
 			}	
 			
 		}
-
-		/**
-		 * This is a method for checking ball and brick collision
-		 * @param root
-		 * @param ball
-		 * @param ballMovement
-		 * @param barMovement
-		 */
-		public void checkBallBrickCollision(Pane root, Circle ball, Ball ballMovement, Player barMovement) {
-			
-			for(int i = 0; i < this.getBlockArrayRow(); i++) 
-        	{
-        		for(int j = 0; j < this.getBlockArrayCol(); j++)
-        		{
-        			if((ballMovement.getHitBrick() == false && this.getBlockArrayAtIndex(i,j).getContainsRectangle(root) && 
-        					this.getBlockArrayAtIndex(i,j).getIntersectsRectangleSides(root, ball)))
-        			{
-        				this.getBlockArrayAtIndex(i,j).removeRectangleFromRoot(root);
-        				ballMovement.horzCollision();
-        				ballMovement.setHitBrick(true);
-        				barMovement.increaseScore();
-        			}
-        			else if((ballMovement.getHitBrick() == false && this.getBlockArrayAtIndex(i,j).getContainsRectangle(root) && 
-        					this.getBlockArrayAtIndex(i,j).getIntersectsRectangleTopAndBottom(root, ball))) 
-        			{
-        				this.getBlockArrayAtIndex(i,j).removeRectangleFromRoot(root);
-        				ballMovement.vertCollision();
-        				ballMovement.setHitBrick(true);
-        				barMovement.increaseScore();
-        			}
-        		}
-        	}       
-			
-		}
-		
-		/**
-		 * This is a method for checking if the ball (Circle Object) collides with the player (Rectangle Object)
-		 * @param root is the Pane object holding the game objects
-		 * @param ball Is the Circle Object for position
-		 * @param bM is the Ball object for movement
-		 * @param bar is the Rectangle object for movement and position
-		 * @param pM is a Player Object for the collides method
-		 */
-		public void checkBallPlayerCollision(Pane root, Circle ball, Ball bM, Rectangle bar, Player pM)
-		{
-			if((root.getChildren().contains(bar) && (pM.getIntersectsBallAndPlayerSides(root, ball, bar))))
-        	{
-				if(true)
-				{
-					
-				}
-				if(pM.getLFlag())
-				{
-					ball.setLayoutX(ball.getLayoutX() - 2);
-					ball.setLayoutY(ball.getLayoutY());
-					bM.setPosition((int) bM.getPosition().getX() - 2, (int) bM.getPosition().getY());
-				}
-				else if(pM.getRFlag())
-				{
-					ball.setLayoutX(ball.getLayoutX() + 2);
-					ball.setLayoutY(ball.getLayoutY());
-					bM.setPosition((int) bM.getPosition().getX() + 2, (int) bM.getPosition().getY());
-				}
-        		bM.horzCollision();
-        	} 
-			if((root.getChildren().contains(bar) && (pM.getIntersectsBallAndPlayerTopAndBottom(root, ball, bar))))
-			{
-				if(pM.getLFlag())
-				{
-					ball.setLayoutX(ball.getLayoutX() + 2);
-					ball.setLayoutY(ball.getLayoutY());
-					bM.setPosition((int) bM.getPosition().getX() + 2, (int) bM.getPosition().getY());
-				}
-				else if(pM.getRFlag())
-				{
-					ball.setLayoutX(ball.getLayoutX() - 2);
-					ball.setLayoutY(ball.getLayoutY());
-					bM.setPosition((int) bM.getPosition().getX() - 2, (int) bM.getPosition().getY());
-				}
-				bM.vertCollision();
-			}
-		}
 		
 		/**
 		 * This method generates random block level in javafx gui
 		 * @param root
 		 */
-		public void generateRandomLevel(Pane root) {
+		public void generateRandomLevel(Pane root, CollisionObjects cO, Paint[] colors) 
+		{
 			int maxBlockThatCanBeRemoved = (blockArrayRow * blockArrayCol); //Max num of blocks that can be removed is all blocks
 			int randomNumBlocksToRemove = ThreadLocalRandom.current().nextInt(0, maxBlockThatCanBeRemoved +1);
 			
-			for (int i=0; i< randomNumBlocksToRemove ;i++) {
+			for (int a = 0; a<10; a++) 
+			{
+		  		for (int b = 0; b<10; b++) 
+		  		{
+		  			cO.colorBrickInArray(a, b, colors);
+		  		}
+			}
+			
+			for (int i=0; i< randomNumBlocksToRemove ;i++) 
+			{
 				
 				int randomRow = ThreadLocalRandom.current().nextInt(0, blockArrayRow );
 				int randomCol = ThreadLocalRandom.current().nextInt(0, blockArrayCol );
-				this.removeBlockAtIndex(root, randomRow,randomCol);
+				this.removeBlockAtIndex(root, randomRow,randomCol, cO);
+			}
 			
-			}		
 		}
 		
 		/**
@@ -458,30 +391,30 @@ public class Board
 		 * @param root
 		 * @param levelName
 		 */
-		
 		public void generateRandomLevel() {
 			int maxBlockThatCanBeRemoved = (blockArrayRow * blockArrayCol); //Max num of blocks that can be removed is all blocks
 			int randomNumBlocksToRemove = ThreadLocalRandom.current().nextInt(0, maxBlockThatCanBeRemoved +1);
 			for (int i=0; i< randomNumBlocksToRemove ;i++) {
 				int randomRow = ThreadLocalRandom.current().nextInt(0, blockArrayRow );
 				int randomCol = ThreadLocalRandom.current().nextInt(0, blockArrayCol );
-				this.removeBlockAtIndex(randomRow, randomCol);
+				this.removeBlockAtIndexText(randomRow, randomCol);
 			}
 		}
+
 
 		/**
 		 * This method is for generating custom levels for javafx gui
 		 * @param root
 		 * @param level
 		 */
-		  public void addCustomLevel(Pane root,String level,Paint color) {
+		  public void addCustomLevel(Pane root,String level,Paint[] colors, CollisionObjects cO) {
 			  
 			  	Scanner scan = null;
 			  	this.blockArrayRow = 10;
 			  	this.blockArrayRow = 10; //Ensure the standard size
 			  	for (int i = 0; i<10; i++) {
 			  		for (int j = 0; j<10; j++) {
-			  			this.getBlockArrayAtIndex(i,j).setColor(color);	
+			  			cO.colorBrickInArray(i, j, colors);	
 			  		}
 			  	}
 			  	try {
@@ -499,7 +432,7 @@ public class Board
 			  	for (int i=0; i<blocksToRemove;i+=2) {
 			  		int xvalue = coordinates.charAt(i) - '0';
 			  		int yvalue = coordinates.charAt(i+1) - '0';
-			  		this.removeBlockAtIndex(root,xvalue,yvalue);
+			  		this.removeBlockAtIndex(root,xvalue,yvalue, cO);
 			  		
 			  	}
 		  }
@@ -508,7 +441,7 @@ public class Board
 			 * @param root
 			 * @param level
 			 */
-		  public void addCustomLevel(String level) {
+		  public void addCustomLevelText(String level) {
 			  Scanner scan = null;
 			  	this.blockArrayRow = 10;
 			  	this.blockArrayRow = 10; //Ensure the standard size
@@ -528,7 +461,7 @@ public class Board
 			  	for (int i=0; i<blocksToRemove;i+=2) {
 			  		int xvalue = coordinates.charAt(i) - '0';
 			  		int yvalue = coordinates.charAt(i+1) - '0';
-			  		this.removeBlockAtIndex(xvalue,yvalue);
+			  		this.removeBlockAtIndexText(xvalue,yvalue);
 			  	}
 		  }
 				

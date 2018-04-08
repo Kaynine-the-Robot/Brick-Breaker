@@ -1,8 +1,6 @@
 package GUI;
 
-import Classes.Ball;
-import Classes.Board;
-import Classes.Player;
+import Classes.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -15,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -59,21 +58,25 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		Board board = new Board(); 
 		Scene scene = new Scene(root , 408 , 500, Color.SKYBLUE);
 		
-		board.generateBlockArray();
+		Rectangle bar = new Rectangle(280,460,70,8);		
+		Circle ball = new Circle(205,455,7);
 		
-		board.addBlockArray(root);
+		CollisionObjects cO = new CollisionObjects(bar, ball);
+		
+		board.generateBlockArray(cO);
+		
+		cO.addBlockArrayToRoot(root);
 		
 		//board.generateRandomLevel(root);
 		//board.removeBlockAtIndex(root, 0,4);
 		//board.addCustomLevel(root,"lines.txt",Color.CORNFLOWERBLUE);
 		
-		Rectangle bar = new Rectangle(280,460,70,8);		
-		Circle ball = new Circle(205,455,7);
 		ballMovement.setHitbox(ball);
 		ball.setStroke(Color.BLACK);
 		ball.setFill(Color.CRIMSON);
 		root.getChildren().add(ball);
 		root.getChildren().add(bar);
+		
 		
 		Label score = new Label("Score: 0");
 		root.getChildren().add(score);
@@ -88,49 +91,28 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			score.setText("Score: " + barMovement.getScore());
 			
 			//Here we are moving the ball
-        	ball.setLayoutX(ball.getLayoutX() + ballMovement.getHorzMovement());
-        	ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
+        	//ball.setLayoutX(ball.getLayoutX() + ballMovement.getHorzMovement());
+        	//ball.setLayoutY(ball.getLayoutY() + ballMovement.getVertMovement());
+			cO.moveBallInWIndow(ballMovement);
         	
-        	//If the right key is down
-        	if(barMovement.getRFlag() && bar.getX() < 340)
-        	{
-        		//bar.setLayoutX(bar.getLayoutX() + 1);
-        		bar.setX(bar.getX() + 1);
-        	}
+        	cO.movePlayerInWindow(barMovement);
         	
-        	//If the left key is down
-        	if(barMovement.getLFlag() && bar.getX() > 0)
-        	{
-        		//bar.setLayoutX(bar.getLayoutX() - 1);
-        		bar.setX(bar.getX() - 1);
-        	}
         	
         	//If the ball comes in contact with left or right side of border
-
-        	if (ball.getLayoutX() == (204-ball.getRadius()) || ball.getLayoutX() == (-206+ ball.getRadius()))
-        	{
-        		ballMovement.horzCollision();
-        	}
         	
         	//If ball comes in contact with top side of the border
-        	if (ball.getLayoutY() == (-456 + ball.getRadius())) 
-        	{
-        		ballMovement.vertCollision();
-        	}
+        	
         	
         	//if ball hits the floor (game ends)
-        	if (ball.getLayoutY() == (46 - ball.getRadius())) 
-        	{
-        		ballMovement.pauseBall();
-        	}
+        	cO.checkBallAndBorders(ballMovement);
         	
 			//If ball comes into contact with bar
-        	board.checkBallPlayerCollision(root,ball,ballMovement, bar, barMovement);
+        	cO.checkBallPlayerCollisionTrigger(root, ballMovement, barMovement);
         	
         	 	
         	
         	//If ball collides with brick
-        	board.checkBallBrickCollision(root,ball,ballMovement,barMovement);
+        	cO.checkBallBrickCollisionTrigger(root,ballMovement,barMovement, board);
         	
         	if(root.getChildren().size() - 3 == 0)
         	{
@@ -189,7 +171,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			@Override
 			public void handle(ActionEvent e) {
 				
-				board.addCustomLevel(root,"heart.txt", Color.SKYBLUE);
+				Paint[] colors = new Paint[1];
+				colors[0] = Color.DARKRED;
+				board.addCustomLevel(root,"heart.txt", colors, cO);
 				primaryStage.setScene(scene);
 				timeline.play();
 			}
@@ -199,7 +183,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			@Override
 			public void handle(ActionEvent e) {
 				
-				board.addCustomLevel(root,"spikes.txt", Color.SKYBLUE);
+				Paint[] colors = new Paint[4];
+				colors[0] = Color.BLUE; colors[1] = Color.BROWN; colors[2] = Color.GREEN; colors[3] = Color.RED;
+				board.addCustomLevel(root,"spikes.txt", colors, cO);
 				primaryStage.setScene(scene);
 				timeline.play();
 			}
@@ -209,7 +195,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			@Override
 			public void handle(ActionEvent e) {
 				
-				board.addCustomLevel(root,"lines.txt", Color.SKYBLUE);
+				Paint[] colors = new Paint[4];
+				colors[0] = Color.BLUE; colors[1] = Color.AQUA; colors[2] = Color.GREEN; colors[3] = Color.RED;
+				board.addCustomLevel(root,"lines.txt", colors, cO);
 				primaryStage.setScene(scene);
 				timeline.play();
 			}
@@ -220,7 +208,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			@Override
 			public void handle(ActionEvent e) {
 				
-				board.generateRandomLevel(root);
+				Paint[] colors = new Paint[4];
+				colors[0] = Color.BLUE; colors[1] = Color.BROWN; colors[2] = Color.GREEN; colors[3] = Color.RED;
+				board.generateRandomLevel(root, cO, colors);
 				primaryStage.setScene(scene);
 				timeline.play();
 				

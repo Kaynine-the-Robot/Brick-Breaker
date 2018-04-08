@@ -68,7 +68,7 @@ public class Main
 
 	    		//board.removeBlockAtIndex(0,4);
 	    		//board.generateRandomLevel();
-	    		board.addCustomLevel("spikes.txt");
+	    		board.addCustomLevelText("spikes.txt");
 	    		draw.printBoard(board, player);
 	    		board.makePlayer(player);
 	    		board.makeBall(ball);
