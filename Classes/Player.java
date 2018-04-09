@@ -16,6 +16,8 @@ public class Player extends AbstractObjects {
 	private boolean rFlag = false;
 	private boolean lFlag = false;
 	private boolean multiFlag = false;
+	private int multiTimer;
+	private long startTime;
 	
 	/**
 	 * A constructor for creating a player object with a horizontal position (should stay in one veticle placement)
@@ -35,6 +37,40 @@ public class Player extends AbstractObjects {
 	public void setMultiFlag(boolean nFlag)
 	{
 		this.multiFlag = nFlag;
+	}
+	
+	public int getMultiTimer()
+	{
+		return this.multiTimer;
+	}
+	
+	public void setMultiTimer()
+	{
+		this.startTime = System.currentTimeMillis() / 1000;
+		long current = 60 - ((System.currentTimeMillis() / 1000) - this.startTime);
+		this.multiTimer = (int) current;
+	}
+	public void updateCurrentTime(PerkDrop pD)
+	{
+		if(this.multiTimer != 0)
+		{
+			this.multiTimer = (int) (60 - ((System.currentTimeMillis() / 1000) - this.startTime));
+		}
+		else if (this.multiTimer == 0)
+		{
+			if(pD.getMulti() <=2)
+			{
+				this.multiFlag = false;
+				this.startTime = 0;
+				this.multiTimer = 0;
+			}
+			else
+			{
+				pD.lowerMulti();
+				this.setMultiTimer();
+			}
+			
+		}
 	}
 	
 	/**

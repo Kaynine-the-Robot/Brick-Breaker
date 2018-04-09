@@ -82,9 +82,12 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			
 			ballMovement.setHitBrick(false);
 			
+			
+			
 			if(barMovement.getMultiFlag())
 			{
-				score.setText("Score: " + barMovement.getScore() + " MULTIPLIER X" + pD.getMulti());
+				barMovement.updateCurrentTime(pD);
+				score.setText("Score: " + barMovement.getScore() + " MULTIPLIER X" + pD.getMulti() + " " + barMovement.getMultiTimer());
 			}
 			else
 			{

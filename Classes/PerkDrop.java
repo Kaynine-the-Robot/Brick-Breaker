@@ -38,6 +38,11 @@ public class PerkDrop extends AbstractObjects {
 		return this.scoreMultiplier;
 	}
 	
+	public void lowerMulti()
+	{
+		this.scoreMultiplier = this.scoreMultiplier / 2;
+	}
+	
 	public String choosePerk()
 	{
 		int rand = ThreadLocalRandom.current().nextInt(0, this.perkList.length);
@@ -50,7 +55,7 @@ public class PerkDrop extends AbstractObjects {
 		switch(perk)
 		{
 		case "lumpScoreBonus": bar.increaseScore(10, this); break;
-		case "scoreMultiplier": this.scoreMultiplier = this.scoreMultiplier * 2; bar.setMultiFlag(true); break;
+		case "scoreMultiplier": this.scoreMultiplier = this.scoreMultiplier * 2; bar.setMultiFlag(true); bar.setMultiTimer(); break;
 		default: break;
 		}
 	}
