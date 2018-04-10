@@ -3,6 +3,7 @@ package Classes;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -14,26 +15,55 @@ public class CollisionObjects {
 
 	private Rectangle[][] brickHitboxes; 
 	private Rectangle barHitbox;
-	private Circle ballHitbox;
+	private ImageView ballHitbox;
 	private ArrayList<Polygon> perkSprites = new ArrayList<Polygon>();
 	
-	public CollisionObjects(Rectangle barH, Circle ballH)
+	public CollisionObjects(Rectangle barH, ImageView ballH)
 	{
 		this.barHitbox = barH;
 		this.ballHitbox = ballH;
 	}
 	
+	public void checkBallImageSwitch(Ball ball)
+	{
+		if (this.ballHitbox.getLayoutX() >= 320 && ball.getPositionFlag() != 4)
+    	{
+			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(4));
+			ball.setPositionFlag();
+    	}
+		else if(this.ballHitbox.getLayoutX() > 240 && this.ballHitbox.getLayoutX() < 320 && ball.getPositionFlag() != 3)
+		{
+			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(3));
+			ball.setPositionFlag();
+		}
+		else if(this.ballHitbox.getLayoutX() >= 160 && this.ballHitbox.getLayoutX() <= 240 && ball.getPositionFlag() != 2)
+		{
+			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(2));
+			ball.setPositionFlag();
+		}
+		else if(this.ballHitbox.getLayoutX() > 80 && this.ballHitbox.getLayoutX() < 160 && ball.getPositionFlag() != 1)
+		{
+			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(1));
+			ball.setPositionFlag();
+		}
+		else if(this.ballHitbox.getLayoutX() < 80 && ball.getPositionFlag() != 0)
+		{
+			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(0));
+			ball.setPositionFlag();
+		}
+	}
+	
 	public void checkBallAndBorders(Ball ball)
 	{
-		if (this.ballHitbox.getLayoutX() == (204-this.ballHitbox.getRadius()) || this.ballHitbox.getLayoutX() == (-206+ this.ballHitbox.getRadius()))
+		if (this.ballHitbox.getLayoutX() == (372) || this.ballHitbox.getLayoutX() == (0))
     	{
     		ball.horzCollision();
     	}
-		if (this.ballHitbox.getLayoutY() == (-456 + this.ballHitbox.getRadius())) 
+		if (this.ballHitbox.getLayoutY() == (0 + this.ballHitbox.getFitHeight())) 
     	{
     		ball.vertCollision();
     	}
-		if (this.ballHitbox.getLayoutY() == (46 - this.ballHitbox.getRadius())) 
+		if (this.ballHitbox.getLayoutY() == (460 - this.ballHitbox.getFitHeight())) 
     	{
     		ball.pauseBall();
     	}

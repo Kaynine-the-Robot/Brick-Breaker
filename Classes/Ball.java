@@ -1,6 +1,7 @@
 package Classes;
 import java.awt.Point;
 import Classes.*;
+import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 
 /**
@@ -15,6 +16,8 @@ public class Ball extends AbstractObjects
 	    private int horzMovement = 1;
 	    private int vertMovement = -1;
 	    private boolean hitBrick = false;
+	    private Image[] ballSprites = new Image[5];
+	    private int positionFlag;
 	    
 	    /**
 	     * A constructor for a ball object
@@ -26,7 +29,40 @@ public class Ball extends AbstractObjects
 	        this.setPosition(x, y);
 	        this.setSymbol('O');
 	    }
+	    
+	    public Ball(int x, int y, Image ballLeft, Image ballMiddleLeft, Image ball, Image ballMiddleRight, Image ballRight)
+	    {
+	        this.setPosition(x, y);
+	        this.setSymbol('O');
+	        ballSprites[0] = ballLeft; ballSprites[1] = ballMiddleLeft; ballSprites[2] = ball; ballSprites[3] = ballMiddleRight; ballSprites[4] = ballRight;
+	    }
  
+	    public Image getBallSpritesAtIndex(int index)
+	    {
+	    	return ballSprites[index];
+	    }
+	    
+	    public int getPositionFlag()
+	    {
+	    	return this.positionFlag;
+	    }
+	    
+	    public void setPositionFlag()
+	    {
+	    	switch(this.positionFlag)
+	    	{
+	    	case 0: this.positionFlag = 1; break;
+	    	case 1: if(this.horzMovement==1) {this.positionFlag = 2;} 
+	    			else if(this.horzMovement == -1) {this.positionFlag = 0;}; break;
+	    	case 2: if(this.horzMovement==1) {this.positionFlag = 3;} 
+					else if(this.horzMovement == -1) {this.positionFlag = 1;}; break;
+	    	case 3: if(this.horzMovement==1) {this.positionFlag = 4;} 
+					else if(this.horzMovement == -1) {this.positionFlag = 2;}; break;
+	    	case 4: this.positionFlag = 3; break;
+	    	default: this.positionFlag = 1; break;
+	    	}
+	    }
+	    
 	    /**
 	     * This is a getter for returning a value of current horizontal movement
 	     * @param none

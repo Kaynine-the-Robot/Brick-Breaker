@@ -1,6 +1,9 @@
 package GUI;
 
 import Classes.*;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -11,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -26,22 +30,33 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 	public void start(Stage primaryStage) throws Exception {
 		
     	//Classes used for keeping track of the ball and player movement for the GUI
-		Ball ballMovement = new Ball(0,0);
+		Ball ballMovement = new Ball(0,0, new Image("file:Assets/Ball_Left.jpg"), new Image("file:Assets/Ball_LeftMiddle.jpg"), new Image("file:Assets/Ball.jpg"),
+										new Image("file:Assets/Ball_RightMiddle.jpg"), new Image("file:Assets/Ball_Right.jpg"));
 		Player barMovement = new Player(0);
 		
 		
 		//Just setting up the graphics for the game including the player and ball
 		Pane root = new Pane();
-		Board board = new Board(); 
+		Board board = new Board();
 		Scene scene = new Scene(root , 408 , 500, Color.SKYBLUE);
 		
-		Rectangle bar = new Rectangle(280,460,70,8);		
-		Circle ball = new Circle(205,455,7);
+		Rectangle bar = new Rectangle(280,460,70,8);
+		//Circle ball = new Circle(205,455,7);
+		ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.jpg"));
+		spriteBall.setLayoutX(205); spriteBall.setLayoutY(450); 
 		
-		CollisionObjects cO = new CollisionObjects(bar, ball);
+		CollisionObjects cO = new CollisionObjects(bar, spriteBall);
 		
 		String[] perkList = new String[2]; perkList[0] = "lumpScoreBonus"; perkList[1] = "scoreMultiplier";
 		PerkDrop pD = new PerkDrop(0.5, perkList);
+		
+		//Image imageBall = new Image("file:Assets/Ball.jpg");
+		
+		//spriteBall.setImage(imageBall);
+		//HBox box = new HBox();
+		//box.getChildren().add(spriteBall);
+		
+		
 		
 		board.generateBlockArray(cO);
 		
@@ -66,9 +81,10 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		
 		
-		ball.setStroke(Color.BLACK);
-		ball.setFill(Color.CRIMSON);
-		root.getChildren().add(ball);
+		//ball.setStroke(Color.BLACK);
+		//ball.setFill(Color.CRIMSON);
+		//root.getChildren().add(ball);
+		root.getChildren().add(spriteBall);
 		root.getChildren().add(bar);
 		
 		
@@ -82,8 +98,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			
 			ballMovement.setHitBrick(false);
 			
-			
-			
 			if(barMovement.getMultiFlag())
 			{
 				barMovement.updateCurrentTime(pD);
@@ -95,6 +109,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			}
 			
 			//Here we are moving the ball
+			cO.checkBallImageSwitch(ballMovement);
 			cO.moveBallInWIndow(ballMovement);
         	//Moving Player
         	cO.movePlayerInWindow(barMovement);
@@ -126,12 +141,12 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				{
 					public void handle(KeyEvent e)
 					{
-						if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false)
+						if(e.getCode() == KeyCode.RIGHT && barMovement.getRFlag() == false)
 						{
 							barMovement.setRFlag(true);
 						}
 						
-						if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false)
+						if(e.getCode() == KeyCode.LEFT && barMovement.getLFlag() == false)
 						{
 							barMovement.setLFlag(true);
 						}
