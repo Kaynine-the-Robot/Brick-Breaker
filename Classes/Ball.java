@@ -63,6 +63,12 @@ public class Ball extends AbstractObjects
 	    	}
 	    }
 	    
+	    public void reset()
+	    {
+	    	horzMovement = 1;
+		    vertMovement = -1;
+	    }
+	    
 	    /**
 	     * This is a getter for returning a value of current horizontal movement
 	     * @param none

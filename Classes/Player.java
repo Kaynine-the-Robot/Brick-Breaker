@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
  */
 public class Player extends AbstractObjects {
 	private int score = 0;
+	private int lives = 3;
 	private boolean rFlag = false;
 	private boolean lFlag = false;
 	private boolean multiFlag = false;
@@ -129,6 +130,15 @@ public class Player extends AbstractObjects {
 		return this.score;
 	}
 	
+	public int getLives()
+	{
+		return this.lives;
+	}
+	
+	public void loseLife()
+	{
+		lives--;
+	}
 	/**
 	 * A method for increasing the score by one
 	 */
