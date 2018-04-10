@@ -187,8 +187,10 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         		endScreen.setText("YOU LOSE");
         	}
         	
-        	if(root.getChildren().size() - 3 == 0)
+        	System.out.println(root.getChildren().size());
+        	if(root.getChildren().size() - 5 == 0)
         	{
+        		
         		ballMovement.pauseBall();
         		barMovement.setMoveFlag(false);
         		
