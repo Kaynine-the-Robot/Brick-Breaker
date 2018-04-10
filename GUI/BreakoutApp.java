@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -71,9 +72,14 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		root.getChildren().add(ball);
 		root.getChildren().add(bar);
 		
-		
+		Label endScreen = new Label();
+		endScreen.setVisible(false);
+		endScreen.setFont(new Font(30));
 		Label score = new Label("Score: 0");
 		root.getChildren().add(score);
+		root.getChildren().add(endScreen);
+		endScreen.setLayoutX(140);
+		endScreen.setLayoutY(270);
 		score.setLayoutX(10);
 		score.setLayoutY(10);
 		
@@ -102,7 +108,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	cO.moveAllPerksInWindow(pD);
         	
         	//Checking ball and all borders of the window
-        	cO.checkBallAndBorders(ballMovement);
+        	cO.checkBallAndBorders(ballMovement, barMovement);
         	//Checking ball and player bar collision
         	cO.checkBallPlayerCollisionTrigger(root, ballMovement, barMovement);
         	//If ball collides with brick
@@ -110,9 +116,19 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	//Checking falling perks collisions
         	cO.checkPerkCollisions(root, barMovement, pD);
         	
+        	if(barMovement.getMoveFlag() == false)
+        	{
+        		endScreen.setVisible(true);
+        		endScreen.setText("YOU LOSE");
+        	}
+        	
         	if(root.getChildren().size() - 3 == 0)
         	{
         		ballMovement.pauseBall();
+        		barMovement.setMoveFlag(false);
+        		
+        		endScreen.setVisible(true);
+        		endScreen.setText("YOU WIN");
         	}
         	
         	
@@ -126,12 +142,12 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				{
 					public void handle(KeyEvent e)
 					{
-						if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false)
+						if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
 						{
 							barMovement.setRFlag(true);
 						}
 						
-						if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false)
+						if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
 						{
 							barMovement.setLFlag(true);
 						}

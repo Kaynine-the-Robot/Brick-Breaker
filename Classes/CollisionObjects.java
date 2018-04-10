@@ -23,7 +23,7 @@ public class CollisionObjects {
 		this.ballHitbox = ballH;
 	}
 	
-	public void checkBallAndBorders(Ball ball)
+	public void checkBallAndBorders(Ball ball, Player player)
 	{
 		if (this.ballHitbox.getLayoutX() == (204-this.ballHitbox.getRadius()) || this.ballHitbox.getLayoutX() == (-206+ this.ballHitbox.getRadius()))
     	{
@@ -36,6 +36,7 @@ public class CollisionObjects {
 		if (this.ballHitbox.getLayoutY() == (46 - this.ballHitbox.getRadius())) 
     	{
     		ball.pauseBall();
+    		player.setMoveFlag(false);
     	}
 	}
 	

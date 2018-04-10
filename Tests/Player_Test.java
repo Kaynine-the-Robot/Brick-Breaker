@@ -22,8 +22,8 @@ public class Player_Test {
 		
 		Player p = new Player(3);
 		assertEquals("Expected 0", 0, p.getScore());
-		p.increaseScore();
-		p.increaseScore();
+		p.increaseScore(1);
+		p.increaseScore(1);
 		assertEquals("Expected 2", 2, p.getScore());
 	}
 	
