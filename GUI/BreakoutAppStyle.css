@@ -1,0 +1,12 @@
+.root{
+
+	-fx-background-image: url("/GUI/purpleSpace.jpg");
+	-fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-family: "Courier New";
+    
+}
+
+.label{
+	-fx-text-fill: white;
+}

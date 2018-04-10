@@ -53,7 +53,8 @@ public class CollisionObjects {
 		}
 	}
 	
-	public void checkBallAndBorders(Ball ball)
+
+	public void checkBallAndBorders(Ball ball, Player player)
 	{
 		if (this.ballHitbox.getLayoutX() == (372) || this.ballHitbox.getLayoutX() == (0))
     	{
@@ -66,6 +67,7 @@ public class CollisionObjects {
 		if (this.ballHitbox.getLayoutY() == (460 - this.ballHitbox.getFitHeight())) 
     	{
     		ball.pauseBall();
+    		player.setMoveFlag(false);
     	}
 	}
 	

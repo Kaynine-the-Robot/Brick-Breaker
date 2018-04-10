@@ -1,0 +1,28 @@
+.root{
+
+	-fx-background-image: url("/GUI/space.jpg");
+	
+}
+.button{
+
+    -fx-background-color: linear-gradient(#7CA6FF     , #FFFFFF    );
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: black;
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 13px;
+    -fx-font-family: "Courier New";
+    
+}
+
+.button:hover{
+
+ 	-fx-background-color: linear-gradient(#7CA6FF, #FF9797  );
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: black;
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 13px;
+    -fx-font-family: "Courier New";
+
+}

@@ -16,6 +16,7 @@ public class Player extends AbstractObjects {
 	private boolean rFlag = false;
 	private boolean lFlag = false;
 	private boolean multiFlag = false;
+	private boolean moveFlag = true;
 	private int multiTimer;
 	private long startTime;
 	
@@ -37,6 +38,16 @@ public class Player extends AbstractObjects {
 	public void setMultiFlag(boolean nFlag)
 	{
 		this.multiFlag = nFlag;
+	}
+	
+	public boolean getMoveFlag()
+	{
+		return this.moveFlag;
+	}
+	
+	public void setMoveFlag(boolean nFlag)
+	{
+		this.moveFlag = nFlag;
 	}
 	
 	public int getMultiTimer()
