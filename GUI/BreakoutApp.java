@@ -9,10 +9,12 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -33,10 +35,25 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//Just setting up the graphics for the game including the player and ball
 		Pane root = new Pane();
 		Board board = new Board(); 
-		Scene scene = new Scene(root , 408 , 500, Color.SKYBLUE);
+		Scene scene = new Scene(root , 408 , 500);
 		
-		Rectangle bar = new Rectangle(280,460,70,8);		
+		//style for the game
+				scene.getStylesheets().add("/GUI/BreakoutAppStyle.css");
+				//
+		
+		Rectangle bar = new Rectangle(280,460,70,15);		
 		Circle ball = new Circle(205,455,7);
+		
+		//Icon + ball img
+		Image icon = new Image("/GUI/ball.png",554,83,true,true);
+		primaryStage.getIcons().add(icon);
+		ball.setFill(new ImagePattern(icon));
+		//
+				
+		//bar img
+		Image barImg = new Image("/GUI/barImg.png");
+		bar.setFill(new ImagePattern(barImg));
+		//
 		
 		CollisionObjects cO = new CollisionObjects(bar, ball);
 		
@@ -47,7 +64,14 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		cO.addBlockArrayToRoot(root);
 		
+		//
 		MainMenu.display();
+		if (MainMenu.getRandomOrCustom().equals("")) {
+			System.out.println("The JavaFX GUI has been closed.");
+			System.out.println("If you wish to access text version, \n"
+					+ "do so in Main method and set up the level there.");
+			System.exit(0);
+		}
 		
 		if (MainMenu.getRandomOrCustom().equals("random")) {
 			board.generateRandomLevel(root, cO, MainMenu.getColors());
@@ -56,18 +80,12 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		else if (MainMenu.getRandomOrCustom().equals("custom")) {
 			board.addCustomLevel(root,MainMenu.getLevelName(), MainMenu.getColors(), cO);
 		}
-    	
+		
+		
+			
 		primaryStage.setScene(scene);
 		
-		//timeline.play();
-		//board.generateRandomLevel(root);
-		//board.removeBlockAtIndex(root, 0,4);
-		//board.addCustomLevel(root,"lines.txt",Color.CORNFLOWERBLUE);
 		
-		
-		
-		ball.setStroke(Color.BLACK);
-		ball.setFill(Color.CRIMSON);
 		root.getChildren().add(ball);
 		root.getChildren().add(bar);
 		
@@ -158,10 +176,16 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//Timeline goes forever unless interrupted and starts timeline
 		timeline.setCycleCount(Timeline.INDEFINITE);
         //Setting up the the final for actually showing the graphics
-		//primaryStage.setScene(MainMenu.getMenu());
 		timeline.play();
 		primaryStage.setTitle("Brick Breaker");
 		
+		//This bit ensures the maximization of the window isn't allowed
+				primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
+		            if (newValue)
+		                primaryStage.setMaximized(false);
+		        });
+				//
+				
 		primaryStage.show();
 		
 		
