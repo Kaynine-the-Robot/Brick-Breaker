@@ -33,9 +33,17 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 	public void start(Stage primaryStage) throws Exception {
 		
     	//Classes used for keeping track of the ball and player movement for the GUI
-		Ball ballMovement = new Ball(0,0, new Image("file:Assets/Ball_Left.jpg"), new Image("file:Assets/Ball_LeftMiddle.jpg"), new Image("file:Assets/Ball.jpg"),
-										new Image("file:Assets/Ball_RightMiddle.jpg"), new Image("file:Assets/Ball_Right.jpg"));
-		Player barMovement = new Player(0);
+		Ball ballMovement = new Ball(205, 434, new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
+				new Image("file:Assets/Ball_LeftMiddle.png"),// 28, 28, true, false), 
+				new Image("file:Assets/Ball.png"),// 28, 28, true, false), 
+				new Image("file:Assets/Ball_RightMiddle.png"),// 28, 28, true, false),  
+				new Image("file:Assets/Ball_Right.png"));// 28, 28, true, false));
+		
+		Player barMovement = new Player(190, new Image("file:Assets/Bar_Left.png", 100, 15, true, true), 
+				new Image("file:Assets/Bar_LeftMiddle.png", 100, 15, true, true), 
+				new Image("file:Assets/Bar.png", 100, 15, true, true), 
+				new Image("file:Assets/Bar_RightMiddle.png", 100, 15, true, true), 
+				new Image("file:Assets/Bar_Right.png", 100, 15, true, true));
 		
 		
 		//Just setting up the graphics for the game including the player and ball
@@ -43,12 +51,17 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		Scene scene = new Scene(root , 408 , 500);
 		
 		//Rectangle bar = new Rectangle(280,460,70,8);
-		Rectangle bar = new Rectangle(280,460,70,15);
+		//Rectangle bar = new Rectangle(280,460,70,15);
 		//Circle ball = new Circle(205,455,7);
-		ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.jpg"));
-		spriteBall.setLayoutX(205); spriteBall.setLayoutY(450); 
+		ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.png"));
+		spriteBall.setX(205); spriteBall.setY(430); 
+		spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
 		
-		CollisionObjects cO = new CollisionObjects(bar, spriteBall);
+		ImageView spriteBar = new ImageView(new Image("file:Assets/Bar.png"));
+		spriteBar.setX(190); spriteBar.setY(460); 
+		spriteBar.setFitHeight(15); spriteBar.setFitWidth(100);
+		
+		CollisionObjects cO = new CollisionObjects(spriteBar, spriteBall);
 		Board board = new Board(); 
 		
 		
@@ -57,17 +70,17 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				//
 		
 				
-		Circle ball = new Circle(205,455,7);
+		//Circle ball = new Circle(205,455,7);
 		
 		//Icon + ball img
-		Image icon = new Image("/GUI/ball.png",554,83,true,true);
-		primaryStage.getIcons().add(icon);
-		ball.setFill(new ImagePattern(icon));
+		//Image icon = new Image("/GUI/ball.png",554,83,true,true);
+		//primaryStage.getIcons().add(icon);
+		//ball.setFill(new ImagePattern(icon));
 		//
 				
 		//bar img
-		Image barImg = new Image("/GUI/barImg.png");
-		bar.setFill(new ImagePattern(barImg));
+		//Image barImg = new Image("/GUI/barImg.png");
+		//bar.setFill(new ImagePattern(barImg));
 		//
 				
 		String[] perkList = new String[2]; perkList[0] = "lumpScoreBonus"; perkList[1] = "scoreMultiplier";
@@ -111,8 +124,8 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//ball.setFill(Color.CRIMSON);
 		//root.getChildren().add(ball);
 		root.getChildren().add(spriteBall);
-		root.getChildren().add(ball);
-		root.getChildren().add(bar);
+		//root.getChildren().add(ball);
+		root.getChildren().add(spriteBar);
 		
 		Label endScreen = new Label();
 		endScreen.setVisible(false);
@@ -144,6 +157,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			cO.checkBallImageSwitch(ballMovement);
 			cO.moveBallInWIndow(ballMovement);
         	//Moving Player
+			cO.checkBarImageSwitch(barMovement);
         	cO.movePlayerInWindow(barMovement);
         	//Moving any Perks
         	cO.moveAllPerksInWindow(pD);
@@ -183,14 +197,14 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				{
 					public void handle(KeyEvent e)
 					{
-						if(e.getCode() == KeyCode.RIGHT && barMovement.getRFlag() == false)
-						if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
+						if(e.getCode() == KeyCode.RIGHT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
+						//if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
 						{
 							barMovement.setRFlag(true);
 						}
 						
-						if(e.getCode() == KeyCode.LEFT && barMovement.getLFlag() == false)
-						if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
+						if(e.getCode() == KeyCode.LEFT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
+						//if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
 						{
 							barMovement.setLFlag(true);
 						}

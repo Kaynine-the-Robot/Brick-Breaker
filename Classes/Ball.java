@@ -17,7 +17,7 @@ public class Ball extends AbstractObjects
 	    private int vertMovement = -1;
 	    private boolean hitBrick = false;
 	    private Image[] ballSprites = new Image[5];
-	    private int positionFlag;
+	    private int ballPositionFlag;
 	    
 	    /**
 	     * A constructor for a ball object
@@ -44,22 +44,22 @@ public class Ball extends AbstractObjects
 	    
 	    public int getPositionFlag()
 	    {
-	    	return this.positionFlag;
+	    	return this.ballPositionFlag;
 	    }
 	    
 	    public void setPositionFlag()
 	    {
-	    	switch(this.positionFlag)
+	    	switch(this.ballPositionFlag)
 	    	{
-	    	case 0: this.positionFlag = 1; break;
-	    	case 1: if(this.horzMovement==1) {this.positionFlag = 2;} 
-	    			else if(this.horzMovement == -1) {this.positionFlag = 0;}; break;
-	    	case 2: if(this.horzMovement==1) {this.positionFlag = 3;} 
-					else if(this.horzMovement == -1) {this.positionFlag = 1;}; break;
-	    	case 3: if(this.horzMovement==1) {this.positionFlag = 4;} 
-					else if(this.horzMovement == -1) {this.positionFlag = 2;}; break;
-	    	case 4: this.positionFlag = 3; break;
-	    	default: this.positionFlag = 1; break;
+	    	case 0: this.ballPositionFlag = 1; break;
+	    	case 1: if(this.horzMovement==1) {this.ballPositionFlag = 2;} 
+	    			else if(this.horzMovement == -1) {this.ballPositionFlag = 0;}; break;
+	    	case 2: if(this.horzMovement==1) {this.ballPositionFlag = 3;} 
+					else if(this.horzMovement == -1) {this.ballPositionFlag = 1;}; break;
+	    	case 3: if(this.horzMovement==1) {this.ballPositionFlag = 4;} 
+					else if(this.horzMovement == -1) {this.ballPositionFlag = 2;}; break;
+	    	case 4: this.ballPositionFlag = 3; break;
+	    	default: this.ballPositionFlag = 1; break;
 	    	}
 	    }
 	    

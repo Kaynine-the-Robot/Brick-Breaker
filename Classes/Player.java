@@ -4,6 +4,7 @@ import java.awt.Point;
 import Classes.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 /**
@@ -19,6 +20,8 @@ public class Player extends AbstractObjects {
 	private boolean moveFlag = true;
 	private int multiTimer;
 	private long startTime;
+	private Image[] barSprites = new Image[5];
+    private int barPositionFlag;
 	
 	/**
 	 * A constructor for creating a player object with a horizontal position (should stay in one veticle placement)
@@ -29,6 +32,39 @@ public class Player extends AbstractObjects {
 		this.setPosition(x, 14);
 		this.setSymbol('P');
 		}
+	
+	public Player(int x, Image barLeft, Image barMiddleLeft, Image bar, Image barMiddleRight, Image barRight)
+	{
+		this.setPosition(x, 450);
+		this.setSymbol('P');
+		barSprites[0] = barLeft; barSprites[1] = barMiddleLeft; barSprites[2] = bar; barSprites[3] = barMiddleRight; barSprites[4] = barRight;
+	}
+	
+	public Image getBarSpritesAtIndex(int index)
+    {
+    	return barSprites[index];
+    }
+    
+    public int getPositionFlag()
+    {
+    	return this.barPositionFlag;
+    }
+    
+    public void setPositionFlag()
+    {
+    	switch(this.barPositionFlag)
+    	{
+    	case 0: this.barPositionFlag = 1; break;
+    	case 1: if(this.rFlag) {this.barPositionFlag = 2;} 
+    			else if(this.lFlag) {this.barPositionFlag = 0;}; break;
+    	case 2: if(this.rFlag) {this.barPositionFlag = 3;} 
+				else if(this.lFlag) {this.barPositionFlag = 1;}; break;
+    	case 3: if(this.rFlag) {this.barPositionFlag = 4;} 
+				else if(this.lFlag) {this.barPositionFlag = 2;}; break;
+    	case 4: this.barPositionFlag = 3; break;
+    	default: this.barPositionFlag = 1; break;
+    	}
+    }
 	
 	public boolean getMultiFlag()
 	{

@@ -14,11 +14,12 @@ import javafx.scene.shape.Polygon;
 public class CollisionObjects {
 
 	private Rectangle[][] brickHitboxes; 
-	private Rectangle barHitbox;
+	private ImageView barHitbox;
 	private ImageView ballHitbox;
 	private ArrayList<Polygon> perkSprites = new ArrayList<Polygon>();
+	final int COLLISION_OFFSET = 4;
 	
-	public CollisionObjects(Rectangle barH, ImageView ballH)
+	public CollisionObjects(ImageView barH, ImageView ballH)
 	{
 		this.barHitbox = barH;
 		this.ballHitbox = ballH;
@@ -26,45 +27,74 @@ public class CollisionObjects {
 	
 	public void checkBallImageSwitch(Ball ball)
 	{
-		if (this.ballHitbox.getLayoutX() >= 320 && ball.getPositionFlag() != 4)
+		if (this.ballHitbox.getX() >= 320 && ball.getPositionFlag() != 4)
     	{
 			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(4));
 			ball.setPositionFlag();
     	}
-		else if(this.ballHitbox.getLayoutX() > 240 && this.ballHitbox.getLayoutX() < 320 && ball.getPositionFlag() != 3)
+		else if(this.ballHitbox.getX() > 240 && this.ballHitbox.getX() < 320 && ball.getPositionFlag() != 3)
 		{
 			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(3));
 			ball.setPositionFlag();
 		}
-		else if(this.ballHitbox.getLayoutX() >= 160 && this.ballHitbox.getLayoutX() <= 240 && ball.getPositionFlag() != 2)
+		else if(this.ballHitbox.getX() >= 160 && this.ballHitbox.getX() <= 240 && ball.getPositionFlag() != 2)
 		{
 			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(2));
 			ball.setPositionFlag();
 		}
-		else if(this.ballHitbox.getLayoutX() > 80 && this.ballHitbox.getLayoutX() < 160 && ball.getPositionFlag() != 1)
+		else if(this.ballHitbox.getX() > 80 && this.ballHitbox.getX() < 160 && ball.getPositionFlag() != 1)
 		{
 			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(1));
 			ball.setPositionFlag();
 		}
-		else if(this.ballHitbox.getLayoutX() < 80 && ball.getPositionFlag() != 0)
+		else if(this.ballHitbox.getX() < 80 && ball.getPositionFlag() != 0)
 		{
 			this.ballHitbox.setImage(ball.getBallSpritesAtIndex(0));
 			ball.setPositionFlag();
 		}
 	}
 	
+	public void checkBarImageSwitch(Player bar)
+	{
+		if (this.barHitbox.getX() >= 280 && bar.getPositionFlag() != 4)
+    	{
+			this.barHitbox.setImage(bar.getBarSpritesAtIndex(4));
+			bar.setPositionFlag();
+    	}
+		else if(this.barHitbox.getX() > 200 && this.barHitbox.getX() < 280 && bar.getPositionFlag() != 3)
+		{
+			this.barHitbox.setImage(bar.getBarSpritesAtIndex(3));
+			bar.setPositionFlag();
+		}
+		else if(this.barHitbox.getX() >= 120 && this.barHitbox.getX() <= 200 && bar.getPositionFlag() != 2)
+		{
+			this.barHitbox.setImage(bar.getBarSpritesAtIndex(2));
+			bar.setPositionFlag();
+		}
+		else if(this.barHitbox.getX() > 40 && this.barHitbox.getX() < 120 && bar.getPositionFlag() != 1)
+		{
+			this.barHitbox.setImage(bar.getBarSpritesAtIndex(1));
+			bar.setPositionFlag();
+		}
+		else if(this.barHitbox.getX() < 40 && bar.getPositionFlag() != 0)
+		{
+			this.barHitbox.setImage(bar.getBarSpritesAtIndex(0));
+			bar.setPositionFlag();
+		}
+	}
+	
 
 	public void checkBallAndBorders(Ball ball, Player player)
 	{
-		if (this.ballHitbox.getLayoutX() == (372) || this.ballHitbox.getLayoutX() == (0))
+		if (this.ballHitbox.getX() + this.ballHitbox.getFitWidth() - this.COLLISION_OFFSET == 408 || this.ballHitbox.getX() <= (0) - this.COLLISION_OFFSET)
     	{
     		ball.horzCollision();
     	}
-		if (this.ballHitbox.getLayoutY() == (0 + this.ballHitbox.getFitHeight())) 
+		if (this.ballHitbox.getY() == (this.ballHitbox.getFitHeight() - this.COLLISION_OFFSET)) 
     	{
     		ball.vertCollision();
     	}
-		if (this.ballHitbox.getLayoutY() == (460 - this.ballHitbox.getFitHeight())) 
+		if (this.ballHitbox.getY() == (500 - this.ballHitbox.getFitHeight())) 
     	{
     		ball.pauseBall();
     		player.setMoveFlag(false);
@@ -74,8 +104,8 @@ public class CollisionObjects {
 	public boolean checkBallAndBrickSides(int i, int j)
 	{
 		Rectangle rect = this.brickHitboxes[i][j];
-		if(this.ballHitbox.getBoundsInParent().intersects(rect.getX(), rect.getY() + 2.0, 1.0, rect.getHeight() - 4.0) || 
-				ballHitbox.getBoundsInParent().intersects(rect.getX() + rect.getWidth(), rect.getY() + 2.0, 1.0, rect.getHeight() - 4.0))
+		if(this.ballHitbox.getBoundsInParent().intersects(rect.getX() + this.COLLISION_OFFSET, rect.getY() + this.COLLISION_OFFSET/2, 1.0, rect.getHeight() - this.COLLISION_OFFSET/2) || 
+				ballHitbox.getBoundsInParent().intersects(rect.getX() + rect.getWidth(), rect.getY() + this.COLLISION_OFFSET/2, 1.0, rect.getHeight() - this.COLLISION_OFFSET/2))
 		{
 			return true;
 		}
@@ -86,8 +116,8 @@ public class CollisionObjects {
 	public boolean checkBallAndBrickTopAndBottom(int i, int j)
 	{
 		Rectangle rect = this.brickHitboxes[i][j];
-		if(ballHitbox.getBoundsInParent().intersects(rect.getX() + 2.0, rect.getY(), rect.getWidth() - 4.0, 1.0) || 
-				ballHitbox.getBoundsInParent().intersects(rect.getX() + 2.0, rect.getY() + rect.getHeight(), rect.getWidth() - 4.0, 1.0))
+		if(ballHitbox.getBoundsInParent().intersects(rect.getX() + this.COLLISION_OFFSET/2, rect.getY(), rect.getWidth() - this.COLLISION_OFFSET/2, 1.0) || 
+				ballHitbox.getBoundsInParent().intersects(rect.getX() + this.COLLISION_OFFSET/2, rect.getY() + rect.getHeight(), rect.getWidth() - this.COLLISION_OFFSET/2, 1.0))
 			{ //The 2.0 and 4.0 are offsets to avoid clipping in false collisions
 			 return true;
 			}
@@ -106,8 +136,8 @@ public class CollisionObjects {
 	
 	public boolean checkBallAndPlayerSides()
 	{
-		if(this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getX(), this.barHitbox.getY() + 2.0, 1.0, this.barHitbox.getHeight() - 4.0) || 
-			this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getX() + this.barHitbox.getWidth(), this.barHitbox.getY() + 2.0, 1.0, this.barHitbox.getHeight() - 4.0))
+		if(this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getX(), this.barHitbox.getY() + 2.0, 1.0, this.barHitbox.getFitHeight() - 4.0) || 
+			this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getX() + this.barHitbox.getFitWidth(), this.barHitbox.getY() + 2.0, 1.0, this.barHitbox.getFitHeight() - 4.0))
 		{
 			return true;
 		}
@@ -116,8 +146,8 @@ public class CollisionObjects {
 	
 	public boolean checkBallAndPlayerTopAndBottom()
 	{
-		if(this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getX() + 2.0, this.barHitbox.getY(), this.barHitbox.getWidth() - 4.0, 1.0) || 
-				this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getX() + 2.0, this.barHitbox.getY() + this.barHitbox.getHeight(), this.barHitbox.getWidth() - 4.0, 1.0))
+		if(this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getX() + 2.0, this.barHitbox.getY(), this.barHitbox.getFitWidth() - 4.0, 1.0) || 
+				this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getX() + 2.0, this.barHitbox.getY() + this.barHitbox.getFitHeight(), this.barHitbox.getFitWidth() - 4.0, 1.0))
 		{
 			return true;
 		}
@@ -126,15 +156,15 @@ public class CollisionObjects {
 	
 	public boolean checkBallAndPlayerCorners()
 	{
-		this.ballHitbox.setLayoutY(this.ballHitbox.getLayoutY() + 2);
-		this.ballHitbox.setLayoutX(this.ballHitbox.getLayoutX() + 2);
+		this.ballHitbox.setY(this.ballHitbox.getY() + 2);
+		this.ballHitbox.setX(this.ballHitbox.getX() + 2);
 		return true;
 	}
 	
 	public void moveBallInWIndow(Ball ballMovement)
 	{
-		this.ballHitbox.setLayoutX(this.ballHitbox.getLayoutX() + ballMovement.getHorzMovement());
-    	this.ballHitbox.setLayoutY(this.ballHitbox.getLayoutY() + ballMovement.getVertMovement());
+		this.ballHitbox.setX(this.ballHitbox.getX() + ballMovement.getHorzMovement());
+    	this.ballHitbox.setY(this.ballHitbox.getY() + ballMovement.getVertMovement());
     	ballMovement.setPosition((int)ballMovement.getPosition().getX() + ballMovement.getHorzMovement(), 
     			(int) ballMovement.getPosition().getY() + ballMovement.getVertMovement());
 	}
@@ -142,7 +172,7 @@ public class CollisionObjects {
 	public void movePlayerInWindow(Player barMovement)
 	{
 		//If the right key is down
-		if(barMovement.getRFlag() && this.barHitbox.getX() < 340)
+		if(barMovement.getRFlag() && this.barHitbox.getX() < 310)
     	{
     		this.barHitbox.setX(this.barHitbox.getX() + 1);
     	}
@@ -301,14 +331,14 @@ public class CollisionObjects {
 			}
 			if(pM.getLFlag())
 			{
-				this.ballHitbox.setLayoutX(this.ballHitbox.getLayoutX() - 2);
-				this.ballHitbox.setLayoutY(this.ballHitbox.getLayoutY());
+				this.ballHitbox.setX(this.ballHitbox.getX() - 2);
+				this.ballHitbox.setY(this.ballHitbox.getY());
 				bM.setPosition((int) bM.getPosition().getX() - 2, (int) bM.getPosition().getY());
 			}
 			else if(pM.getRFlag())
 			{
-				this.ballHitbox.setLayoutX(this.ballHitbox.getLayoutX() + 2);
-				this.ballHitbox.setLayoutY(this.ballHitbox.getLayoutY());
+				this.ballHitbox.setX(this.ballHitbox.getX() + 2);
+				this.ballHitbox.setY(this.ballHitbox.getY());
 				bM.setPosition((int) bM.getPosition().getX() + 2, (int) bM.getPosition().getY());
 			}
     		bM.horzCollision();
@@ -317,14 +347,14 @@ public class CollisionObjects {
 		{
 			if(pM.getLFlag())
 			{
-				this.ballHitbox.setLayoutX(this.ballHitbox.getLayoutX() + 2);
-				this.ballHitbox.setLayoutY(this.ballHitbox.getLayoutY());
+				this.ballHitbox.setX(this.ballHitbox.getX() + 2);
+				this.ballHitbox.setY(this.ballHitbox.getY());
 				bM.setPosition((int) bM.getPosition().getX() + 2, (int) bM.getPosition().getY());
 			}
 			else if(pM.getRFlag())
 			{
-				this.ballHitbox.setLayoutX(this.ballHitbox.getLayoutX() - 2);
-				this.ballHitbox.setLayoutY(this.ballHitbox.getLayoutY());
+				this.ballHitbox.setX(this.ballHitbox.getX() - 2);
+				this.ballHitbox.setY(this.ballHitbox.getY());
 				bM.setPosition((int) bM.getPosition().getX() - 2, (int) bM.getPosition().getY());
 			}
 			bM.vertCollision();
@@ -348,7 +378,7 @@ public class CollisionObjects {
 	{
 		for(int i = 0; i < this.perkSprites.size(); i++)
 		{
-			if(this.perkSprites.get(i).getLayoutY() >= 30)
+			if(this.perkSprites.get(i).getY() >= 30)
 			{
 				root.getChildren().remove(this.perkSprites.get(i));
 				pD.removeLowestPerk();
