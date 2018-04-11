@@ -36,7 +36,7 @@ public class Player extends AbstractObjects {
 	
 	public Player(int x, Image barLeft, Image barMiddleLeft, Image bar, Image barMiddleRight, Image barRight)
 	{
-		this.setPosition(x, 450);
+		this.setPosition(x, 950);
 		this.setSymbol('P');
 		barSprites[0] = barLeft; barSprites[1] = barMiddleLeft; barSprites[2] = bar; barSprites[3] = barMiddleRight; barSprites[4] = barRight;
 	}

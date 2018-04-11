@@ -38,7 +38,7 @@ public class Board
 	    public Board()
 	    {
 	    	this.blockArrayRow = 10;
-	    	this.blockArrayCol = 10;
+	    	this.blockArrayCol = 15;
 	    	
 	    }
 	    
@@ -275,11 +275,11 @@ public class Board
 		 				int rand = ThreadLocalRandom.current().nextInt(0, 4);
 		 				if(rand == 3)
 		 				{
-		 					blockArray[i][j] = new Hard_Block(10 + (40 * i), 70 + (20 * j), 'B', 2, 30, 10, 2);
+		 					blockArray[i][j] = new Hard_Block(cO.getBackWidth()/30 + (80 * i), cO.getBackHeight()/10 + (30 * j), 'B', 2, 60, 20, 2);
 		 				}
 		 				else
 		 				{
-		 					blockArray[i][j] = new Normal_Block(10 + (40 * i), 70 + (20 * j), 'B', 2, 30, 10);
+		 					blockArray[i][j] = new Normal_Block(cO.getBackWidth()/30 + (80 * i), cO.getBackHeight()/10 + (30 * j), 'B', 2, 60, 20);
 		 				}
 		 			}
 		 		}
@@ -358,9 +358,9 @@ public class Board
 			int maxBlockThatCanBeRemoved = (blockArrayRow * blockArrayCol); //Max num of blocks that can be removed is all blocks
 			int randomNumBlocksToRemove = ThreadLocalRandom.current().nextInt(0, maxBlockThatCanBeRemoved +1);
 			
-			for (int a = 0; a<10; a++) 
+			for (int a = 0; a<this.blockArrayRow; a++) 
 			{
-		  		for (int b = 0; b<10; b++) 
+		  		for (int b = 0; b<this.blockArrayCol; b++) 
 		  		{
 		  			cO.colorBrickInArray(a, b, colors);
 		  		}
@@ -400,10 +400,10 @@ public class Board
 		  public void addCustomLevel(Pane root,String level,Paint[] colors, CollisionObjects cO) {
 			  
 			  	Scanner scan = null;
-			  	this.blockArrayRow = 10;
-			  	this.blockArrayRow = 10; //Ensure the standard size
-			  	for (int i = 0; i<10; i++) {
-			  		for (int j = 0; j<10; j++) {
+			  	//this.blockArrayRow = 10;
+			  	//this.blockArrayRow = 10; //Ensure the standard size
+			  	for (int i = 0; i<this.blockArrayRow; i++) {
+			  		for (int j = 0; j<this.blockArrayCol; j++) {
 			  			cO.colorBrickInArray(i, j, colors);	
 			  		}
 			  	}

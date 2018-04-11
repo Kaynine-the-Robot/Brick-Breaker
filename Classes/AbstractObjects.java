@@ -24,11 +24,11 @@ public abstract class AbstractObjects {
 	 */
 	public void setPosition(int XCoord,int YCoord)
 	{
-		if(XCoord < 400)
+		if(XCoord < 816)
 		{
 			this.position.x = XCoord;
 		}
-		if(YCoord < 500)
+		if(YCoord < 1000)
 		{
 			this.position.y = YCoord;
 		}

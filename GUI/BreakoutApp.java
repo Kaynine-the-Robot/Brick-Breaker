@@ -15,6 +15,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -32,41 +37,55 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
     @Override
 	public void start(Stage primaryStage) throws Exception {
 		
+    	//Just setting up the graphics for the game including the player and ball
+    	Pane root = new Pane();
+    	Scene scene = new Scene(root , 816 , 1000);
+    	
+    	Image img = new Image("file:GUI/purpleSpace.jpg");
+    	final int BACKGROUND_WIDTH = 816;
+    	final int BACKGROUND_HEIGHT = 1000;
+    	
+		BackgroundSize bS = new BackgroundSize(BACKGROUND_WIDTH,BACKGROUND_HEIGHT,true,true,true,true);
+		final BackgroundImage bI = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, 
+	            					BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bS);
+	    final Background background = new Background(bI);
+	    root.setBackground(background); root.setMinWidth(img.getWidth()); root.setMinHeight(img.getHeight());
+	    
+
+    	ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.png"));
+    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(BACKGROUND_HEIGHT /10); 
+    	spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
+    	
+    	ImageView spriteBar = new ImageView(new Image("file:Assets/Bar.png"));
+    	spriteBar.setX(BACKGROUND_WIDTH/2); spriteBar.setY(BACKGROUND_HEIGHT - 50); 
+    	spriteBar.setFitHeight(15); spriteBar.setFitWidth(140);
+    	
     	//Classes used for keeping track of the ball and player movement for the GUI
-		Ball ballMovement = new Ball(205, 430, new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
+		Ball ballMovement = new Ball(BACKGROUND_WIDTH/2, BACKGROUND_HEIGHT / 10, new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball_LeftMiddle.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball_RightMiddle.png"),// 28, 28, true, false),  
 				new Image("file:Assets/Ball_Right.png"));// 28, 28, true, false));
 		
-		Player barMovement = new Player(190, new Image("file:Assets/Bar_Left.png", 100, 15, true, true), 
-				new Image("file:Assets/Bar_LeftMiddle.png", 100, 15, true, true), 
-				new Image("file:Assets/Bar.png", 100, 15, true, true), 
-				new Image("file:Assets/Bar_RightMiddle.png", 100, 15, true, true), 
-				new Image("file:Assets/Bar_Right.png", 100, 15, true, true));
-		
-		
-		//Just setting up the graphics for the game including the player and ball
-		Pane root = new Pane();
-		Scene scene = new Scene(root , 408 , 500);
+		Player barMovement = new Player(BACKGROUND_WIDTH/2, new Image("file:Assets/Bar_Left.png", 140, 15, true, true), 
+				new Image("file:Assets/Bar_LeftMiddle.png", 140, 15, true, true), 
+				new Image("file:Assets/Bar.png", 140, 15, true, true), 
+				new Image("file:Assets/Bar_RightMiddle.png", 140, 15, true, true), 
+				new Image("file:Assets/Bar_Right.png", 140, 15, true, true));
 		
 		//Rectangle bar = new Rectangle(280,460,70,8);
 		//Rectangle bar = new Rectangle(280,460,70,15);
 		//Circle ball = new Circle(205,455,7);
-		ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.png"));
-		spriteBall.setX(205); spriteBall.setY(430); 
-		spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
 		
-		ImageView spriteBar = new ImageView(new Image("file:Assets/Bar.png"));
-		spriteBar.setX(190); spriteBar.setY(460); 
-		spriteBar.setFitHeight(15); spriteBar.setFitWidth(100);
 		
-		CollisionObjects cO = new CollisionObjects(spriteBar, spriteBall);
+		CollisionObjects cO = new CollisionObjects(spriteBar, spriteBall, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 		Board board = new Board(); 
 		
 		
 		//style for the game
-				scene.getStylesheets().add("/GUI/BreakoutAppStyle.css");
+		
+				//scene.getStylesheets().add("/GUI/BreakoutAppStyle.css");
+				
 				//
 		
 				
