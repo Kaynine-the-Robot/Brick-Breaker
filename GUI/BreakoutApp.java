@@ -130,18 +130,27 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		Label endScreen = new Label();
 		endScreen.setVisible(false);
 		endScreen.setFont(new Font(30));
+		
+		Label lives = new Label("Lives: 3");
+		
 		Label score = new Label("Score: 0");
+		
 		root.getChildren().add(score);
 		root.getChildren().add(endScreen);
+		root.getChildren().add(lives);
+		
 		endScreen.setLayoutX(140);
 		endScreen.setLayoutY(270);
 		score.setLayoutX(10);
 		score.setLayoutY(10);
+		lives.setLayoutX(300);
+		lives.setLayoutY(10);
 		
 		//The animation "loop" that handles all movement in graphics
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 			
 			ballMovement.setHitBrick(false);
+			lives.setText("Lives: " + barMovement.getLives());
 			
 			if(barMovement.getMultiFlag())
 			{
@@ -171,14 +180,17 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	//Checking falling perks collisions
         	cO.checkPerkCollisions(root, barMovement, pD);
         	
+        	
         	if(barMovement.getMoveFlag() == false)
         	{
         		endScreen.setVisible(true);
         		endScreen.setText("YOU LOSE");
         	}
         	
-        	if(root.getChildren().size() - 3 == 0)
+        	System.out.println(root.getChildren().size());
+        	if(root.getChildren().size() - 5 == 0)
         	{
+        		
         		ballMovement.pauseBall();
         		barMovement.setMoveFlag(false);
         		

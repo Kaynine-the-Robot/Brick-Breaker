@@ -96,8 +96,18 @@ public class CollisionObjects {
     	}
 		if (this.ballHitbox.getY() == (500 - this.ballHitbox.getFitHeight())) 
     	{
-    		ball.pauseBall();
-    		player.setMoveFlag(false);
+			if(player.getLives() > 0)
+			{
+				ballHitbox.setX(205);
+				ballHitbox.setY(430);
+				ball.reset();
+				player.loseLife();
+			}
+			else
+			{
+	    		ball.pauseBall();
+	    		player.setMoveFlag(false);
+			}
     	}
 	}
 	
@@ -172,13 +182,13 @@ public class CollisionObjects {
 	public void movePlayerInWindow(Player barMovement)
 	{
 		//If the right key is down
-		if(barMovement.getRFlag() && this.barHitbox.getX() < 310)
+		if(barMovement.getRFlag() && this.barHitbox.getX() < 310 && barMovement.getMoveFlag())
     	{
     		this.barHitbox.setX(this.barHitbox.getX() + 1);
     	}
     	
     	//If the left key is down
-    	if(barMovement.getLFlag() && this.barHitbox.getX() > 0)
+    	if(barMovement.getLFlag() && this.barHitbox.getX() > 0 && barMovement.getMoveFlag())
     	{
     		this.barHitbox.setX(this.barHitbox.getX() - 1);
     	}
