@@ -187,7 +187,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         		endScreen.setText("YOU LOSE");
         	}
         	
-        	System.out.println(root.getChildren().size());
         	if(root.getChildren().size() - 5 == 0)
         	{
         		
