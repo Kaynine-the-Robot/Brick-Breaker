@@ -12,7 +12,7 @@ public class Normal_Block extends Block {
 	private int height;
 	*/
 	
-	public Normal_Block(int x, int y, char col, int len, int nWidth, int nHeight)
+	public Normal_Block(double x, double y, char col, int len, int nWidth, int nHeight)
 	{
 		this.setColor(col);
 		this.setBlockLength(len);

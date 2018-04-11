@@ -18,10 +18,10 @@ public class CollisionObjects {
 	private ImageView ballHitbox;
 	private ArrayList<Polygon> perkSprites = new ArrayList<Polygon>();
 	final int COLLISION_OFFSET = 4;
-	final int BACKGROUND_WIDTH;
-	final int BACKGROUND_HEIGHT;
+	final double BACKGROUND_WIDTH;
+	final double BACKGROUND_HEIGHT;
 	
-	public CollisionObjects(ImageView barH, ImageView ballH, int BACKGROUND_WIDTH, int BACKGROUND_HEIGHT)
+	public CollisionObjects(ImageView barH, ImageView ballH, double BACKGROUND_WIDTH, double BACKGROUND_HEIGHT)
 	{
 		this.barHitbox = barH;
 		this.ballHitbox = ballH;
@@ -29,12 +29,12 @@ public class CollisionObjects {
 		this.BACKGROUND_HEIGHT = BACKGROUND_HEIGHT;
 	}
 	
-	public int getBackHeight()
+	public double getBackHeight()
 	{
 		return this.BACKGROUND_HEIGHT;
 	}
 	
-	public int getBackWidth()
+	public double getBackWidth()
 	{
 		return this.BACKGROUND_WIDTH;
 	}
@@ -137,8 +137,8 @@ public class CollisionObjects {
     	{
 			if(player.getLives() > 0)
 			{
-				ballHitbox.setX(205);
-				ballHitbox.setY(430);
+				ballHitbox.setX(this.BACKGROUND_HEIGHT/2);
+				ballHitbox.setY(this.BACKGROUND_HEIGHT * 0.9 );
 				ball.reset();
 				player.loseLife();
 			}

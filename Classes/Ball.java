@@ -30,7 +30,7 @@ public class Ball extends AbstractObjects
 	        this.setSymbol('O');
 	    }
 	    
-	    public Ball(int x, int y, Image ballLeft, Image ballMiddleLeft, Image ball, Image ballMiddleRight, Image ballRight)
+	    public Ball(double x, double y, Image ballLeft, Image ballMiddleLeft, Image ball, Image ballMiddleRight, Image ballRight)
 	    {
 	        this.setPosition(x, y);
 	        this.setSymbol('O');

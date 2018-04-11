@@ -42,8 +42,8 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
     	Scene scene = new Scene(root , 816 , 1000);
     	
     	Image img = new Image("file:GUI/purpleSpace.jpg");
-    	final int BACKGROUND_WIDTH = 816;
-    	final int BACKGROUND_HEIGHT = 1000;
+    	final double BACKGROUND_WIDTH = 816;
+    	final double BACKGROUND_HEIGHT = 1000;
     	
 		BackgroundSize bS = new BackgroundSize(BACKGROUND_WIDTH,BACKGROUND_HEIGHT,true,true,true,true);
 		final BackgroundImage bI = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, 
@@ -53,7 +53,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 	    
 
     	ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.png"));
-    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(BACKGROUND_HEIGHT /10); 
+    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(BACKGROUND_HEIGHT * 0.9); 
     	spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
     	
     	ImageView spriteBar = new ImageView(new Image("file:Assets/Bar.png"));
@@ -61,7 +61,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
     	spriteBar.setFitHeight(15); spriteBar.setFitWidth(140);
     	
     	//Classes used for keeping track of the ball and player movement for the GUI
-		Ball ballMovement = new Ball(BACKGROUND_WIDTH/2, BACKGROUND_HEIGHT / 10, new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
+		Ball ballMovement = new Ball(BACKGROUND_WIDTH/2, BACKGROUND_HEIGHT * (9/10), new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball_LeftMiddle.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball_RightMiddle.png"),// 28, 28, true, false),  

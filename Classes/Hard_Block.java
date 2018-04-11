@@ -11,7 +11,7 @@ public class Hard_Block extends Block {
 	private int height;
 	*/
 	
-	public Hard_Block(int x, int y, char col, int len, int nWidth, int nHeight, int nHealth)
+	public Hard_Block(double x, double y, char col, int len, int nWidth, int nHeight, int nHealth)
 	{		
 		this.setColor(col);
 		this.setBlockLength(len);

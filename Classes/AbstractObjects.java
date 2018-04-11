@@ -22,15 +22,15 @@ public abstract class AbstractObjects {
 	 * @param XCoord is an integer of the x coordinate to be changed to
 	 * @param YCoord is an integer of the y coordinate to be changed to
 	 */
-	public void setPosition(int XCoord,int YCoord)
+	public void setPosition(double XCoord,double YCoord)
 	{
 		if(XCoord < 816)
 		{
-			this.position.x = XCoord;
+			this.position.x = (int) XCoord;
 		}
 		if(YCoord < 1000)
 		{
-			this.position.y = YCoord;
+			this.position.y = (int) YCoord;
 		}
 	}
 	
