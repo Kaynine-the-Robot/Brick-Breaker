@@ -33,7 +33,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 	public void start(Stage primaryStage) throws Exception {
 		
     	//Classes used for keeping track of the ball and player movement for the GUI
-		Ball ballMovement = new Ball(205, 434, new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
+		Ball ballMovement = new Ball(205, 430, new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball_LeftMiddle.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball.png"),// 28, 28, true, false), 
 				new Image("file:Assets/Ball_RightMiddle.png"),// 28, 28, true, false),  
