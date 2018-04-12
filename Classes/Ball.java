@@ -199,7 +199,7 @@ public class Ball extends AbstractObjects
 	    		return true;
 	    	} 
 	    	//Checks for if ball is at the bottom of screen
-	    	else if (this.getPosition().getY() == 14) 
+	    	else if (this.getPosition().getY() == 19) 
 	    	{
 	    		System.out.println("You lose.");
 	    		System.exit(0);

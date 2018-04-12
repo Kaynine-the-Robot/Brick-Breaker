@@ -237,7 +237,7 @@ public class Board
 
 			for (int i = 0 ; i< 10; i++) 
 			{
-				for (int j = 0 ; j< 10 ; j++) 
+				for (int j = 0 ; j< 15 ; j++) 
 				{
 					if ((ball.getPosition().getX() == objBoard[i][j].getPosition().getX()
 							&& ball.getPosition().getY() == objBoard[i][j].getPosition().getY()) 

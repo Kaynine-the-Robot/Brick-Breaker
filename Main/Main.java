@@ -91,7 +91,6 @@ public class Main
 	    			
 	    			player.moveBar(direction);
 	    			
-
 	    			
 	    			//if ball is on the bar's LEFT or RIGHT side..
 	    			if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
@@ -103,17 +102,11 @@ public class Main
 	    		 
 	    			board.checkBrickCollision(ball,player); //Checks if ball collides with brick
 	    		 
-	    			//if((int) ball.getPosition().getY() == 0)
-	    			//{
-	    				//player.increaseScore();
-	    			//}
-    		 		
-	    			ball.checkLocation(); //Checks ball-wall collision
-	 	
 	    		 		
 	    		 	board.updateBoard(ball.getPosition(), player.getPosition(),ball); //Board gets updated
 	    		 		
 	    		 	draw.printBoard(board, player); //Board gets displayed
+	    			ball.checkLocation(); //Checks ball-wall collision
 
 	    			}
 
