@@ -54,21 +54,20 @@ public class Main
 	        {
 	    		Application.launch(BreakoutApp.class, args);
 	    		
-	    		
-	    		
-	    		Board board = new Board(10,15);
+	    		Board board = new Board(10,20); //columns, rows
 	    		Text_GUI draw = new Text_GUI(true);
 	    		Text_Block blocks = new Text_Block();
-	    		Ball ball = new Ball(4,13);
-	    		Player player = new Player(4);
+	    		Ball ball = new Ball(4,18); //column, row
+	    		Player player = new Player(4,(int)board.getBoardSize().getY() - 1); //column,row
 
-	    		board.advancedRowBlocks(blocks.arrayBlocks(10, 10));
+	    		board.advancedRowBlocks(blocks.arrayBlocks(10, 15)); //columns,rows
+
 	    		board.makePlayer(player);
 	    		board.makeBall(ball);
 
 	    		//board.removeBlockAtIndex(0,4);
 	    		//board.generateRandomLevel();
-	    		board.addCustomLevelText("spikes.txt");
+	    		board.addCustomLevelText("heart.txt");
 	    		draw.printBoard(board, player);
 	    		board.makePlayer(player);
 	    		board.makeBall(ball);

@@ -190,6 +190,7 @@ public class Board
 	    public void makePlayer(Player player)
 	    	{
 	    		this.playerPos = new Point((int) player.getPosition().getX(), (int) player.getPosition().getY());
+	    		System.out.println(this.playerPos);
 	    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
 	    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
 	    	}
