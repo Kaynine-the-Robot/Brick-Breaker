@@ -31,7 +31,7 @@ public class Player extends AbstractObjects {
 	 * A constructor for creating a player object with a horizontal position (should stay in one veticle placement)
 	 * @param x is the horizontal position of the player the begin in
 	 */
-	public Player(int x) 
+	public Player(double x) 
 		{
 		this.setPosition(x, 19);
 		this.setSymbol('P');

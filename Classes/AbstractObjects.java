@@ -40,7 +40,7 @@ public abstract class AbstractObjects {
      * @return Nothing.
      * @author Amanda
      */
-    public void updatePos(int horzMovement, int vertMovement)
+    public void updatePos(double horzMovement, double vertMovement)
     {	
     	int newX = (int) (this.position.getX() + horzMovement);
     	int newY = (int) (this.position.getY() + vertMovement);
@@ -54,7 +54,7 @@ public abstract class AbstractObjects {
      * @return Nothing.
      * @author Amanda
      */
-    public void updatePos(int horzMovement)
+    public void updatePos(double horzMovement)
     {	
     	int newX = (int) (this.position.getX() + horzMovement);
     	int newY = (int) (this.position.getY());
