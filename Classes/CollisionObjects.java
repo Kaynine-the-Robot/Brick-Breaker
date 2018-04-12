@@ -3,6 +3,7 @@ package Classes;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -13,11 +14,11 @@ import javafx.scene.shape.Polygon;
 
 public class CollisionObjects {
 
-	private Rectangle[][] brickHitboxes; 
+	private ImageView[][] brickHitboxes; 
 	private ImageView barHitbox;
 	private ImageView ballHitbox;
 	private ArrayList<Polygon> perkSprites = new ArrayList<Polygon>();
-	final int COLLISION_OFFSET = 4;
+	final int COLLISION_OFFSET = 1;
 	final double BACKGROUND_WIDTH;
 	final double BACKGROUND_HEIGHT;
 	
@@ -125,15 +126,15 @@ public class CollisionObjects {
 
 	public void checkBallAndBorders(Ball ball, Player player)
 	{
-		if (this.ballHitbox.getX() + this.ballHitbox.getFitWidth() - this.COLLISION_OFFSET == this.BACKGROUND_WIDTH || this.ballHitbox.getX() <= 0 - this.COLLISION_OFFSET)
+		if (this.ballHitbox.getX() + this.ballHitbox.getFitWidth() - this.COLLISION_OFFSET >= this.BACKGROUND_WIDTH || this.ballHitbox.getX() <= 0 - this.COLLISION_OFFSET)
     	{
     		ball.horzCollision();
     	}
-		if (this.ballHitbox.getY() == (0 - this.COLLISION_OFFSET)) 
+		if (this.ballHitbox.getY() <= (0 - this.COLLISION_OFFSET)) 
     	{
     		ball.vertCollision();
     	}
-		if (this.ballHitbox.getY() == (this.BACKGROUND_HEIGHT - this.ballHitbox.getFitHeight())) 
+		if (this.ballHitbox.getY() >= (this.BACKGROUND_HEIGHT - this.ballHitbox.getFitHeight())) 
     	{
 			if(player.getLives() > 0)
 			{
@@ -152,9 +153,9 @@ public class CollisionObjects {
 	
 	public boolean checkBallAndBrickSides(int i, int j)
 	{
-		Rectangle rect = this.brickHitboxes[i][j];
-		if(this.ballHitbox.getBoundsInParent().intersects(rect.getX() + this.COLLISION_OFFSET, rect.getY() + this.COLLISION_OFFSET/2, 1.0, rect.getHeight() - this.COLLISION_OFFSET/2) || 
-				ballHitbox.getBoundsInParent().intersects(rect.getX() + rect.getWidth(), rect.getY() + this.COLLISION_OFFSET/2, 1.0, rect.getHeight() - this.COLLISION_OFFSET/2))
+		ImageView rect = this.brickHitboxes[i][j];
+		if(this.ballHitbox.getBoundsInParent().intersects(rect.getBoundsInParent().getMinX(), rect.getY() + this.COLLISION_OFFSET/2, 1.0, rect.getFitHeight() - this.COLLISION_OFFSET) || 
+				ballHitbox.getBoundsInParent().intersects(rect.getBoundsInParent().getMaxX(), rect.getY() + this.COLLISION_OFFSET/2, 1.0, rect.getFitHeight() - this.COLLISION_OFFSET))
 		{
 			return true;
 		}
@@ -164,9 +165,9 @@ public class CollisionObjects {
 	
 	public boolean checkBallAndBrickTopAndBottom(int i, int j)
 	{
-		Rectangle rect = this.brickHitboxes[i][j];
-		if(ballHitbox.getBoundsInParent().intersects(rect.getX() + this.COLLISION_OFFSET/2, rect.getY(), rect.getWidth() - this.COLLISION_OFFSET/2, 1.0) || 
-				ballHitbox.getBoundsInParent().intersects(rect.getX() + this.COLLISION_OFFSET/2, rect.getY() + rect.getHeight(), rect.getWidth() - this.COLLISION_OFFSET/2, 1.0))
+		ImageView rect = this.brickHitboxes[i][j];
+		if(ballHitbox.getBoundsInParent().intersects(rect.getX() + this.COLLISION_OFFSET/2, rect.getY(), rect.getFitWidth() - this.COLLISION_OFFSET, 1.0) || 
+				ballHitbox.getBoundsInParent().intersects(rect.getX() + this.COLLISION_OFFSET/2, rect.getY() + rect.getFitHeight(), rect.getFitWidth() - this.COLLISION_OFFSET, 1.0))
 			{ //The 2.0 and 4.0 are offsets to avoid clipping in false collisions
 			 return true;
 			}
@@ -223,13 +224,13 @@ public class CollisionObjects {
 		//If the right key is down
 		if(barMovement.getRFlag() && this.barHitbox.getX() < (this.BACKGROUND_WIDTH - this.barHitbox.getFitWidth()) && barMovement.getMoveFlag())
     	{
-    		this.barHitbox.setX(this.barHitbox.getX() + 1);
+			this.barHitbox.setX(this.barHitbox.getX() + barMovement.accelerate());
     	}
     	
     	//If the left key is down
     	if(barMovement.getLFlag() && this.barHitbox.getX() > 0 && barMovement.getMoveFlag())
     	{
-    		this.barHitbox.setX(this.barHitbox.getX() - 1);
+			this.barHitbox.setX(this.barHitbox.getX() - barMovement.accelerate());
     	}
 	}
 	
@@ -244,13 +245,66 @@ public class CollisionObjects {
 	
 	public void setBrickHitBoxes(Block[][] nArray)
 	{
-		this.brickHitboxes = new Rectangle[nArray.length][nArray[0].length];
+		this.brickHitboxes = new ImageView[nArray.length][nArray[0].length];
 		for(int i = 0; i < nArray.length; i++)
 		{
 			for(int j = 0; j < nArray[i].length; j++)
 			{
-				this.brickHitboxes[i][j] = new Rectangle(nArray[i][j].getPosition().getX(), nArray[i][j].getPosition().getY(),
-						nArray[i][j].getWidth(), nArray[i][j].getHeight());
+				if(i <= nArray.length/4 && nArray[i][j] instanceof Normal_Block)
+				{
+					int rand = ThreadLocalRandom.current().nextInt(0, 2);
+					if(rand == 0) 
+					{
+						this.brickHitboxes[i][j] = new ImageView(nArray[i][j].getBrickSpritesAtIndex(0));
+						
+					}
+					else
+					{
+						this.brickHitboxes[i][j] = new ImageView(nArray[i][j].getBrickSpritesAtIndex(3));
+					}
+					this.brickHitboxes[i][j].setFitHeight(nArray[i][j].getHeight()); this.brickHitboxes[i][j].setFitWidth(nArray[i][j].getWidth());
+					this.brickHitboxes[i][j].setX(nArray[i][j].getPosition().getX()); this.brickHitboxes[i][j].setY(nArray[i][j].getPosition().getY());
+				}
+				else if(i > nArray.length/4 && i < nArray.length -(nArray.length/4 + 1) && nArray[i][j] instanceof Normal_Block)
+				{
+					int rand = ThreadLocalRandom.current().nextInt(0, 2);
+					if(rand == 0) 
+					{
+						this.brickHitboxes[i][j] = new ImageView(nArray[i][j].getBrickSpritesAtIndex(1));
+					}
+					else
+					{
+						this.brickHitboxes[i][j] = new ImageView(nArray[i][j].getBrickSpritesAtIndex(4));
+					}
+					this.brickHitboxes[i][j].setFitHeight(nArray[i][j].getHeight()); this.brickHitboxes[i][j].setFitWidth(nArray[i][j].getWidth());
+					this.brickHitboxes[i][j].setX(nArray[i][j].getPosition().getX()); this.brickHitboxes[i][j].setY(nArray[i][j].getPosition().getY());
+				}
+				else if(i >= (nArray.length- (nArray.length/4 + 1)) && nArray[i][j] instanceof Normal_Block)
+				{
+					int rand = ThreadLocalRandom.current().nextInt(0, 2);
+					if(rand == 0) 
+					{
+						this.brickHitboxes[i][j] = new ImageView(nArray[i][j].getBrickSpritesAtIndex(2));
+					}
+					else
+					{
+						this.brickHitboxes[i][j] = new ImageView(nArray[i][j].getBrickSpritesAtIndex(5));
+					}
+					this.brickHitboxes[i][j].setFitHeight(nArray[i][j].getHeight()); this.brickHitboxes[i][j].setFitWidth(nArray[i][j].getWidth());
+					this.brickHitboxes[i][j].setX(nArray[i][j].getPosition().getX()); this.brickHitboxes[i][j].setY(nArray[i][j].getPosition().getY());
+				}
+				else
+				{
+					this.brickHitboxes[i][j] = new ImageView(nArray[i][j].getBrickSpritesAtIndex(0));
+					this.brickHitboxes[i][j].setFitHeight(nArray[i][j].getHeight()); this.brickHitboxes[i][j].setFitWidth(nArray[i][j].getWidth());
+					this.brickHitboxes[i][j].setX(nArray[i][j].getPosition().getX()); this.brickHitboxes[i][j].setY(nArray[i][j].getPosition().getY());
+				}
+				
+				
+				
+				
+				//this.brickHitboxes[i][j] = new Rectangle(nArray[i][j].getPosition().getX(), nArray[i][j].getPosition().getY(),
+				//		nArray[i][j].getWidth(), nArray[i][j].getHeight());
 			}
 		}
 	}
@@ -261,6 +315,8 @@ public class CollisionObjects {
 		{
 			for(int j = 0; j < this.brickHitboxes[i].length; j++)
 			{
+				
+
 				root.getChildren().add(this.brickHitboxes[i][j]);
 			}	
 		}	
@@ -282,6 +338,7 @@ public class CollisionObjects {
 		this.perkSprites.add(perk);
 	}
 	
+	/*
 	public void colorBrickInArray(int i, int j, Paint[] colors)
 	{
 			int rand = ThreadLocalRandom.current().nextInt(0, colors.length);
@@ -296,6 +353,7 @@ public class CollisionObjects {
 			}
 		//this.brickHitboxes[i][j].setFill(colors[ThreadLocalRandom.current().nextInt(0, colors.length)]);
 	}
+	*/
 	
 	/**
 	 * This is a method for checking ball and brick collision
@@ -315,17 +373,17 @@ public class CollisionObjects {
     			{
     				if(board.getBlockArrayAtIndex(i, j).decreaseHealth())
     				{
-    					if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'N')
+    					if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'N') //Check if this is even reachable
     					{
     						barMovement.increaseScore(1, pD);
     					}
-    					else if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'H')
+    					if(board.getBlockArrayAtIndex(i, j).getSymbol() == 'H')
     					{
     						barMovement.increaseScore(2, pD);
     						int rand = ThreadLocalRandom.current().nextInt(3, 4);
     						if (rand == 3)
     						{
-    							double x = this.brickHitboxes[i][j].getX() + (this.brickHitboxes[i][j].getWidth()/2);
+    							double x = this.brickHitboxes[i][j].getX() + (this.brickHitboxes[i][j].getFitWidth()/2);
     							double y = this.brickHitboxes[i][j].getY();
     							this.addPerkToRoot(root, x, y);
     							pD.choosePerk();
@@ -334,6 +392,10 @@ public class CollisionObjects {
     					}
     					root.getChildren().remove(this.brickHitboxes[i][j]);
     					board.removeBlockAtIndex(root, i, j, this);
+    				}
+    				else
+    				{
+    					this.brickHitboxes[i][j].setImage(board.getBlockArrayAtIndex(i,j).getBrickSpritesAtIndex(1));
     				}
     				ballMovement.horzCollision();
     				ballMovement.setHitBrick(true);
@@ -353,6 +415,10 @@ public class CollisionObjects {
     					{
     						barMovement.increaseScore(2, pD);
     					}
+    				}
+    				else
+    				{
+    					this.brickHitboxes[i][j].setImage(board.getBlockArrayAtIndex(i,j).getBrickSpritesAtIndex(1));
     				}
     				ballMovement.vertCollision();
     				ballMovement.setHitBrick(true);
@@ -451,7 +517,7 @@ public class CollisionObjects {
 				pD.removeLowestPerk();
 				this.perkSprites.remove(i);
 			}
-			else if(this.perkSprites.get(i).getLayoutY() >= 470)
+			else if(this.perkSprites.get(i).getLayoutY() >= this.BACKGROUND_HEIGHT)
 			{
 				root.getChildren().remove(this.perkSprites.get(i));
 				pD.removeLowestPerk();

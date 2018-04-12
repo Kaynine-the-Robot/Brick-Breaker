@@ -19,8 +19,11 @@ public class Player extends AbstractObjects {
 	private boolean lFlag = false;
 	private boolean multiFlag = false;
 	private boolean moveFlag = true;
-	private int multiTimer;
-	private long startTime;
+	private long multiTimer;
+	private long startMultiTime;
+	private long accelTimer;
+	private long startAccelTimer;
+	private double accelAmount = 1.0;
 	private Image[] barSprites = new Image[5];
     private int barPositionFlag;
 	
@@ -39,6 +42,16 @@ public class Player extends AbstractObjects {
 		this.setPosition(x, 950);
 		this.setSymbol('P');
 		barSprites[0] = barLeft; barSprites[1] = barMiddleLeft; barSprites[2] = bar; barSprites[3] = barMiddleRight; barSprites[4] = barRight;
+	}
+	    
+	public double accelerate()
+	{
+		return this.accelAmount = this.accelAmount + 0.01;
+	}
+	
+	public void resetAccelerate()
+	{
+		this.accelAmount = 1;
 	}
 	
 	public Image getBarSpritesAtIndex(int index)
@@ -87,29 +100,30 @@ public class Player extends AbstractObjects {
 		this.moveFlag = nFlag;
 	}
 	
-	public int getMultiTimer()
+	public long getMultiTimer()
 	{
 		return this.multiTimer;
 	}
 	
 	public void setMultiTimer()
 	{
-		this.startTime = System.currentTimeMillis() / 1000;
-		long current = 60 - ((System.currentTimeMillis() / 1000) - this.startTime);
+		this.startMultiTime = System.currentTimeMillis() / 1000;
+		long current = 60 - ((System.currentTimeMillis() / 1000) - this.startMultiTime);
 		this.multiTimer = (int) current;
 	}
+	
 	public void updateCurrentTime(PerkDrop pD)
 	{
 		if(this.multiTimer != 0)
 		{
-			this.multiTimer = (int) (60 - ((System.currentTimeMillis() / 1000) - this.startTime));
+			this.multiTimer = (int) (60 - ((System.currentTimeMillis() / 1000) - this.startMultiTime));
 		}
 		else if (this.multiTimer == 0)
 		{
 			if(pD.getMulti() <=2)
 			{
 				this.multiFlag = false;
-				this.startTime = 0;
+				this.startMultiTime = 0;
 				this.multiTimer = 0;
 			}
 			else

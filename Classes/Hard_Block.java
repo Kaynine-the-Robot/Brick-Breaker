@@ -1,5 +1,8 @@
 package Classes;
 
+import java.util.ArrayList;
+
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;

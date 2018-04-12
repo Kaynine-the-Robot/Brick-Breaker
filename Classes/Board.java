@@ -2,10 +2,13 @@ package Classes;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Classes.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -30,7 +33,7 @@ public class Board
 	    private Point playerPos;
 	    private Block[][] blockArray; //Might make the same as objBoard
 	    private int blockArrayRow = 10;
-	    private int blockArrayCol = 10;
+	    private int blockArrayCol = 15;//Means 15 Rows
 	    
 	    /**
 	     * This is a default constructor for board
@@ -38,7 +41,7 @@ public class Board
 	    public Board()
 	    {
 	    	this.blockArrayRow = 10;
-	    	this.blockArrayCol = 15;
+	    	this.blockArrayCol = 15; //Means 15 Rows
 	    	
 	    }
 	    
@@ -264,22 +267,28 @@ public class Board
 		/**
 		   * This method generates array of Rectangle objects (Blocks) to store it in Array List for javafx gui
 		   */
-		   public void generateBlockArray(CollisionObjects cO) 
+		   public void generateBlockArray(CollisionObjects cO)
 		   {
 			   blockArray = new Block[blockArrayRow][blockArrayCol];
-				
+			   Image[] normalBlockSprites = new Image[6];
+			   normalBlockSprites[0] = new Image("file:Assets/NormalBlock_Red_Left.png"); normalBlockSprites[1] = new Image("file:Assets/NormalBlock_Red.png"); normalBlockSprites[2] = new Image("file:Assets/NormalBlock_Red_Right.png");
+			   normalBlockSprites[3] = new Image("file:Assets/NormalBlock_Green_Left.png"); normalBlockSprites[4] = new Image("file:Assets/NormalBlock_Green.png"); normalBlockSprites[5] = new Image("file:Assets/NormalBlock_Green_Right.png");
+			   Image[] hardBlockSprites = new Image[2];
+			   hardBlockSprites[0] = new Image("file:Assets/HardBlock_Whole.png"); hardBlockSprites[1] = new Image("file:Assets/HardBlock_Broken.png");
 		 		for(int i = 0; i < blockArray.length; i++)
 		 		{
-		 			for(int j = 0; j < blockArray[0].length; j++)
+		 			for(int j = 0; j < blockArray[i].length; j++)
 		 			{
 		 				int rand = ThreadLocalRandom.current().nextInt(0, 4);
 		 				if(rand == 3)
 		 				{
 		 					blockArray[i][j] = new Hard_Block(cO.getBackWidth()/30 + (80 * i), cO.getBackHeight()/10 + (30 * j), 'B', 2, 60, 20, 2);
+		 					blockArray[i][j].setBrickSprites(hardBlockSprites);
 		 				}
 		 				else
 		 				{
 		 					blockArray[i][j] = new Normal_Block(cO.getBackWidth()/30 + (80 * i), cO.getBackHeight()/10 + (30 * j), 'B', 2, 60, 20);
+		 					blockArray[i][j].setBrickSprites(normalBlockSprites);
 		 				}
 		 			}
 		 		}
@@ -358,6 +367,7 @@ public class Board
 			int maxBlockThatCanBeRemoved = (blockArrayRow * blockArrayCol); //Max num of blocks that can be removed is all blocks
 			int randomNumBlocksToRemove = ThreadLocalRandom.current().nextInt(0, maxBlockThatCanBeRemoved +1);
 			
+			/*
 			for (int a = 0; a<this.blockArrayRow; a++) 
 			{
 		  		for (int b = 0; b<this.blockArrayCol; b++) 
@@ -365,6 +375,7 @@ public class Board
 		  			cO.colorBrickInArray(a, b, colors);
 		  		}
 			}
+			*/
 			
 			for (int i=0; i< randomNumBlocksToRemove ;i++) 
 			{
@@ -402,11 +413,13 @@ public class Board
 			  	Scanner scan = null;
 			  	//this.blockArrayRow = 10;
 			  	//this.blockArrayRow = 10; //Ensure the standard size
+			  	/*
 			  	for (int i = 0; i<this.blockArrayRow; i++) {
 			  		for (int j = 0; j<this.blockArrayCol; j++) {
 			  			cO.colorBrickInArray(i, j, colors);	
 			  		}
 			  	}
+			  	*/
 			  	try {
 					scan = new Scanner(new File(level));
 				}

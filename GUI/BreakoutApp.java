@@ -1,5 +1,7 @@
 package GUI;
 
+import java.util.ArrayList;
+
 import Classes.*;
 
 import javafx.scene.image.Image;
@@ -28,6 +30,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -39,11 +42,11 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
     	//Just setting up the graphics for the game including the player and ball
     	Pane root = new Pane();
-    	Scene scene = new Scene(root , 816 , 1000);
+    	Scene scene = new Scene(root , 816 , Screen.getPrimary().getVisualBounds().getHeight() - 50);
     	
     	Image img = new Image("file:GUI/purpleSpace.jpg");
     	final double BACKGROUND_WIDTH = 816;
-    	final double BACKGROUND_HEIGHT = 1000;
+    	final double BACKGROUND_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight() - 50;
     	
 		BackgroundSize bS = new BackgroundSize(BACKGROUND_WIDTH,BACKGROUND_HEIGHT,true,true,true,true);
 		final BackgroundImage bI = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, 
@@ -103,13 +106,14 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//
 				
 		String[] perkList = new String[2]; perkList[0] = "lumpScoreBonus"; perkList[1] = "scoreMultiplier";
-		PerkDrop pD = new PerkDrop(0.5, perkList);
+		PerkDrop pD = new PerkDrop(1, perkList);
 		
 		//Image imageBall = new Image("file:Assets/Ball.jpg");
 		
 		//spriteBall.setImage(imageBall);
 		//HBox box = new HBox();
 		//box.getChildren().add(spriteBall);
+		
 		
 		
 		
@@ -165,6 +169,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		lives.setLayoutX(300);
 		lives.setLayoutY(10);
 		
+		//Count for BallSpeed up
+		ballMovement.setSpeedTimer();
+		
 		//The animation "loop" that handles all movement in graphics
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
 			
@@ -181,12 +188,16 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				score.setText("Score: " + barMovement.getScore());
 			}
 			
+			ballMovement.checkCurrentTime();
+		
+			
 			//Here we are moving the ball
 			cO.checkBallImageSwitch(ballMovement);
 			cO.moveBallInWIndow(ballMovement);
         	//Moving Player
 			cO.checkBarImageSwitch(barMovement);
         	cO.movePlayerInWindow(barMovement);
+        	
         	//Moving any Perks
         	cO.moveAllPerksInWindow(pD);
         	
@@ -249,11 +260,13 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 							if(e.getCode() == KeyCode.RIGHT)
 							{
 								barMovement.setRFlag(false);
+								barMovement.resetAccelerate();
 							}
 							
 							if(e.getCode() == KeyCode.LEFT)
 							{
 								barMovement.setLFlag(false);
+								barMovement.resetAccelerate();
 							}
 						}
 					});

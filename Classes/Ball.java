@@ -13,11 +13,13 @@ import javafx.scene.shape.Circle;
 public class Ball extends AbstractObjects
 	{
 	    
-	    private int horzMovement = 1;
-	    private int vertMovement = -1;
+	    private double horzMovement = 1;
+	    private double vertMovement = -1;
 	    private boolean hitBrick = false;
 	    private Image[] ballSprites = new Image[5];
 	    private int ballPositionFlag;
+	    private long speedTimer;
+	    private long startTime;
 	    
 	    /**
 	     * A constructor for a ball object
@@ -74,7 +76,7 @@ public class Ball extends AbstractObjects
 	     * @param none
 	     * @return horzMovement value
 	     */
-	    public int getHorzMovement() 
+	    public double getHorzMovement() 
 	    {
 	    	return this.horzMovement;
 	    }
@@ -83,7 +85,7 @@ public class Ball extends AbstractObjects
 	      * This is a getter for returning a value of current vertical movement
 	      * @return
 	      */
-	    public int getVertMovement() 
+	    public double getVertMovement() 
 	    {
 	    	return this.vertMovement;
 	    }
@@ -101,9 +103,44 @@ public class Ball extends AbstractObjects
 	    
 	    public void increaseSpeed()
 	    {
-	    	this.horzMovement++;
-	    	this.vertMovement++;
+	    	if(this.horzMovement > 0 && this.horzMovement < 4)
+	    	{
+	    		this.horzMovement = this.horzMovement + 0.1;
+	    	}
+	    	else if(this.horzMovement < 0 && this.horzMovement > -4)
+	    	{
+	    		this.horzMovement = this.horzMovement - 0.1;
+	    	}
+	    	if(this.vertMovement > 0 && this.vertMovement < 4)
+	    	{
+	    		this.vertMovement = this.vertMovement + 0.1;
+	    	}
+	    	else if (this.vertMovement < 0 && this.vertMovement > -4)
+	    	{
+	    		this.vertMovement = this.vertMovement - 0.1;
+	    	}
+	    	
 	    }
+	    
+	    public void checkCurrentTime()
+		{
+			if(this.speedTimer != 0)
+			{
+				this.speedTimer = (30 - ((System.currentTimeMillis() / 1000) - this.startTime));
+			}
+			else if (this.speedTimer == 0)
+			{
+				this.setSpeedTimer();
+				this.increaseSpeed();
+			}
+			
+		}
+	    
+	    public void setSpeedTimer()
+		{
+			this.startTime = System.currentTimeMillis() / 1000;
+			this.speedTimer = (30 - ((System.currentTimeMillis() / 1000) - this.startTime));
+		}
 	    
 	    /**
 	     * This method changes the vertical speed of the ball object when there has been a collision.

@@ -1,6 +1,10 @@
 package Classes;
 
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
+
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -22,6 +26,8 @@ public class Normal_Block extends Block {
 		super.setHeight(nHeight);
 		this.setHealth(1); //Normal Block can only have 1 health
 	}
+	
+	
 	
 	/*
 	public int getWidth()

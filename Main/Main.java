@@ -78,7 +78,7 @@ public class Main
 	    		while(player.getScore() <= board.totalBlocks())
 	    		{
 	    			
-	    			ball.updatePos(ball.getHorzMovement(), ball.getVertMovement());  //Ball gets moved
+	    			ball.updatePos((int) ball.getHorzMovement(), (int) ball.getVertMovement());  //Ball gets moved
 	    			
 	    			char direction = ' ';
 	    		

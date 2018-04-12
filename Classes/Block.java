@@ -1,7 +1,11 @@
 package Classes;
 import java.awt.Point;
+import java.util.ArrayList;
+
 import Classes.Board;
 import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 /**
  * This is the block class which will have methods and attributes to control the blocks behavior and appearance
  * @author
@@ -15,6 +19,7 @@ public class Block extends AbstractObjects
 		private int health;
 		private int width;// = 30;
 		private int height;// = 10;
+		private Image[] blockSprites;
 		
 		/**
 		 * A default constructor for Block
@@ -40,7 +45,7 @@ public class Block extends AbstractObjects
 				this.health = 1;
 			}
 		
-		public Block(int x, int y, char col, int len, int nWidth, int nHeight) 
+		public Block(int x, int y, char col, int len, int nWidth, int nHeight)
 		{
 			this.color = col;
 			this.blockLength = len;
@@ -51,6 +56,16 @@ public class Block extends AbstractObjects
 			this.health = 1;
 		}
 
+		public Image getBrickSpritesAtIndex(int index)
+	    {
+	    	return this.blockSprites[index];
+	    }
+		
+		public void setBrickSprites(Image[] bS)
+		{
+			this.blockSprites = bS;
+		}
+		
 		/**
 		 * A getter for the color attribute of a block
 		 * @return the char attribute color representing the color
