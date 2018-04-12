@@ -58,7 +58,7 @@ public class Main
 	    		Text_GUI draw = new Text_GUI(true);
 	    		Text_Block blocks = new Text_Block();
 	    		Ball ball = new Ball(4,18); //column, row
-	    		Player player = new Player(4,(int)board.getBoardSize().getY() - 1); //column,row
+	    		Player player = new Player(4); //column,row
 
 	    		board.advancedRowBlocks(blocks.arrayBlocks(10, 15)); //columns,rows
 
