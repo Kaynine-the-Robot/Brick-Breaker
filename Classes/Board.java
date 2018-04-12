@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.converter.IntegerStringConverter;
 import Classes.Normal_Block;
 //import java.util.Formatter;
 
@@ -190,7 +191,6 @@ public class Board
 	    public void makePlayer(Player player)
 	    	{
 	    		this.playerPos = new Point((int) player.getPosition().getX(), (int) player.getPosition().getY());
-	    		System.out.println(this.playerPos);
 	    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
 	    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
 	    	}
@@ -389,7 +389,7 @@ public class Board
 		}
 		
 		/**
-		 * This method generates random block level in the text gui
+		 * This method generates random block level in the TEXT gui
 		 * @param root
 		 * @param levelName
 		 */
@@ -410,17 +410,10 @@ public class Board
 		 * @param level
 		 */
 		  public void addCustomLevel(Pane root,String level,Paint[] colors, CollisionObjects cO) {
+
 			  
 			  	Scanner scan = null;
-			  	//this.blockArrayRow = 10;
-			  	//this.blockArrayRow = 10; //Ensure the standard size
-			  	/*
-			  	for (int i = 0; i<this.blockArrayRow; i++) {
-			  		for (int j = 0; j<this.blockArrayCol; j++) {
-			  			cO.colorBrickInArray(i, j, colors);	
-			  		}
-			  	}
-			  	*/
+
 			  	try {
 					scan = new Scanner(new File(level));
 				}
@@ -429,13 +422,16 @@ public class Board
 			  		System.exit(0);
 			  	}
 			  	
-			  	String coordinates = scan.nextLine();
+			  	IntegerStringConverter isc = new IntegerStringConverter();
+			  	
+			  	String coordinateLine = scan.nextLine();
+			  	String[] coordinates = coordinateLine.split(",");
 
-			  	int blocksToRemove = coordinates.length();
+			  	int blocksToRemove = coordinates.length;
 			  	
 			  	for (int i=0; i<blocksToRemove;i+=2) {
-			  		int xvalue = coordinates.charAt(i) - '0';
-			  		int yvalue = coordinates.charAt(i+1) - '0';
+			  		int xvalue = isc.fromString(coordinates[i]);
+			  		int yvalue = isc.fromString(coordinates[i+1]);
 			  		this.removeBlockAtIndex(root,xvalue,yvalue, cO);
 			  		
 			  	}
@@ -447,7 +443,7 @@ public class Board
 			 */
 		  public void addCustomLevelText(String level) {
 			  Scanner scan = null;
-			  	this.blockArrayRow = 10;
+			  	this.blockArrayRow = 15;
 			  	this.blockArrayRow = 10; //Ensure the standard size
 			  	
 			  	try {
@@ -458,13 +454,17 @@ public class Board
 			  		System.exit(0);
 			  	}
 			  	
-			  	String coordinates = scan.nextLine();
+			  	String coordinateLine = scan.nextLine();
+			  	String[] coordinates = coordinateLine.split(",");
 
-			  	int blocksToRemove = coordinates.length();
+			  	IntegerStringConverter isc = new IntegerStringConverter();
 			  	
-			  	for (int i=0; i<blocksToRemove;i+=2) {
-			  		int xvalue = coordinates.charAt(i) - '0';
-			  		int yvalue = coordinates.charAt(i+1) - '0';
+			  	int blocksToRemove = coordinates.length;
+			  	
+			  	for (int i=0; i<blocksToRemove;i+=2)
+			  	{
+			  		int xvalue = isc.fromString(coordinates[i]);
+			  		int yvalue = isc.fromString(coordinates[i+1]);
 			  		this.removeBlockAtIndexText(xvalue,yvalue);
 			  	}
 		  }
