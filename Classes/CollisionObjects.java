@@ -139,7 +139,7 @@ public class CollisionObjects {
 			if(player.getLives() > 0)
 			{
 				ballHitbox.setX(this.BACKGROUND_HEIGHT/2);
-				ballHitbox.setY(this.BACKGROUND_HEIGHT * 0.9 );
+				ballHitbox.setY(this.barHitbox.getY() - ballHitbox.getFitHeight() - 5);
 				ball.reset();
 				player.loseLife();
 			}

@@ -53,15 +53,14 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 	            					BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bS);
 	    final Background background = new Background(bI);
 	    root.setBackground(background); root.setMinWidth(img.getWidth()); root.setMinHeight(img.getHeight());
-	    
-
-    	ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.png"));
-    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(BACKGROUND_HEIGHT * 0.9); 
-    	spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
     	
     	ImageView spriteBar = new ImageView(new Image("file:Assets/Bar.png"));
     	spriteBar.setX(BACKGROUND_WIDTH/2); spriteBar.setY(BACKGROUND_HEIGHT - 50); 
     	spriteBar.setFitHeight(15); spriteBar.setFitWidth(140);
+    	
+    	ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.png"));
+    	spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
+    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(spriteBar.getY() - spriteBall.getFitHeight() - 5); 
     	
     	//Classes used for keeping track of the ball and player movement for the GUI
 		Ball ballMovement = new Ball(BACKGROUND_WIDTH/2, BACKGROUND_HEIGHT * (9/10), new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
