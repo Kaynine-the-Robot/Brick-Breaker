@@ -13,14 +13,14 @@ import javafx.scene.shape.Circle;
 public class Ball extends AbstractObjects
 	{
 	    
-	    private double horzMovement = 1;
-	    private double vertMovement = -1;
+	    private double horzMovement;
+	    private double vertMovement;
 	    private boolean hitBrick = false;
 	    private Image[] ballSprites = new Image[5];
 	    private int ballPositionFlag;
 	    private long speedTimer;
 	    private long startTime;
-	    private boolean sideCollision = true;
+	    private boolean gameStartState;
 	    
 	    /**
 	     * A constructor for a ball object
@@ -48,6 +48,9 @@ public class Ball extends AbstractObjects
 	        this.setPosition(x, y);
 	        this.setSymbol('O');
 	        ballSprites[0] = ballLeft; ballSprites[1] = ballMiddleLeft; ballSprites[2] = ball; ballSprites[3] = ballMiddleRight; ballSprites[4] = ballRight;
+	        this.horzMovement = 0;
+	        this.vertMovement = 0;
+	        this.gameStartState = true;
 	    }
 	    
 	    /**
@@ -93,9 +96,9 @@ public class Ball extends AbstractObjects
 	     */
 	    public void reset()
 	    {
-	    	this.sideCollision = true;
-	    	horzMovement = 1;
-		    vertMovement = -1;
+	    	this.gameStartState = true;
+	    	horzMovement = 0;
+		    vertMovement = 0;
 	    }
 	    
 	    /**
@@ -209,6 +212,24 @@ public class Ball extends AbstractObjects
 	    {
 	    	vertMovement = 0;
 	    	horzMovement = 0;
+	    }
+	    
+	    /**
+	     * A method for when the ball has reset to it's default position and waiting for the player to start it
+	     */
+	    public void startBall()
+	    {
+	    	if(this.gameStartState)
+	    	{
+	    		this.gameStartState = false;
+	    		vertMovement = -1;
+	    		horzMovement = 1;
+	    	}
+	    }
+	    
+	    public boolean getGameStartState()
+	    {
+	    	return this.gameStartState;
 	    }
 	    
 	    /** 

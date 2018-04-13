@@ -110,7 +110,7 @@ public class CollisionObjects {
     	{
 			if(player.getLives() > 0) //Method checking if there's positive lives left, aka player is still alive even though a ball was lost
 			{
-				ballHitbox.setX(this.BACKGROUND_HEIGHT/2); //Reseting the balls position to the middle of the screens width
+				ballHitbox.setX(this.barHitbox.getX()+this.barHitbox.getFitWidth()/2); //Reseting the balls position to the middle of the screens width
 				ballHitbox.setY(this.barHitbox.getY() - ballHitbox.getFitHeight() - 5); //Reseting the balls position to be relatively above the bar no matter the screen size to avoid clipping into each other
 				ball.reset(); //Reseting motion and speed
 				player.loseLife(); //Taking one life away
@@ -198,6 +198,7 @@ public class CollisionObjects {
 		double deltaXLeft = this.barHitbox.getX() - (this.ballHitbox.getX()+this.ballHitbox.getFitWidth()/2); double deltaY = this.barHitbox.getY() - (this.ballHitbox.getY()+this.ballHitbox.getFitHeight()/2);
 		double deltaXRight = (this.barHitbox.getX()+this.barHitbox.getFitWidth()) - (this.ballHitbox.getX()+this.ballHitbox.getFitWidth()/2); //Delta's are the difference between points of the corners and the ball's center
 		double distanceLeft = Math.sqrt((deltaXLeft*deltaXLeft)+(deltaY*deltaY)); double distanceRight = Math.sqrt((deltaXRight*deltaXRight)+(deltaY*deltaY)); //Using the delta's to get distances between points
+		
 		if(this.ballHitbox.getX()+this.ballHitbox.getFitWidth()/2 <= this.barHitbox.getX() && distanceLeft <= 14 && yMax < this.barHitbox.getY()) 
 			//Checking the ball if over the edge far enough, the distance is the radius (14), and that the ball bottom is a little lower than the bar top
 		{
@@ -244,19 +245,30 @@ public class CollisionObjects {
 	 * This method is for moving the visual bar in the window based on the attributes of the Player object
 	 * @param barMovement
 	 */
-	public void movePlayerInWindow(Player barMovement)
+	public void movePlayerInWindow(Player barMovement, Ball ball)
 	{
 		//If the right key is down
 		if(barMovement.getRFlag() && this.barHitbox.getX() < (this.BACKGROUND_WIDTH - this.barHitbox.getFitWidth()) && barMovement.getMoveFlag()) //Uses the constant of the screen width to prevent going beyond
     	{
+			if(ball.getGameStartState())//If the ball is in the game start state, make it move right with the bar
+			{
+				ball.setPosition(ball.getPosition().getX() + barMovement.accelerate(), ball.getPosition().getY());
+				this.ballHitbox.setX(this.ballHitbox.getX() + barMovement.accelerate());
+			}
 			this.barHitbox.setX(this.barHitbox.getX() + barMovement.accelerate());
     	}
     	
     	//If the left key is down
-    	if(barMovement.getLFlag() && this.barHitbox.getX() > 0 && barMovement.getMoveFlag()) //0 for the left side
+		if(barMovement.getLFlag() && this.barHitbox.getX() > 0 && barMovement.getMoveFlag()) //0 for the left side
     	{
+			if(ball.getGameStartState())//If the ball is in the game start state, make it move left with the bar
+			{
+				ball.setPosition(ball.getPosition().getX() - barMovement.accelerate(), ball.getPosition().getY());
+				this.ballHitbox.setX(this.ballHitbox.getX() - barMovement.accelerate());
+			}
 			this.barHitbox.setX(this.barHitbox.getX() - barMovement.accelerate());
     	}
+		
 	}
 	
 	/**
