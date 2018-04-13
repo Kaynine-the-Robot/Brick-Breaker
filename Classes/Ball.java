@@ -7,7 +7,7 @@ import javafx.scene.shape.Circle;
 /**
  * This is the ball class which will have all the methods and attributes to control the ball 
  * and it's interactions.
- * @author Sebastian, Amanda
+ * @author Sebastien, Amanda, Kaynen
  *
  */
 public class Ball extends AbstractObjects
@@ -32,23 +32,45 @@ public class Ball extends AbstractObjects
 	        this.setSymbol('O');
 	    }
 	    
+	    /**
+	     * The connstructor for a ball that takes an image
+	     * @param x The ball's x position
+	     * @param y The ball's y position
+	     * @param ballLeft The image for the left of the ball
+	     * @param ballMiddleLeft The image for the middle left of the ball
+	     * @param ball The image for the centre of the ball
+	     * @param ballMiddleRight The image for the middle right of the ball
+	     * @param ballRight The image for the right of the ball
+	     */
 	    public Ball(double x, double y, Image ballLeft, Image ballMiddleLeft, Image ball, Image ballMiddleRight, Image ballRight)
 	    {
 	        this.setPosition(x, y);
 	        this.setSymbol('O');
 	        ballSprites[0] = ballLeft; ballSprites[1] = ballMiddleLeft; ballSprites[2] = ball; ballSprites[3] = ballMiddleRight; ballSprites[4] = ballRight;
 	    }
- 
+	    
+	    /**
+	     * This method returns a specified image from the image array attribute
+	     * @param index The index of the image to return
+	     * @return The image
+	     */
 	    public Image getBallSpritesAtIndex(int index)
 	    {
 	    	return ballSprites[index];
 	    }
 	    
+	    /**
+		 * A method the returns the relative position of the ball for proper animation
+		 * @return The position of the ball
+		 */
 	    public int getPositionFlag()
 	    {
 	    	return this.ballPositionFlag;
 	    }
 	    
+	    /**
+	     * A method that set the position flag of the ball relative to its position on screen
+	     */
 	    public void setPositionFlag()
 	    {
 	    	switch(this.ballPositionFlag)
@@ -65,6 +87,9 @@ public class Ball extends AbstractObjects
 	    	}
 	    }
 	    
+	    /**
+	     * A method that resets the ball movement to its default value
+	     */
 	    public void reset()
 	    {
 	    	horzMovement = 1;
@@ -73,8 +98,7 @@ public class Ball extends AbstractObjects
 	    
 	    /**
 	     * This is a getter for returning a value of current horizontal movement
-	     * @param none
-	     * @return horzMovement value
+	     * @return the horizontal speed
 	     */
 	    public double getHorzMovement() 
 	    {
@@ -83,7 +107,7 @@ public class Ball extends AbstractObjects
 	    
 	     /**
 	      * This is a getter for returning a value of current vertical movement
-	      * @return
+	      * @return the vertical speed
 	      */
 	    public double getVertMovement() 
 	    {
@@ -92,15 +116,17 @@ public class Ball extends AbstractObjects
 	    
 	    /**
 	     * This method changes the horizontal speed of the ball object when there has been a collision.
-	     * @param args unused.
-	     * @return Nothing.
-	     * 
+	     *  
 	     */
 	    public void horzCollision()
 	    {
 	        horzMovement = horzMovement * -1;
 	    }
 	    
+	    /**
+	     * A method that slowly increases the speed of the ball
+	     * 
+	     */
 	    public void increaseSpeed()
 	    {
 	    	if(this.horzMovement > 0 && this.horzMovement < 4)
@@ -122,6 +148,10 @@ public class Ball extends AbstractObjects
 	    	
 	    }
 	    
+	    /**
+	     * A method that returns the current time
+	     * 
+	     */
 	    public void checkCurrentTime()
 		{
 			if(this.speedTimer != 0)
@@ -144,8 +174,6 @@ public class Ball extends AbstractObjects
 	    
 	    /**
 	     * This method changes the vertical speed of the ball object when there has been a collision.
-	     * @param args unused.
-	     * @return Nothing.
 	     * 
 	     */
 	    public void vertCollision()
@@ -206,9 +234,7 @@ public class Ball extends AbstractObjects
 	    	}
 			return false;
 	    }
-	   
-	    	
-	    }
+	}
 	    
 	    
 	
