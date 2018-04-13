@@ -67,7 +67,6 @@ public class MainMenu {
 		Button spikesStage = new Button("Spikes Stage");
 		Button linesStage = new Button("Lines Stage");
 		Button randomStage = new Button("Random Stage");
-		//
 		
 		Stage window = new Stage();
 		window.setTitle("Welcome to the Brick Breaker!");
