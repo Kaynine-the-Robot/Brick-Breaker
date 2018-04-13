@@ -171,9 +171,9 @@ public class Player extends AbstractObjects {
 	/**
 	 * A method for increasing the score by one for TEXT GUI
 	 */
-	public void increaseScore(int nInc)
+	public void increaseScore()
 	{
-			this.score = this.score++;
+		this.score++;
 	}
 	
 	/**

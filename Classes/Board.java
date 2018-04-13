@@ -253,7 +253,7 @@ public class Board
 							ball.horzCollision();
 						}
 						
-						player.increaseScore(1);
+						player.increaseScore();
 					
 					
 					}
