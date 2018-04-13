@@ -60,7 +60,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
     	
     	ImageView spriteBall = new ImageView(new Image("file:Assets/Ball.png"));
     	spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
-    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(spriteBar.getY() - spriteBall.getFitHeight() - 5); 
+    	spriteBall.setX(spriteBar.getX()+spriteBar.getFitWidth()/2); spriteBall.setY(spriteBar.getY() - spriteBall.getFitHeight() - 5); 
     	
     	//Classes used for keeping track of the ball and player movement for the GUI
 		Ball ballMovement = new Ball(BACKGROUND_WIDTH/2, BACKGROUND_HEIGHT * (9/10), new Image("file:Assets/Ball_Left.png"),// 28, 28, true, false), 
@@ -171,7 +171,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			cO.moveBallInWIndow(ballMovement);
         	//Moving Player
 			cO.checkBarImageSwitch(barMovement);
-        	cO.movePlayerInWindow(barMovement);
+        	cO.movePlayerInWindow(barMovement, ballMovement);
         	
         	//Moving any Perks
         	cO.moveAllPerksInWindow(pD);
@@ -214,15 +214,19 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				public void handle(KeyEvent e)
 				{
 					if(e.getCode() == KeyCode.RIGHT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
-					//if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
 					{
 						barMovement.setRFlag(true);
 					}
 					
 					if(e.getCode() == KeyCode.LEFT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
-					//if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
 					{
 						barMovement.setLFlag(true);
+					}
+					
+					//For if the player presses start at beginning of a level or when a life is lost, starts the ball moving
+					if(e.getCode() == KeyCode.SPACE)
+					{
+						ballMovement.startBall();
 					}
 				}
 		});
@@ -245,7 +249,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 					}
 				}
 			});
-		
+
 		//Timeline goes forever unless interrupted and starts timeline
 		timeline.setCycleCount(Timeline.INDEFINITE);
         //Setting up the the final for actually showing the graphics
