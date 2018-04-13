@@ -283,10 +283,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 					
 					barMovement.setMoveFlag(true);
 			   
-					//if (MainMenu.getCloseMenu() == true) {
-						//System.exit(0);
-					//}
-					
 			    	timeline.playFromStart();
 					primaryStage.show(); 
 

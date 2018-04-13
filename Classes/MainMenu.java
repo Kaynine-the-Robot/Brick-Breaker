@@ -28,7 +28,6 @@ public class MainMenu {
 	private static String randomOrCustom = "";
 	private static Scene menu;
 	private static String scoreToWrite = "0";
-	private static Boolean closeMenu = false;
 	
 	/**
 	 * This method is for getting the color array
@@ -63,13 +62,6 @@ public class MainMenu {
 		return menu;
 	}
 	
-	/**
-	 * This method sets a flag if the menu was closed X
-	 * @return closeMenu - a boolean
-	 */
-	public static Boolean getCloseMenu() {
-		return closeMenu;
-	}
 	
 	/**
 	 * This method is for displaying the actual menu
@@ -182,10 +174,11 @@ public class MainMenu {
 		});
 		
     	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
-    	      public void handle(WindowEvent we) {
-    	          closeMenu = true;
-    	      }
-    	  }); 
+            @Override
+            public void handle(WindowEvent event) {
+                System.exit(0);
+            }
+    	});
     	
 		window.showAndWait();
 
