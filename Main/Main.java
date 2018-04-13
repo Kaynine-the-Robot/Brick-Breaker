@@ -31,18 +31,16 @@ import Classes.Text_Block;
 
 /**
  * This is the project for CPSC 233 Lecture 02 Tutorial section 06 for group 5
- * Group 5 is Amanda, Emir, Kaynen, Sebastien.
+ * Group 5 is Amanda, Kaynen, Sebastien.
  * The project is a clone of Brickbreaker, the game where you (the player) move a
  * bat left and right to prevent a bouncing ball from going beyond it to the bottom 
  * of the screen. The ball will bounce around the game area bouncing off the walls and
- * blocks with the collison with the blocks casuing them to break and earn the player
+ * blocks with the collison with the blocks causuing them to break and earn the player
  * score. The level will end when all the blocks are destroyed.
  */
 
 /**
  * This is the main class of the game that will control and call the other classes and functions.
- *
- *@author Everyone
  */
 public class Main
 	{
@@ -52,23 +50,27 @@ public class Main
 		 */
 	    public static void main(String[] args)
 	        {
+	    		/**
+	    		 * Javafx game launch is below
+	    		 */
 	    		Application.launch(BreakoutApp.class, args);
 	    		
-	    		
-	    		
-	    		Board board = new Board(10,15);
+	    		/**
+	    		 * Text based game is below
+	    		 */
+	    		Board board = new Board(10,20); //columns, rows
 	    		Text_GUI draw = new Text_GUI(true);
 	    		Text_Block blocks = new Text_Block();
-	    		Ball ball = new Ball(4,13);
-	    		Player player = new Player(4);
+	    		Ball ball = new Ball(4,18); //columns, rows
+	    		Player player = new Player(4); //column
 
-	    		board.advancedRowBlocks(blocks.arrayBlocks(10, 10));
+	    		board.advancedRowBlocks(blocks.arrayBlocks(10, 15)); //columns,rows
+
 	    		board.makePlayer(player);
 	    		board.makeBall(ball);
 
-	    		//board.removeBlockAtIndex(0,4);
-	    		//board.generateRandomLevel();
-	    		board.addCustomLevelText("spikes.txt");
+	    		//board.generateRandomLevel(); //Use to generate random level
+	    		board.addCustomLevelText("lines.txt"); //Can also use spikes.txt and heart.txt
 	    		draw.printBoard(board, player);
 	    		board.makePlayer(player);
 	    		board.makeBall(ball);
@@ -92,7 +94,6 @@ public class Main
 	    			
 	    			player.moveBar(direction);
 	    			
-
 	    			
 	    			//if ball is on the bar's LEFT or RIGHT side..
 	    			if (ball.getPosition().getX() == player.getPosition().getX() && ball.getPosition().getY()+1 == player.getPosition().getY()
@@ -104,17 +105,11 @@ public class Main
 	    		 
 	    			board.checkBrickCollision(ball,player); //Checks if ball collides with brick
 	    		 
-	    			//if((int) ball.getPosition().getY() == 0)
-	    			//{
-	    				//player.increaseScore();
-	    			//}
-    		 		
-	    			ball.checkLocation(); //Checks ball-wall collision
-	 	
 	    		 		
 	    		 	board.updateBoard(ball.getPosition(), player.getPosition(),ball); //Board gets updated
 	    		 		
 	    		 	draw.printBoard(board, player); //Board gets displayed
+	    			ball.checkLocation(); //Checks ball-wall collision
 
 	    			}
 
@@ -123,6 +118,6 @@ public class Main
 	        }
 	}
 
-//This is the old text based game
+
 
 

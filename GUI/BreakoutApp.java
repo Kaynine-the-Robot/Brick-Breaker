@@ -83,26 +83,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		CollisionObjects cO = new CollisionObjects(spriteBar, spriteBall, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 		Board board = new Board(); 
 		
-		
-		//style for the game
-		
-				//scene.getStylesheets().add("/GUI/BreakoutAppStyle.css");
-				
-				//
-		
-				
-		//Circle ball = new Circle(205,455,7);
-		
-		//Icon + ball img
-		//Image icon = new Image("/GUI/ball.png",554,83,true,true);
-		//primaryStage.getIcons().add(icon);
-		//ball.setFill(new ImagePattern(icon));
-		//
-				
-		//bar img
-		//Image barImg = new Image("/GUI/barImg.png");
-		//bar.setFill(new ImagePattern(barImg));
-		//
+		scene.getStylesheets().add("/GUI/BreakoutAppStyle.css"); //The font,size,color of labels
 				
 		String[] perkList = new String[2]; perkList[0] = "lumpScoreBonus"; perkList[1] = "scoreMultiplier";
 		PerkDrop pD = new PerkDrop(1, perkList);
@@ -113,40 +94,35 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		//HBox box = new HBox();
 		//box.getChildren().add(spriteBall);
 		
-		
-		
-		
 		board.generateBlockArray(cO);
 		
 		cO.addBlockArrayToRoot(root);
 		
-		//
+		//Below is the main menu display
+		
 		MainMenu.display();
-		if (MainMenu.getRandomOrCustom().equals("")) {
+		if (MainMenu.getRandomOrCustom().equals("")) 
+		{
 			System.out.println("The JavaFX GUI has been closed.");
 			System.out.println("If you wish to access text version, \n"
 					+ "do so in Main method and set up the level there.");
 			System.exit(0);
 		}
 		
-		if (MainMenu.getRandomOrCustom().equals("random")) {
+		if (MainMenu.getRandomOrCustom().equals("random")) 
+		{
 			board.generateRandomLevel(root, cO, MainMenu.getColors());
 		}
 		
-		else if (MainMenu.getRandomOrCustom().equals("custom")) {
+		else if (MainMenu.getRandomOrCustom().equals("custom")) 
+		{
 			board.addCustomLevel(root,MainMenu.getLevelName(), MainMenu.getColors(), cO);
 		}
 		
-		
-			
 		primaryStage.setScene(scene);
 		
-		
-		//ball.setStroke(Color.BLACK);
-		//ball.setFill(Color.CRIMSON);
-		//root.getChildren().add(ball);
 		root.getChildren().add(spriteBall);
-		//root.getChildren().add(ball);
+
 		root.getChildren().add(spriteBar);
 		
 		Label endScreen = new Label();
@@ -172,7 +148,8 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		ballMovement.setSpeedTimer();
 		
 		//The animation "loop" that handles all movement in graphics
-		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> {
+		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> 
+		{
 			
 			ballMovement.setHitBrick(false);
 			lives.setText("Lives: " + barMovement.getLives());
@@ -189,7 +166,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			
 			ballMovement.checkCurrentTime();
 		
-			
 			//Here we are moving the ball
 			cO.checkBallImageSwitch(ballMovement);
 			cO.moveBallInWIndow(ballMovement);
@@ -231,44 +207,44 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		})); //This is the end of the Timeline animation
 		
 		
-			//The Key handler for key presses, sets flag on in movement objects
-			scene.setOnKeyPressed(
-				new EventHandler<KeyEvent>()
+		//The Key handler for key presses, sets flag on in movement objects
+		scene.setOnKeyPressed(
+		new EventHandler<KeyEvent>()
+		{
+				public void handle(KeyEvent e)
 				{
-					public void handle(KeyEvent e)
+					if(e.getCode() == KeyCode.RIGHT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
+					//if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
 					{
-						if(e.getCode() == KeyCode.RIGHT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
-						//if(e.getCode() == KeyCode.RIGHT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
-						{
-							barMovement.setRFlag(true);
-						}
-						
-						if(e.getCode() == KeyCode.LEFT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
-						//if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
-						{
-							barMovement.setLFlag(true);
-						}
+						barMovement.setRFlag(true);
 					}
-				});
-			//The Key handler for keys released, sets flags off in movement objects
-			scene.setOnKeyReleased(
-					new EventHandler<KeyEvent>()
+					
+					if(e.getCode() == KeyCode.LEFT && barMovement.getLFlag() == false && barMovement.getMoveFlag())
+					//if(e.getCode() == KeyCode.LEFT && barMovement.getRFlag() == false && barMovement.getMoveFlag())
 					{
-						public void handle(KeyEvent e)
-						{
-							if(e.getCode() == KeyCode.RIGHT)
-							{
-								barMovement.setRFlag(false);
-								barMovement.resetAccelerate();
-							}
-							
-							if(e.getCode() == KeyCode.LEFT)
-							{
-								barMovement.setLFlag(false);
-								barMovement.resetAccelerate();
-							}
-						}
-					});
+						barMovement.setLFlag(true);
+					}
+				}
+		});
+			//The Key handler for keys released, sets flags off in movement objects
+		scene.setOnKeyReleased(
+			new EventHandler<KeyEvent>()
+			{
+					public void handle(KeyEvent e)
+				{
+					if(e.getCode() == KeyCode.RIGHT)
+					{
+						barMovement.setRFlag(false);
+						barMovement.resetAccelerate();
+					}
+						
+					if(e.getCode() == KeyCode.LEFT)
+					{
+						barMovement.setLFlag(false);
+						barMovement.resetAccelerate();
+					}
+				}
+			});
 		
 		//Timeline goes forever unless interrupted and starts timeline
 		timeline.setCycleCount(Timeline.INDEFINITE);
@@ -277,20 +253,19 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		primaryStage.setTitle("Brick Breaker");
 		
 		//This bit ensures the maximization of the window isn't allowed
-				primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> {
-		            if (newValue)
-		                primaryStage.setMaximized(false);
-		        });
-				//
+		primaryStage.maximizedProperty().addListener((observable, oldValue, newValue) -> 
+		{
+		   if (newValue) primaryStage.setMaximized(false);
+		 });
+		//
 				
 		primaryStage.show();
-		
-		
-		 
+			 
 	} 
     
 	@Override
-	public void handle(KeyEvent arg0) {
+	public void handle(KeyEvent arg0) 
+	{
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,0 +1,13 @@
+README
+
+For Application:
+After compilation, run Main.java
+This will start the game and open the main menu.  Proceed to chose a level
+and play the animated version of the game.  Use the arrow keys to play the
+game.  After quitting the application window, the text based version of the
+game will run.
+
+For testing:
+Run TestRunner.java
+This will run all the tests.  It will print "true" if all the tests pass.
+It will print each error that the tests fail.

@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 /**
  * This is the block class which will have methods and attributes to control the blocks behavior and appearance
+ * It is a subclass of the AbstractObjects class
  * @author
  *
  */
@@ -45,6 +46,15 @@ public class Block extends AbstractObjects
 				this.health = 1;
 			}
 		
+		/**
+		 * A constructor for the Block, this is for the application
+		 * @param x The x coordinate of the block
+		 * @param y The y coordinate of the block
+		 * @param col The character representation of the block's colour
+		 * @param len The length of the block
+		 * @param nWidth The width of the block
+		 * @param nHeight The height of the block
+		 */
 		public Block(int x, int y, char col, int len, int nWidth, int nHeight)
 		{
 			this.color = col;
@@ -55,12 +65,21 @@ public class Block extends AbstractObjects
 			this.height = nHeight;
 			this.health = 1;
 		}
-
+		
+		/**
+		 * This method returns a specified image from the image array attribute
+		 * @param index The index of the image to return
+		 * @return The image
+		 */
 		public Image getBrickSpritesAtIndex(int index)
 	    {
 	    	return this.blockSprites[index];
 	    }
 		
+		/**
+		 * This method set the array of images for the block
+		 * @param bS The array of images
+		 */
 		public void setBrickSprites(Image[] bS)
 		{
 			this.blockSprites = bS;
@@ -114,7 +133,8 @@ public class Block extends AbstractObjects
 		 * This is a method for setting visibility of the block for text gui
 		 * @param vis - true or false
 		 */
-		public void setVisibility(boolean vis) {
+		public void setVisibility(boolean vis)
+		{
 			this.visibility = vis;
 		}
 		
@@ -122,11 +142,14 @@ public class Block extends AbstractObjects
 		 * This is a method for getting visibility of the block for text gui
 		 * @return visibility - boolean value
 		 */
-		
 		public boolean getVisibility() {
 			return this.visibility;
 		}
 		
+		/**
+		 * A method that decreases the health of a block
+		 * @return False if the block loses health, true if the block already has less than 1 health
+		 */
 		public boolean decreaseHealth()
 		{
 			if(this.health > 1)
@@ -140,11 +163,19 @@ public class Block extends AbstractObjects
 			}
 		}
 		
+		/**
+		 * A method that returns the amount of health a block has
+		 * @return The blocks health
+		 */
 		public int getHealth()
 		{
 			return this.health;
 		}
 		
+		/**
+		 * A method that sets the blocks health
+		 * @param nHealth The new set health of the block
+		 */
 		public void setHealth(int nHealth)
 		{
 			if(nHealth > 0 && nHealth < 5)
@@ -153,16 +184,28 @@ public class Block extends AbstractObjects
 			}
 		}
 		
+		/**
+		 * A method that returns the width of a block
+		 * @return The block's width
+		 */
 		public int getWidth()
 		{
 			return this.width;
 		}
 		
+		/**
+		 * A method that returns the height of the block
+		 * @return The block's height
+		 */
 		public int getHeight()
 		{
 			return this.height;
 		}
 		
+		/**
+		 * A method that sets the width of the block
+		 * @param nWidth The new width of the block
+		 */
 		public void setWidth(int nWidth)
 		{
 			if(nWidth > 0 && nWidth < 100)
@@ -171,6 +214,10 @@ public class Block extends AbstractObjects
 			}
 		}
 		
+		/**
+		 * A method that sets the height of the block
+		 * @param nHeight The new height of the block
+		 */
 		public void setHeight(int nHeight)
 		{
 			if(nHeight > 0 && nHeight < 100)
