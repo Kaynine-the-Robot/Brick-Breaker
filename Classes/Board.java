@@ -53,19 +53,20 @@ public class Board
 	     * @param y is the vertical length in integer units.
 	     */
 	   public Board(int x, int y)
-	        {
-	            this.xLength = x;
-	            this.yLength = y;
-	            this.board = new char[this.xLength][this.yLength];
-	        }
+	   {
+		   this.xLength = x;
+		   this.yLength = y;
+		   this.board = new char[this.xLength][this.yLength];
+	   }
 	   
 	   /**
 	    * This is a constructor for board that creates basic square block shape.
-	    * @param levelName
-	    * @param rowNumber
-	    * @param colNumber
+	    * @param levelName The name of the level
+	    * @param rowNumber The amount of rows on the board
+	    * @param colNumber The amount of columns on the board
 	    */
-	   public Board(String levelName,int rowNumber, int colNumber) {
+	   public Board(String levelName,int rowNumber, int colNumber)
+	   {
 		   
 		   if (levelName == "Basic") 
 		   {
@@ -85,19 +86,19 @@ public class Board
 	     * @return returns the board size in a Point object.
 	     */
 	    public Point getBoardSize()
-	        {
-	            Point size = new Point(this.xLength,this.yLength);
-	            return size;
-	        }
+	    {
+	    	Point size = new Point(this.xLength,this.yLength);
+	    	return size;
+	    }
 	    
 	    /**
 	     * This is a getter for retrieving the board/array and everything in it.
 	     * @return returns the board/array
 	     */
 	    public char[][] getBoard()
-	    	{
-	    		return this.board;
-	    	}
+	    {
+	    	return this.board;
+	    }
 	    
 	    /**
 	     * This is a method for returning how many blocks are left in text gui
@@ -124,43 +125,43 @@ public class Board
 	     * @param y is the vertical length.
 	     */
 	    public void setBoardSize(int x, int y) 
-	    	{
-	    		this.xLength = x;
-	    		this.yLength = y;
-	    	}
+	    {
+	    	this.xLength = x;
+	    	this.yLength = y;
+	    }
 	    
 	    /**
 	     * This method is for drawing a row of Blocks. (Later to become drawing multiple rows or patterns)
 	     * @param row is the constant row in the 2D array to set Blocks on.
 	     */
 	    public void basicRowBlocks(int row) 
+	    {
+	    	for(int i = 0; i < this.xLength; i++) 
 	    	{
-	    		for(int i = 0; i < this.xLength; i++) 
-	    			{
-	    				this.board[i][row] = 'B';
-    			}
+	    		this.board[i][row] = 'B';
 	    	}
+	    }
 	    
 	    /**
 	     * This is for making multiple rows of blocks
 	     * @param blocks is the 2D array of blocks
 	     */
 	    public void advancedRowBlocks(Block[][] blocks) 
+	    {
+	    	this.objBoard = blocks;
+
+	    	for(int i = 0; i < blocks.length; i++) 
 	    	{
-	    		this.objBoard = blocks;
-
-	    		for(int i = 0; i < blocks.length; i++) 
+	    		for(int j = 0; j < blocks[i].length; j++) 
+	    		{
+	    			if(blocks[i][j] != null)
 	    			{
-	    				for(int j = 0; j < blocks[i].length; j++) 
-	    					{
-	    						if(blocks[i][j] != null)
-	    							{
-	    								this.board[i][j] = (char) blocks[i][j].getSymbol();
+	    				this.board[i][j] = (char) blocks[i][j].getSymbol();
 
-	    							}
-	    						}
-	    					}
 	    			}
+	    		}
+	    	}
+	    }
 	    
 	    
 	    /**
@@ -170,11 +171,11 @@ public class Board
 	     * @param startY is the specified starting y coordinate of the player.
 	     */
 	    public void makePlayer(Player player)
-	    	{
-	    		this.playerPos = new Point((int) player.getPosition().getX(), (int) player.getPosition().getY());
-	    		this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
-	    		this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
-	    	}
+	    {
+	    	this.playerPos = new Point((int) player.getPosition().getX(), (int) player.getPosition().getY());
+	    	this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = 'P';
+	    	this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] = 'P';
+	    }
 	    
 	    /**
 	     * This is a method for setting the ball's positions on the board.
@@ -183,10 +184,10 @@ public class Board
 	     * @param startY is the specified starting y coordinate of the ball.
 	     */
 	    public void makeBall(Ball ball) 
-	    	{
-	    		this.ballPos = new Point( (int) ball.getPosition().getX(), (int) ball.getPosition().getY());
-	    		this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = 'O';
-	    	}
+	    {
+	    	this.ballPos = new Point( (int) ball.getPosition().getX(), (int) ball.getPosition().getY());
+	    	this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = 'O';
+	    }
 	    
 	    /**
 	     * This method is for updating the board positions of the ball and player when moving.
@@ -194,28 +195,25 @@ public class Board
 	     * @param newPlayerPos is the new position of the player that is going to replace the old position.
 	     */
 		public void updateBoard(Point newBallPos, Point newPlayerPos, Ball ball) 
-			{
-				this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = ' '; //ball remove
-				this.ballPos.setLocation((int) newBallPos.getX(), (int) newBallPos.getY()); //ball update pos
-				this.board[(int) newBallPos.getX()][(int) newBallPos.getY()] = 'O';//place ball
-				
-				this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] =' '; //Remove bar
-				this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = ' ';//Remove bar
-				this.playerPos.setLocation((int) newPlayerPos.getX(), (int) newPlayerPos.getY());//Update bar
-				this.board[(int) newPlayerPos.getX()][(int) newPlayerPos.getY()] = 'P'; //Place bar
-				this.board[(int) newPlayerPos.getX()+1][(int) newPlayerPos.getY()] = 'P'; //Place bar
-				
-				
-				//this.checkBrickCollision(ball);
-				
-			}
+		{
+			this.board[(int) this.ballPos.getX()][(int) this.ballPos.getY()] = ' '; //ball remove
+			this.ballPos.setLocation((int) newBallPos.getX(), (int) newBallPos.getY()); //ball update pos
+			this.board[(int) newBallPos.getX()][(int) newBallPos.getY()] = 'O';//place ball
+
+			this.board[(int) this.playerPos.getX()][(int) this.playerPos.getY()] =' '; //Remove bar
+			this.board[(int) this.playerPos.getX()+1][(int) this.playerPos.getY()] = ' ';//Remove bar
+			this.playerPos.setLocation((int) newPlayerPos.getX(), (int) newPlayerPos.getY());//Update bar
+			this.board[(int) newPlayerPos.getX()][(int) newPlayerPos.getY()] = 'P'; //Place bar
+			this.board[(int) newPlayerPos.getX()+1][(int) newPlayerPos.getY()] = 'P'; //Place bar
+		}
 		
 		/**
 		 * This is a function that checks the board brick collision IN TEXT GUI
-		 * 
+		 * @param ball The ball object to check for collision
+		 * @param player The player object to check for collision
 		 */
-		public void checkBrickCollision(Ball ball,Player player) {
-
+		public void checkBrickCollision(Ball ball,Player player)
+		{
 			for (int i = 0 ; i< 10; i++) 
 			{
 				for (int j = 0 ; j< 15 ; j++) 
@@ -247,36 +245,37 @@ public class Board
 						
 		
 		/**
-		   * This method generates array of Rectangle objects (Blocks) to store it in Array List for javafx gui
-		   */
-		   public void generateBlockArray(CollisionObjects cO)
-		   {
-			   blockArray = new Block[blockArrayRow][blockArrayCol];
-			   Image[] normalBlockSprites = new Image[6];
-			   normalBlockSprites[0] = new Image("file:Assets/NormalBlock_Red_Left.png"); normalBlockSprites[1] = new Image("file:Assets/NormalBlock_Red.png"); normalBlockSprites[2] = new Image("file:Assets/NormalBlock_Red_Right.png");
-			   normalBlockSprites[3] = new Image("file:Assets/NormalBlock_Green_Left.png"); normalBlockSprites[4] = new Image("file:Assets/NormalBlock_Green.png"); normalBlockSprites[5] = new Image("file:Assets/NormalBlock_Green_Right.png");
-			   Image[] hardBlockSprites = new Image[2];
-			   hardBlockSprites[0] = new Image("file:Assets/HardBlock_Whole.png"); hardBlockSprites[1] = new Image("file:Assets/HardBlock_Broken.png");
-		 		for(int i = 0; i < blockArray.length; i++)
-		 		{
-		 			for(int j = 0; j < blockArray[i].length; j++)
-		 			{
-		 				int rand = ThreadLocalRandom.current().nextInt(0, 4);
-		 				if(rand == 3)
-		 				{
-		 					blockArray[i][j] = new Hard_Block(cO.getBackWidth()/30 + (80 * i), cO.getBackHeight()/10 + (30 * j), 'B', 2, 60, 20, 2);
-		 					blockArray[i][j].setBrickSprites(hardBlockSprites);
-		 				}
-		 				else
-		 				{
-		 					blockArray[i][j] = new Normal_Block(cO.getBackWidth()/30 + (80 * i), cO.getBackHeight()/10 + (30 * j), 'B', 2, 60, 20);
-		 					blockArray[i][j].setBrickSprites(normalBlockSprites);
-		 				}
-		 			}
-		 		}
-		 		cO.setBrickHitBoxes(blockArray);
-			      
-		   }
+		 * This method generates array of Rectangle objects (Blocks) to store it in Array List for javafx gui
+		 * @param cO The collision object for generation
+		 */
+		public void generateBlockArray(CollisionObjects cO)
+		{
+			blockArray = new Block[blockArrayRow][blockArrayCol];
+			Image[] normalBlockSprites = new Image[6];
+			normalBlockSprites[0] = new Image("file:Assets/NormalBlock_Red_Left.png"); normalBlockSprites[1] = new Image("file:Assets/NormalBlock_Red.png"); normalBlockSprites[2] = new Image("file:Assets/NormalBlock_Red_Right.png");
+			normalBlockSprites[3] = new Image("file:Assets/NormalBlock_Green_Left.png"); normalBlockSprites[4] = new Image("file:Assets/NormalBlock_Green.png"); normalBlockSprites[5] = new Image("file:Assets/NormalBlock_Green_Right.png");
+			Image[] hardBlockSprites = new Image[2];
+			hardBlockSprites[0] = new Image("file:Assets/HardBlock_Whole.png"); hardBlockSprites[1] = new Image("file:Assets/HardBlock_Broken.png");
+			for(int i = 0; i < blockArray.length; i++)
+			{
+				for(int j = 0; j < blockArray[i].length; j++)
+				{
+					int rand = ThreadLocalRandom.current().nextInt(0, 4);
+					if(rand == 3)
+					{
+						blockArray[i][j] = new Hard_Block(cO.getBackWidth()/30 + (80 * i), cO.getBackHeight()/10 + (30 * j), 'B', 2, 60, 20, 2);
+						blockArray[i][j].setBrickSprites(hardBlockSprites);
+					}
+					else
+					{
+						blockArray[i][j] = new Normal_Block(cO.getBackWidth()/30 + (80 * i), cO.getBackHeight()/10 + (30 * j), 'B', 2, 60, 20);
+						blockArray[i][j].setBrickSprites(normalBlockSprites);
+					}
+				}
+			}
+			cO.setBrickHitBoxes(blockArray);
+
+		}
 
 		/**
 		 * This is a getter for number of rows in the block array
@@ -309,55 +308,48 @@ public class Board
 		
 		/**
 		 * This method removes block by specific index in javafx gui
-		 * @param root
-		 * @param x
-		 * @param y
+		 * @param root The root object to remove block from
+		 * @param x The x index of the block to remove
+		 * @param y The y index of the block to remove
 		 */
 		public void removeBlockAtIndex(Pane root,int x, int y, CollisionObjects cO) 
 		{
-				this.getBlockArrayAtIndex(x,y).setVisibility(false);
-				cO.removeBlockFromRoot(root, x, y);
-				
-				//removeRectangleFromRoot(root);
+			this.getBlockArrayAtIndex(x,y).setVisibility(false);
+			cO.removeBlockFromRoot(root, x, y);
 		}
 		
 		/**
 		 * This method is for removing block at text gui by index
-		 * @param x
-		 * @param y
+		 * @param x The x index of the block to remove
+		 * @param y The y index of the block to remove
 		 */
 		
-		public void removeBlockAtIndexText(int x, int y) {
+		public void removeBlockAtIndexText(int x, int y)
+		{
 			objBoard[x][y].setVisibility(false);
 			board[x][y] = ' ';
 
 		}
+		
 		/**
 		 * This is a getter for block array
 		 * @return blockArray - which is the array of blocks
 		 */
-		public Block[][] getBlockArray(){
+		public Block[][] getBlockArray()
+		{
 			return this.blockArray;
 		}
 		
 		/**
 		 * This method generates random block level in javafx gui
-		 * @param root
+		 * @param root The root object to place the nodes in
+		 * @param cO The collision object to generate blocks to
+		 * @param colors An array or colours for the blocks
 		 */
 		public void generateRandomLevel(Pane root, CollisionObjects cO, Paint[] colors) 
 		{
 			int maxBlockThatCanBeRemoved = (blockArrayRow * blockArrayCol); //Max num of blocks that can be removed is all blocks
 			int randomNumBlocksToRemove = ThreadLocalRandom.current().nextInt(0, maxBlockThatCanBeRemoved +1);
-			
-			/*
-			for (int a = 0; a<this.blockArrayRow; a++) 
-			{
-		  		for (int b = 0; b<this.blockArrayCol; b++) 
-		  		{
-		  			cO.colorBrickInArray(a, b, colors);
-		  		}
-			}
-			*/
 			
 			for (int i=0; i< randomNumBlocksToRemove ;i++) 
 			{
@@ -366,13 +358,11 @@ public class Board
 				int randomCol = ThreadLocalRandom.current().nextInt(0, blockArrayCol );
 				this.removeBlockAtIndex(root, randomRow,randomCol, cO);
 			}
-			
 		}
 		
 		/**
 		 * This method generates random block level in the TEXT gui
-		 * @param root
-		 * @param levelName
+		 * 
 		 */
 		public void generateRandomLevel() {
 			int maxBlockThatCanBeRemoved = (blockArrayRow * blockArrayCol); //Max num of blocks that can be removed is all blocks
@@ -387,69 +377,71 @@ public class Board
 
 		/**
 		 * This method is for generating custom levels for javafx gui
+		 * @param root The root object for the nodes
+		 * @param level The name of the level to generate
+		 * @param colors An array of colours for the blocks
+		 * @param cO The collision object for block generation
+		 */
+		public void addCustomLevel(Pane root,String level,Paint[] colors, CollisionObjects cO)
+		{
+			Scanner scan = null;
+
+			try {
+				scan = new Scanner(new File(level));
+			}
+			catch(FileNotFoundException e) {
+				System.out.println(e);
+				System.exit(0);
+			}
+
+			IntegerStringConverter isc = new IntegerStringConverter();
+
+			String coordinateLine = scan.nextLine();
+			String[] coordinates = coordinateLine.split(",");
+
+			int blocksToRemove = coordinates.length;
+
+			for (int i=0; i<blocksToRemove;i+=2) {
+				int xvalue = isc.fromString(coordinates[i]);
+				int yvalue = isc.fromString(coordinates[i+1]);
+				this.removeBlockAtIndex(root,xvalue,yvalue, cO);
+
+			}
+		}
+
+		/**
+		 * This method is for generating custom levels for text gui
 		 * @param root
 		 * @param level
 		 */
-		  public void addCustomLevel(Pane root,String level,Paint[] colors, CollisionObjects cO) {
+		public void addCustomLevelText(String level)
+		{
+			Scanner scan = null;
+			this.blockArrayRow = 15;
+			this.blockArrayRow = 10; //Ensure the standard size
 
-			  
-			  	Scanner scan = null;
+			try {
+				scan = new Scanner(new File(level));
+			}
+			catch(FileNotFoundException e) {
+				System.out.println(e);
+				System.exit(0);
+			}
 
-			  	try {
-					scan = new Scanner(new File(level));
-				}
-			  	catch(FileNotFoundException e) {
-			  		System.out.println(e);
-			  		System.exit(0);
-			  	}
-			  	
-			  	IntegerStringConverter isc = new IntegerStringConverter();
-			  	
-			  	String coordinateLine = scan.nextLine();
-			  	String[] coordinates = coordinateLine.split(",");
+			String coordinateLine = scan.nextLine();
+			String[] coordinates = coordinateLine.split(",");
 
-			  	int blocksToRemove = coordinates.length;
-			  	
-			  	for (int i=0; i<blocksToRemove;i+=2) {
-			  		int xvalue = isc.fromString(coordinates[i]);
-			  		int yvalue = isc.fromString(coordinates[i+1]);
-			  		this.removeBlockAtIndex(root,xvalue,yvalue, cO);
-			  		
-			  	}
-		  }
-		  /**
-			 * This method is for generating custom levels for text gui
-			 * @param root
-			 * @param level
-			 */
-		  public void addCustomLevelText(String level) {
-			  Scanner scan = null;
-			  	this.blockArrayRow = 15;
-			  	this.blockArrayRow = 10; //Ensure the standard size
-			  	
-			  	try {
-					scan = new Scanner(new File(level));
-				}
-			  	catch(FileNotFoundException e) {
-			  		System.out.println(e);
-			  		System.exit(0);
-			  	}
-			  	
-			  	String coordinateLine = scan.nextLine();
-			  	String[] coordinates = coordinateLine.split(",");
+			IntegerStringConverter isc = new IntegerStringConverter();
 
-			  	IntegerStringConverter isc = new IntegerStringConverter();
-			  	
-			  	int blocksToRemove = coordinates.length;
-			  	
-			  	for (int i=0; i<blocksToRemove;i+=2)
-			  	{
-			  		int xvalue = isc.fromString(coordinates[i]);
-			  		int yvalue = isc.fromString(coordinates[i+1]);
-			  		this.removeBlockAtIndexText(xvalue,yvalue);
-			  	}
-		  }
-				
+			int blocksToRemove = coordinates.length;
+
+			for (int i=0; i<blocksToRemove;i+=2)
+			{
+				int xvalue = isc.fromString(coordinates[i]);
+				int yvalue = isc.fromString(coordinates[i+1]);
+				this.removeBlockAtIndexText(xvalue,yvalue);
+			}
+		}		
 	}
 
 
