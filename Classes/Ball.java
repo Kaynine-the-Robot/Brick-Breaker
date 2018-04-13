@@ -1,8 +1,5 @@
 package Classes;
-import java.awt.Point;
-import Classes.*;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Circle;
 
 /**
  * This is the ball class which will have all the methods and attributes to control the ball 
@@ -23,7 +20,7 @@ public class Ball extends AbstractObjects
 	    private boolean gameStartState;
 	    
 	    /**
-	     * A constructor for a ball object
+	     * A constructor for a ball object fot text game
 	     * @param x is an int for the x coordinate of a Point object
 	     * @param y is an int for the y coordinate of a Point object
 	     */
@@ -31,6 +28,8 @@ public class Ball extends AbstractObjects
 	    {
 	        this.setPosition(x, y);
 	        this.setSymbol('O');
+	        this.horzMovement = 1;
+	        this.vertMovement = -1;
 	    }
 	    
 	    /**

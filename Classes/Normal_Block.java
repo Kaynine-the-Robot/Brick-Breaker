@@ -1,14 +1,5 @@
 package Classes;
 
-import javafx.scene.shape.Rectangle;
-
-import java.util.ArrayList;
-
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-
 /**
  * A class for the normal block, which contains all the attributes and methods of a normal block
  * This is used for the application GUI of the game, and is a subclass of the Block class

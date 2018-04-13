@@ -1,11 +1,5 @@
 package Classes;
-import java.awt.Point;
-import java.util.ArrayList;
-
-import Classes.Board;
-import javafx.scene.layout.Pane;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 /**
  * This is the block class which will have methods and attributes to control the blocks behavior and appearance
  * It is a subclass of the AbstractObjects class

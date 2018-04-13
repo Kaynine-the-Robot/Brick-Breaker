@@ -1,11 +1,5 @@
 package Classes;
-import java.util.Scanner;
-import java.awt.Point;
-import Classes.*;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 /**
  * This is the player class which contains the methods and attributes of the player's bat.

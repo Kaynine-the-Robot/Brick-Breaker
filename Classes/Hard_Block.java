@@ -1,12 +1,5 @@
 package Classes;
 
-import java.util.ArrayList;
-
-import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-
 /**
  * This is the hard block class which contains all the method and attributes of a hard block
  * It is a subslass of the Block class

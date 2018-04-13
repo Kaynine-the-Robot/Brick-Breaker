@@ -1,31 +1,11 @@
 package Main;
-import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
-
 import Classes.Board;
 import GUI.BreakoutApp;
 import GUI.Text_GUI;
 import javafx.application.Application;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import Classes.Ball;
-import Classes.Block;
 import Classes.Player;
 import Classes.Text_Block;
 
@@ -114,6 +94,7 @@ public class Main
 	    			}
 
 	    			System.out.println("You win.");
+	    			input.close();
 	    			System.exit(0);
 	        }
 	}
