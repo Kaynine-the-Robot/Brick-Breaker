@@ -1,30 +1,37 @@
 package Classes;
 
+import java.awt.TextField;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 
 public class MainMenu {
 
 	private static Paint[] colors ;
-	private static String levelName;
+	private static String levelName = "";
 	private static String randomOrCustom = "";
 	private static Scene menu;
+	private static String scoreToWrite = "0";
+	
 	/**
 	 * This method is for getting the color array
 	 * @return colors - Paint[] array
 	 */
-	public static Paint[] getColors()
-	{
+	public static Paint[] getColors(){
 		return colors;
 	}
 	
@@ -32,42 +39,44 @@ public class MainMenu {
 	 * This method is for returning the level name
 	 * @return levelName - String
 	 */
-	public static String getLevelName()
-	{
+	public static String getLevelName() {
 		return levelName;
 	}
 	/**
 	 * This method is for returning level selection
 	 * @return randomOrCustom - String
 	 */
-	public static String getRandomOrCustom()
-	{
+	public static String getRandomOrCustom() {
 
-		return randomOrCustom;
-
+			return randomOrCustom;
+			
 	}
 	
 	/**
 	 * This method is for returning the menu scene
 	 * @return menu - Scene
 	 */
-	public static Scene getMenu()
-	{
+	public static Scene getMenu() {
 		return menu;
 	}
 	
 	/**
 	 * This method is for displaying the actual menu
 	 */
-	public static void display()
-	{
+	public static void display(String scoreToWrite) {
 		
 		//Buttons
 		Button heartStage = new Button("Heart Stage");
 		Button spikesStage = new Button("Spikes Stage");
 		Button linesStage = new Button("Lines Stage");
 		Button randomStage = new Button("Random Stage");
+		
+		String[] FileArray = ScoresTracker.getFileContentsArray();
 		//
+		if (FileArray[0].equals("1")) {heartStage.setText("Heart Stage - Completed! ");}
+		if (FileArray[2].equals("1")) {spikesStage.setText("Spikes Stage - Completed!");}
+		if (FileArray[4].equals("1")) {linesStage.setText("Lines Stage - Completed!");}
+		if (FileArray[6].equals("1")) {randomStage.setText("RandomStage - Completed!");}
 		
 		Stage window = new Stage();
 		window.setTitle("Welcome to the Brick Breaker!");
@@ -84,6 +93,10 @@ public class MainMenu {
 		window.getIcons().add(icon);
 		//
 		
+		//High Score 
+		Label scoreText = new Label("CURRENT HIGHSCORE: " + scoreToWrite);
+		//
+		
 		BorderPane menuRoot = new BorderPane();
 		VBox vbox1 = new VBox();
 		HBox hbox1 = new HBox();
@@ -92,6 +105,7 @@ public class MainMenu {
 		vbox1.getChildren().add(randomStage);
 		vbox1.getChildren().add(linesStage);
 		vbox1.getChildren().add(spikesStage);
+		vbox1.getChildren().add(scoreText);
 		hbox1.getChildren().add(logo);
 		
 		menuRoot.setTop(hbox1);
@@ -118,6 +132,7 @@ public class MainMenu {
 
 				colors = new Paint[4];
 				colors[0] = Color.BLUE; colors[1] = Color.BROWN; colors[2] = Color.GREEN; colors[3] = Color.RED;
+				levelName = "random";
 				randomOrCustom = "random";
 				window.close();
 			

@@ -81,7 +81,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		//Below is the main menu display
 		
-		MainMenu.display();
+		MainMenu.display(ScoresTracker.getHighScoreAsString());
 		if (MainMenu.getRandomOrCustom().equals("")) 
 		{
 			System.out.println("The JavaFX GUI has been closed.");
@@ -125,6 +125,9 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		lives.setLayoutX(BACKGROUND_WIDTH - (BACKGROUND_WIDTH/8));
 		lives.setLayoutY(TOP_OFFSET);
 		
+		//We use this to write scores to a file
+		ScoresTracker scoreWriter = new ScoresTracker(MainMenu.getLevelName());
+		
 		//Count for BallSpeed up
 		ballMovement.setSpeedTimer();
 		
@@ -167,25 +170,33 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	cO.checkPerkCollisions(root, barMovement, pD);
         	
         	
+        	//If the player lost
         	if(barMovement.getMoveFlag() == false)
         	{
         		endScreen.setVisible(true);
-        		endScreen.setText("YOU LOSE");
+
+        		endScreen.setText("! YOU LOSE - Press Esc !");
         	}
+        	
+        	//Update the current high score to file if greater then the last score
+        	scoreWriter.scoreToFileUpdate(barMovement.getScore());
+        	
+        	//Check if all blocks have been destroyed
         	
         	if(root.getChildren().size() - 5 == 0)
         	{
-        		
         		ballMovement.pauseBall();
         		barMovement.setMoveFlag(false);
         		
+        		//Write to file that the level has been completed marked with - "1"
+        		scoreWriter.levelWonUpdate(barMovement.getScore());
+        		
+        		endScreen.setText("! YOU WIN - Press Esc !");
         		endScreen.setVisible(true);
-        		endScreen.setText("YOU WIN");
-        	}
         	
         	
         	
-		})); //This is the end of the Timeline animation
+		}})); //This is the end of the Timeline animation
 		
 		
 		//The Key handler for key presses, sets flag on in movement objects
@@ -209,8 +220,76 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 					{
 						ballMovement.startBall();
 					}
+				
+				
+				
+				//Esc is basically a re-set of the game but score is kept
+				if (e.getCode() == KeyCode.ESCAPE) 
+				{
+				
+					scoreWriter.scoreToFileUpdate(barMovement.getScore());
+					
+					endScreen.setVisible(false);
+			    	
+					timeline.pause();
+					
+					//Resetting bar and ball positions
+					spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
+			    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(spriteBar.getY() - spriteBall.getFitHeight() - 5); 
+			    	spriteBar.setX(BACKGROUND_WIDTH/2); spriteBar.setY(BACKGROUND_HEIGHT - 50); 
+			    	spriteBar.setFitHeight(15); spriteBar.setFitWidth(140);
+			    	ballMovement.reset();
+			    	
+			    	 
+			    	//Reseting block array here	!!! removeblockfrom root
+					//for (int i = 0 ;i < root.getChildren().size() - 5 ; i++) 
+					//{
+					
+						
+						//root.getChildren().remove(root.getChildren());
+					//}
+			    	root.getChildren().clear();
+			    	
+			    	root.getChildren().add(spriteBall);
+					root.getChildren().add(spriteBar);
+					root.getChildren().add(score);
+					root.getChildren().add(endScreen);
+					root.getChildren().add(lives);
+					
+					board.generateBlockArray(cO);
+					
+					cO.addBlockArrayToRoot(root);
+					
+					MainMenu.display(ScoresTracker.getHighScoreAsString());
+	        		
+					if (MainMenu.getRandomOrCustom().equals("random")) 
+					{
+						board.generateRandomLevel(root, cO, MainMenu.getColors());
+					}
+					
+					else if (MainMenu.getRandomOrCustom().equals("custom")) 
+					{
+						board.addCustomLevel(root,MainMenu.getLevelName(), MainMenu.getColors(), cO);
+					}
+	
+											
+					primaryStage.setScene(scene);
+					
+					
+					barMovement.setLives(3);
+					barMovement.setScore(0);
+					
+					barMovement.setMoveFlag(true);
+			   
+			    	timeline.playFromStart();
+					primaryStage.show(); 
+
+					
 				}
-		});
+				
+			}});
+		
+		
 			//The Key handler for keys released, sets flags off in movement objects
 		scene.setOnKeyReleased(
 			new EventHandler<KeyEvent>()
@@ -246,13 +325,12 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				
 		primaryStage.show();
 			 
-	} 
-    
+		
+    }
+
 	@Override
-	public void handle(KeyEvent arg0) 
-	{
+	public void handle(KeyEvent event) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-}
+	}}
+ 
