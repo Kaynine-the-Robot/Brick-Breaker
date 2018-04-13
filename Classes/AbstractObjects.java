@@ -39,9 +39,6 @@ public abstract class AbstractObjects {
 	
 	/**
      * This method updates the position of the ball object.
-     * @param args unused.
-     * @return Nothing.
-     * @author Amanda
      */
     public void updatePos(double horzMovement, double vertMovement)
     {	
@@ -53,9 +50,6 @@ public abstract class AbstractObjects {
     
     /**
      * This method updates the position of the player object.
-     * @param args unused.
-     * @return Nothing.
-     * @author Amanda
      */
     public void updatePos(double horzMovement)
     {	
