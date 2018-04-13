@@ -54,6 +54,13 @@ public class Player extends AbstractObjects {
 		return this.accelAmount = this.accelAmount + 0.01;
 	}
 	
+	public void setLives(int l) {
+		this.lives = l;
+	}
+	public void setScore(int s) {
+		this.score = s;
+	}
+	
 	/**
 	 * A method that resets the bar's speed to 1
 	 */
