@@ -4,8 +4,9 @@ For Application:
 After compilation, run Main.java
 This will start the game and open the main menu.  Proceed to chose a level
 and play the animated version of the game.  Use the arrow keys to play the
-game.  After quitting the application window, the text based version of the
-game will run.
+game, the space bar to launch the ball, and esc to return to the menu. If 
+you win or lose the game, the game should return to the menu.  After quitting 
+the application window, the text based version of the game will run.
 
 For testing:
 Run TestRunner.java
