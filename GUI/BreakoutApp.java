@@ -233,6 +233,8 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			    	
 					timeline.pause();
 					
+					primaryStage.close();
+
 					//Resetting bar and ball positions
 					spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
 			    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(spriteBar.getY() - spriteBall.getFitHeight() - 5); 
@@ -281,6 +283,10 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 					
 					barMovement.setMoveFlag(true);
 			   
+					//if (MainMenu.getCloseMenu() == true) {
+						//System.exit(0);
+					//}
+					
 			    	timeline.playFromStart();
 					primaryStage.show(); 
 

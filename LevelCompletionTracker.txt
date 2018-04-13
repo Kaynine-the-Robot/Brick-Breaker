@@ -1,1 +1,1 @@
-0 <-heart 0 <-spikes 0 <-lines 0 <-random 1 <-highscore
+0 <-heart 0 <-spikes 0 <-lines 0 <-random 7 <-highscore 4 <-heartHighScore 0 <-spikesHighScore 7 <-linesHighScore 4 <-randomHighScore
