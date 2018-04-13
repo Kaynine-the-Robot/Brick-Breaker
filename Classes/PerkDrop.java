@@ -43,6 +43,11 @@ public class PerkDrop extends AbstractObjects {
 		this.scoreMultiplier = this.scoreMultiplier / 2;
 	}
 	
+	public void resetMulti()
+	{
+		this.scoreMultiplier = 1;
+	}
+	
 	public String choosePerk()
 	{
 		int rand = ThreadLocalRandom.current().nextInt(0, this.perkList.length);

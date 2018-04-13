@@ -5,9 +5,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
+import javafx.util.Duration;
 
 public class CollisionObjects {
 
@@ -91,16 +93,25 @@ public class CollisionObjects {
 	 * This method is for checking collisions between the ball and the borders of the window
 	 * @param ball is a Ball object passed for it's collisions, reset, and pauseball methods
 	 * @param player is a Player object passed through for it's lives and stopping it's movement
+	 * @param mP is a MediaPlayer object which will play a sounds when the ball collides with a block
 	 */
-	public void checkBallAndBorders(Ball ball, Player player)
+	public void checkBallAndBorders(Ball ball, Player player, MediaPlayer impact, MediaPlayer death)
 	{
+		if(impact.getCurrentCount()==1)
+		{
+			impact.stop();
+		}
+		impact.setCycleCount(MediaPlayer.INDEFINITE);
+		death.setCycleCount(1);
 		if (this.ballHitbox.getX() + this.ballHitbox.getFitWidth() - this.COLLISION_OFFSET >= this.BACKGROUND_WIDTH || this.ballHitbox.getX() <= 0 - this.COLLISION_OFFSET) //Ball colliding with the right or left borders
     	{
     		ball.horzCollision(); //Will change the balls direction to the opposite horizontal direction
+    		impact.play();
     	}
 		if (this.ballHitbox.getY() <= (0 - this.COLLISION_OFFSET)) //Ball colliding with the top of the window
     	{
     		ball.vertCollision(); //Will change the balls direction to the opposite vertical direction
+    		impact.play();
     	}
 		if (this.ballHitbox.getY() >= (this.BACKGROUND_HEIGHT - this.ballHitbox.getFitHeight())) //Ball colliding with the bottom of screen, aka lost
     	{
@@ -110,9 +121,11 @@ public class CollisionObjects {
 				ballHitbox.setY(this.barHitbox.getY() - ballHitbox.getFitHeight() - 5); //Reseting the balls position to be relatively above the bar no matter the screen size to avoid clipping into each other
 				ball.reset(); //Reseting motion and speed
 				player.loseLife(); //Taking one life away
+				impact.play();
 			}
 			else
 			{
+				death.play();
 	    		ball.pauseBall(); //Stopping the balls movement as the player has lost
 	    		player.setMoveFlag(false); //Stopping the player's bar movement as the play has lost
 			}
@@ -393,8 +406,13 @@ public class CollisionObjects {
 	 * @param barMovement is a Bar object used for increasing the score
 	 * @param board is the Board object used for accesing the Block methods for conditions, health, and types of blocks
 	 */
-	public void checkBallBrickCollisionTrigger(Pane root, Ball ballMovement, Player barMovement, Board board, PerkDrop pD) {
+	public void checkBallBrickCollisionTrigger(Pane root, Ball ballMovement, Player barMovement, Board board, PerkDrop pD, MediaPlayer impact) {
 		
+		if(impact.getCurrentCount()==1)
+		{
+			impact.stop();
+		}
+		impact.setCycleCount(MediaPlayer.INDEFINITE);
 		for(int i = 0; i < this.brickHitboxes.length; i++) 
     	{
     		for(int j = 0; j < this.brickHitboxes[i].length; j++)
@@ -423,6 +441,7 @@ public class CollisionObjects {
     				{
     					this.brickHitboxes[i][j].setImage(board.getBlockArrayAtIndex(i,j).getBrickSpritesAtIndex(1));
     				}
+    				impact.play();
     				ballMovement.horzCollision();
     				ballMovement.setHitBrick(true);
     			}
@@ -450,6 +469,7 @@ public class CollisionObjects {
     				{
     					this.brickHitboxes[i][j].setImage(board.getBlockArrayAtIndex(i,j).getBrickSpritesAtIndex(1));
     				}
+    				impact.play();
     				ballMovement.vertCollision();
     				ballMovement.setHitBrick(true);
     			}
@@ -462,19 +482,27 @@ public class CollisionObjects {
 	 * This is a method for checking if the ball (Circle Object) collides with the player (Rectangle Object)
 	 * @param bM is the Ball object for changing movement
 	 */
-	public void checkBallPlayerCollisionTrigger(Ball bM)
+	public void checkBallPlayerCollisionTrigger(Ball bM, MediaPlayer impact)
 	{
+		if(impact.getCurrentCount()==1)
+		{
+			impact.stop();
+		}
+		impact.setCycleCount(MediaPlayer.INDEFINITE);
 		if((this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getBoundsInParent()) && (this.checkBallAndPlayerCorners(bM))))
 		{
+			impact.play();
 			bM.vertCollision();
 			bM.horzCollision();
 		}
 		else if((this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getBoundsInParent()) && (this.checkBallAndPlayerSides())))
     	{
+			impact.play();
     		bM.horzCollision();
     	} 
 		else if((this.ballHitbox.getBoundsInParent().intersects(this.barHitbox.getBoundsInParent()) && this.checkBallAndPlayerTop()))
 		{
+			impact.play();
 			bM.vertCollision();
 		}
 	}

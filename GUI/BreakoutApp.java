@@ -1,6 +1,8 @@
 package GUI;
 
 
+import java.io.File;
+
 import Classes.*;
 
 import javafx.scene.image.Image;
@@ -19,6 +21,8 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -73,6 +77,11 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				
 		String[] perkList = new String[2]; perkList[0] = "lumpScoreBonus"; perkList[1] = "scoreMultiplier";
 		PerkDrop pD = new PerkDrop(1, perkList);
+		
+		Sound gameSounds = new Sound(new Media(new File("Assets/Impact1.mp3").toURI().toString()), 
+				new Media(new File("Assets/ImpactGlass.mp3").toURI().toString()), 
+				new Media(new File("Assets/Atmosphere.mp3").toURI().toString()), 
+				new Media(new File("Assets/Death.mp3").toURI().toString()));
 		
 		board.generateBlockArray(cO);
 		
@@ -130,6 +139,8 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		//Count for BallSpeed up
 		ballMovement.setSpeedTimer();
+		gameSounds.getAmbientBackground().setCycleCount(MediaPlayer.INDEFINITE);
+		gameSounds.getAmbientBackground().play();
 		
 		//The animation "loop" that handles all movement in graphics
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(8), (evt) -> 
@@ -161,11 +172,11 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	cO.moveAllPerksInWindow(pD);
         	
         	//Checking ball and all borders of the window
-        	cO.checkBallAndBorders(ballMovement, barMovement);
+        	cO.checkBallAndBorders(ballMovement, barMovement, gameSounds.getImpactAtIndex(0), gameSounds.getDeath());
         	//Checking ball and player bar collision
-        	cO.checkBallPlayerCollisionTrigger(ballMovement);
+        	cO.checkBallPlayerCollisionTrigger(ballMovement, gameSounds.getImpactAtIndex(0));
         	//If ball collides with brick
-        	cO.checkBallBrickCollisionTrigger(root,ballMovement,barMovement, board, pD);
+        	cO.checkBallBrickCollisionTrigger(root,ballMovement,barMovement, board, pD, gameSounds.getImpactAtIndex(1));
         	//Checking falling perks collisions
         	cO.checkPerkCollisions(root, barMovement, pD);
         	
@@ -227,10 +238,11 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				if (e.getCode() == KeyCode.ESCAPE) 
 				{
 				
-					scoreWriter.scoreToFileUpdate(barMovement.getScore());
+					scoreWriter.scoreToFileUpdate(barMovement.getScore()); //Writing score to file, keeping track
 					
 					endScreen.setVisible(false);
 			    	
+					primaryStage.close();
 					timeline.pause();
 					
 					//Resetting bar and ball positions
@@ -239,7 +251,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 			    	spriteBar.setX(BACKGROUND_WIDTH/2); spriteBar.setY(BACKGROUND_HEIGHT - 50); 
 			    	spriteBar.setFitHeight(15); spriteBar.setFitWidth(140);
 			    	ballMovement.reset();
-			    	
+			    	gameSounds.reset();
 			    	 
 			    	//Reseting block array here	!!! removeblockfrom root
 					//for (int i = 0 ;i < root.getChildren().size() - 5 ; i++) 
