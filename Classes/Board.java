@@ -79,25 +79,6 @@ public class Board
 			   System.out.println("Logical Error - please use constructor for board properly." );
 		   }
 	   }
-	   
-	   /**
-	    * This method is for getting the number of blocks
-	    * @return count - the number of blocks
-	    */
-	   public int numOfBlocks() {
-			
-			int count = 0;
-			
-			for(int i = 0; i < this.blockArray.length; i++)
-			{
-				for(int j = 0; j < this.blockArray[i].length; j++)
-				{
-					count++;
-				}
-			}
-			
-			return count;
-		}
 
 	    /**
 	     * This is a getter for retrieving the board size in a Point object coordinate.

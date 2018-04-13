@@ -2,10 +2,13 @@ package Classes;
 
 import java.awt.Point;
 
+import javafx.stage.Screen;
+
 public abstract class AbstractObjects {
 	
 	private Point position = new Point(0,0);
 	private char symbol = 'A';
+	final double screenWidth = Screen.getPrimary().getVisualBounds().getHeight() - 50;
 	
 	/**
      * This method returns the position of the game object.
@@ -28,7 +31,7 @@ public abstract class AbstractObjects {
 		{
 			this.position.x = (int) XCoord;
 		}
-		if(YCoord < 1000)
+		if(YCoord < screenWidth)
 		{
 			this.position.y = (int) YCoord;
 		}
@@ -77,7 +80,7 @@ public abstract class AbstractObjects {
 	 */
 	public void setSymbol(char nSymb)
 	{
-		if(nSymb == 'O' || nSymb == 'B' || nSymb == 'P' || nSymb == 'N' || nSymb == 'H')
+		if(nSymb == 'O' || nSymb == 'B' || nSymb == 'P' || nSymb == 'N' || nSymb == 'H') //Symbols for ball, block, player, normal block, and hard block respectively
 		{
 			this.symbol = nSymb;
 		}

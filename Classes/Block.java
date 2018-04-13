@@ -42,7 +42,7 @@ public class Block extends AbstractObjects
 				this.color = col;
 				this.blockLength = len;
 				this.setPosition(x,y);
-				//this.setSymbol('B');
+				this.setSymbol('B');
 				this.health = 1;
 			}
 		
@@ -60,7 +60,7 @@ public class Block extends AbstractObjects
 			this.color = col;
 			this.blockLength = len;
 			this.setPosition(x,y);
-			//this.setSymbol('B');
+			this.setSymbol('B');
 			this.width = nWidth;
 			this.height = nHeight;
 			this.health = 1;
