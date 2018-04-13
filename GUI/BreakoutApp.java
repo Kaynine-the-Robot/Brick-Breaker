@@ -203,7 +203,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
         	//Checking ball and all borders of the window
         	cO.checkBallAndBorders(ballMovement, barMovement);
         	//Checking ball and player bar collision
-        	cO.checkBallPlayerCollisionTrigger(root, ballMovement, barMovement);
+        	cO.checkBallPlayerCollisionTrigger(ballMovement);
         	//If ball collides with brick
         	cO.checkBallBrickCollisionTrigger(root,ballMovement,barMovement, board, pD);
         	//Checking falling perks collisions

@@ -20,6 +20,7 @@ public class Ball extends AbstractObjects
 	    private int ballPositionFlag;
 	    private long speedTimer;
 	    private long startTime;
+	    private boolean sideCollision = true;
 	    
 	    /**
 	     * A constructor for a ball object
@@ -67,6 +68,7 @@ public class Ball extends AbstractObjects
 	    
 	    public void reset()
 	    {
+	    	this.sideCollision = true;
 	    	horzMovement = 1;
 		    vertMovement = -1;
 	    }

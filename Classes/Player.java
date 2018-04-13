@@ -21,8 +21,6 @@ public class Player extends AbstractObjects {
 	private boolean moveFlag = true;
 	private long multiTimer;
 	private long startMultiTime;
-	private long accelTimer;
-	private long startAccelTimer;
 	private double accelAmount = 1.0;
 	private Image[] barSprites = new Image[5];
     private int barPositionFlag;
@@ -44,6 +42,11 @@ public class Player extends AbstractObjects {
 		barSprites[0] = barLeft; barSprites[1] = barMiddleLeft; barSprites[2] = bar; barSprites[3] = barMiddleRight; barSprites[4] = barRight;
 	}
 	    
+	public double getAccelAmount()
+	{
+		return this.accelAmount;
+	}
+	
 	public double accelerate()
 	{
 		return this.accelAmount = this.accelAmount + 0.01;
