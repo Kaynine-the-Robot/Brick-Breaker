@@ -245,6 +245,8 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 					primaryStage.close();
 					timeline.pause();
 					
+					primaryStage.close();
+
 					//Resetting bar and ball positions
 					spriteBall.setFitHeight(28); spriteBall.setFitWidth(28);
 			    	spriteBall.setX(BACKGROUND_WIDTH/2); spriteBall.setY(spriteBar.getY() - spriteBall.getFitHeight() - 5); 

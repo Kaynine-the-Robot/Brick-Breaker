@@ -10,7 +10,7 @@
     -fx-background-insets: 0;
     -fx-text-fill: black;
     -fx-padding: 10 10 10 10;
-    -fx-font-size: 13px;
+    -fx-font-size: 11px;
     -fx-font-family: "Courier New";
     
 }
@@ -22,7 +22,7 @@
     -fx-background-insets: 0;
     -fx-text-fill: black;
     -fx-padding: 10 10 10 10;
-    -fx-font-size: 13px;
+    -fx-font-size: 12px;
     -fx-font-family: "Courier New";
 
 }

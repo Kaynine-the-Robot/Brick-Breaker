@@ -2,6 +2,7 @@ package Classes;
 
 import java.awt.TextField;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.converter.IntegerStringConverter;
 
 public class MainMenu {
@@ -60,23 +62,25 @@ public class MainMenu {
 		return menu;
 	}
 	
+	
 	/**
 	 * This method is for displaying the actual menu
 	 */
 	public static void display(String scoreToWrite) {
 		
 		//Buttons
-		Button heartStage = new Button("Heart Stage");
-		Button spikesStage = new Button("Spikes Stage");
-		Button linesStage = new Button("Lines Stage");
-		Button randomStage = new Button("Random Stage");
+		Button heartStage = new Button("HeartStage | High Score : " + ScoresTracker.getHeartHighScore("heart.txt"));
+		Button spikesStage = new Button("SpikesStage | High Score: " +  ScoresTracker.getHeartHighScore("spikes.txt"));
+		Button linesStage = new Button("LinesStage| High Score: " +  ScoresTracker.getHeartHighScore("lines.txt"));
+		Button randomStage = new Button("RandomStage | High Score: " + ScoresTracker.getHeartHighScore("random"));
+		
 		
 		String[] FileArray = ScoresTracker.getFileContentsArray();
 		//
-		if (FileArray[0].equals("1")) {heartStage.setText("Heart Stage - Completed! ");}
-		if (FileArray[2].equals("1")) {spikesStage.setText("Spikes Stage - Completed!");}
-		if (FileArray[4].equals("1")) {linesStage.setText("Lines Stage - Completed!");}
-		if (FileArray[6].equals("1")) {randomStage.setText("RandomStage - Completed!");}
+		if (FileArray[0].equals("1")) {heartStage.setText("HeartStage | High Score : " + ScoresTracker.getHeartHighScore("heart.txt") + " DONE");}
+		if (FileArray[2].equals("1")) {spikesStage.setText("SpikesStage | High Score: " + ScoresTracker.getHeartHighScore("spikes.txt") + " DONE!");}
+		if (FileArray[4].equals("1")) {linesStage.setText("LinesStage| High Score: " + ScoresTracker.getHeartHighScore("lines.txt") + " DONE!");}
+		if (FileArray[6].equals("1")) {randomStage.setText("RandomStage | High Score: " + ScoresTracker.getHeartHighScore("random") + " DONE!");}
 		
 		Stage window = new Stage();
 		window.setTitle("Welcome to the Brick Breaker!");
@@ -126,6 +130,7 @@ public class MainMenu {
 		             window.setMaximized(false);
 		        });
 		//
+			
 		
 		//Sets up both menu buttons
 		randomStage.setOnAction(e -> {
@@ -168,7 +173,13 @@ public class MainMenu {
 				window.close();
 		});
 		
-		
+    	window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                System.exit(0);
+            }
+    	});
+    	
 		window.showAndWait();
 
 	}
