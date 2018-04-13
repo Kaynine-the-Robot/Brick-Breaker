@@ -47,6 +47,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
     	Image img = new Image("file:GUI/purpleSpace.jpg");
     	final double BACKGROUND_WIDTH = 816;
     	final double BACKGROUND_HEIGHT = Screen.getPrimary().getVisualBounds().getHeight() - 50;
+    	final double TOP_OFFSET = 10;
     	
 		BackgroundSize bS = new BackgroundSize(BACKGROUND_WIDTH,BACKGROUND_HEIGHT,true,true,true,true);
 		final BackgroundImage bI = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, 
@@ -75,11 +76,6 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 				new Image("file:Assets/Bar_RightMiddle.png", 140, 15, true, true), 
 				new Image("file:Assets/Bar_Right.png", 140, 15, true, true));
 		
-		//Rectangle bar = new Rectangle(280,460,70,8);
-		//Rectangle bar = new Rectangle(280,460,70,15);
-		//Circle ball = new Circle(205,455,7);
-		
-		
 		CollisionObjects cO = new CollisionObjects(spriteBar, spriteBall, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 		Board board = new Board(); 
 		
@@ -88,15 +84,10 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		String[] perkList = new String[2]; perkList[0] = "lumpScoreBonus"; perkList[1] = "scoreMultiplier";
 		PerkDrop pD = new PerkDrop(1, perkList);
 		
-		//Image imageBall = new Image("file:Assets/Ball.jpg");
-		
-		//spriteBall.setImage(imageBall);
-		//HBox box = new HBox();
-		//box.getChildren().add(spriteBall);
-		
 		board.generateBlockArray(cO);
 		
 		cO.addBlockArrayToRoot(root);
+		
 		
 		//Below is the main menu display
 		
@@ -127,7 +118,7 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		
 		Label endScreen = new Label();
 		endScreen.setVisible(false);
-		endScreen.setFont(new Font(30));
+		endScreen.setFont(new Font(50));
 		
 		Label lives = new Label("Lives: 3");
 		
@@ -137,12 +128,12 @@ public class BreakoutApp extends Application implements EventHandler<KeyEvent>{
 		root.getChildren().add(endScreen);
 		root.getChildren().add(lives);
 		
-		endScreen.setLayoutX(140);
-		endScreen.setLayoutY(270);
-		score.setLayoutX(10);
-		score.setLayoutY(10);
-		lives.setLayoutX(300);
-		lives.setLayoutY(10);
+		endScreen.setLayoutX(BACKGROUND_WIDTH/2 - 35);
+		endScreen.setLayoutY(BACKGROUND_HEIGHT/2 + 30);
+		score.setLayoutX(TOP_OFFSET);
+		score.setLayoutY(TOP_OFFSET);
+		lives.setLayoutX(BACKGROUND_WIDTH - (BACKGROUND_WIDTH/8));
+		lives.setLayoutY(TOP_OFFSET);
 		
 		//Count for BallSpeed up
 		ballMovement.setSpeedTimer();
