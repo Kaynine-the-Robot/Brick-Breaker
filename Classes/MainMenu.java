@@ -25,7 +25,8 @@ public class MainMenu {
 	 * This method is for getting the color array
 	 * @return colors - Paint[] array
 	 */
-	public static Paint[] getColors(){
+	public static Paint[] getColors()
+	{
 		return colors;
 	}
 	
@@ -33,31 +34,35 @@ public class MainMenu {
 	 * This method is for returning the level name
 	 * @return levelName - String
 	 */
-	public static String getLevelName() {
+	public static String getLevelName()
+	{
 		return levelName;
 	}
 	/**
 	 * This method is for returning level selection
 	 * @return randomOrCustom - String
 	 */
-	public static String getRandomOrCustom() {
+	public static String getRandomOrCustom()
+	{
 
-			return randomOrCustom;
-			
+		return randomOrCustom;
+
 	}
 	
 	/**
 	 * This method is for returning the menu scene
 	 * @return menu - Scene
 	 */
-	public static Scene getMenu() {
+	public static Scene getMenu()
+	{
 		return menu;
 	}
 	
 	/**
 	 * This method is for displaying the actual menu
 	 */
-	public static void display() {
+	public static void display()
+	{
 		
 		//Buttons
 		Button heartStage = new Button("Heart Stage");

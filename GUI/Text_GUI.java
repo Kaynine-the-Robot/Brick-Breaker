@@ -13,9 +13,9 @@ public class Text_GUI
 		 * @param bool is a passed true or false for if the board will show. True if it will.
 		 */
 		public Text_GUI(boolean bool)
-			{
-				this.visibility = bool;
-			}
+		{
+			this.visibility = bool;
+		}
 		
 		/**
 		 * This is the drawing method for the text-based version of the game.
@@ -23,39 +23,39 @@ public class Text_GUI
 		 * @param board is the object of the board which contains the array and size of the current board.
 		 */
 		public void printBoard(Board board, Player player)
+		{
+			if(this.visibility == true)
 			{
-				if(this.visibility == true)
+				Point size = board.getBoardSize();
+				int xLength = (int) size.getX();
+				int yLength = (int) size.getY();
+				for(int l = 0; l < (xLength*4); l++) 
+				{
+					System.out.print("-");
+				}
+				System.out.println("");
+				for(int j = 0; j < yLength; j++) 
+				{
+					for(int i = 0; i < xLength; i++) 
 					{
-					Point size = board.getBoardSize();
-					int xLength = (int) size.getX();
-					int yLength = (int) size.getY();
-					for(int l = 0; l < (xLength*4); l++) 
+						if(board.getBoard()[i][j] == 0)
 						{
-							System.out.print("-");
+							System.out.print("|   ");
 						}
-					System.out.println("");
-					for(int j = 0; j < yLength; j++) 
+						else
 						{
-							for(int i = 0; i < xLength; i++) 
-								{
-									if(board.getBoard()[i][j] == 0)
-									{
-										System.out.print("|   ");
-									}
-									else
-									{
-										System.out.print(String.format("| %c ",board.getBoard()[i][j]));
-									}
-								}
-							System.out.println("|");
-							for(int a = 0; a < xLength; a++) 
-								{
-									System.out.print("----");
-								}
-							System.out.println("");
+							System.out.print(String.format("| %c ",board.getBoard()[i][j]));
 						}
-					System.out.println("Score: " + player.getScore());
-					
 					}
+					System.out.println("|");
+					for(int a = 0; a < xLength; a++) 
+					{
+						System.out.print("----");
+					}
+					System.out.println("");
+				}
+				System.out.println("Score: " + player.getScore());
+
 			}
+		}
 	}
