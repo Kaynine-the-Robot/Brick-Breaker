@@ -1,5 +1,8 @@
 README
 
+This readme is for the game of Brick Breaker built in Java built as a first 
+year university project.
+
 For Application:
 After compilation, run Main.java
 This will start the game and open the main menu.  Proceed to chose a level
